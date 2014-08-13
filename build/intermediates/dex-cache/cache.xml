@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/diego/Dropbox/Universita/SAM/SoundNotes/app/build/intermediates/pre-dexed/debug/classes-6d8bea15cc2092499ddb3ee5a07e5f5ae56d1b25.jar"
+        jar="/Users/diego/Dropbox/Universita/SAM/SoundNotes/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="/Users/diego/Dropbox/Universita/SAM/SoundNotes/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-bca9cd8c8082330ef7549e0398af852faae531fd.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="/Users/diego/Dropbox/Universita/SAM/SoundNotes/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-520f4987a7b3706e6470fa26cf0f4f60af377916.jar"
+        jar="/Users/diego/Dropbox/Universita/SAM/SoundNotes/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+
+</pre-dex-items>
