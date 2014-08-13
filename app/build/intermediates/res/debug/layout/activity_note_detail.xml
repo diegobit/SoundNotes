@@ -1,0 +1,10 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/note_detail_container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="it.giorgini.soundnotes.NoteDetailActivity"
+    tools:ignore="MergeRootFrame"
+    android:gravity="center">
+</FrameLayout>
+<!-- From: file:/Users/diego/Dropbox/Universita/SAM/SoundNotes/app/src/main/res/layout/activity_note_detail.xml -->

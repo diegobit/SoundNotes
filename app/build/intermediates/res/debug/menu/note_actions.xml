@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <!-- Tasto registrazione audio -->
+    <item android:id="@+id/action_rec"
+          android:icon="@drawable/ic_action_mic"
+          android:title="@string/action_rec"
+          android:showAsAction="always" />
+    
+    <!-- Search -->
+    <item android:id="@+id/action_search"
+          android:icon="@drawable/ic_action_search"
+          android:title="@string/action_search"
+          android:showAsAction="never" />
+    
+    <!-- Share file as text-->
+    <item android:id="@+id/action_share_text"
+          android:title="@string/action_share_text"
+          android:showAsAction="never" />
+    
+    <!-- Share entire file -->
+    <item android:id="@+id/action_share_full"
+          android:title="@string/action_share_full"
+          android:showAsAction="never" />
+</menu><!-- From: file:/Users/diego/Dropbox/Universita/SAM/SoundNotes/app/src/main/res/menu/note_actions.xml -->
