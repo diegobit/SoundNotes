@@ -20,6 +20,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 /**
@@ -37,13 +39,15 @@ import android.widget.Toast;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends Activity implements
-		NoteListFragment.Callbacks {
-	private boolean mTwoPane; // Modalità doppia per tablet
-    private NoteDetailFragment detailFragment; // Solo se mTwoPane è definito
+public class NoteListActivity extends Activity implements NoteListFragment.Callbacks {
+	private boolean mTwoPane = false; // Modalità doppia per tablet
+    private NoteDetailFragment detailFragment; // Solo se mTwoPane è definito // FIXME: e se lo mettessi in un WeakReference?
+    private NoteListFragment listFragment; // fragment per visualizzare una lista di elementi
 
-//    private NoteListFragment listFragment; // fragment per visualizzare una lista di elementi
-//    private EmptyNoteListFragment emptyFragment; // fragment quando la lista di elementi è vuota
+    private Menu menu; // L'oggetto menu dell'action bar che contiene tutti i bottoni.
+
+    private boolean deletingState = false; // Indica che l'elemento selezionato dal ListFragment è quello attualmente visualizzato.
+    // mi serve questa variabile perchè il fragment chiama un metodo di NoteListActivity che deve comportarsi in modi differenti.
 
 	private GestureDetector mDetector; // Per ascoltare le gesture del touchpad
     public static final String DATA_PREFS = "DataPreferences";
@@ -60,71 +64,74 @@ public class NoteListActivity extends Activity implements
         SharedPreferences app_prefs = getSharedPreferences (APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences data_prefs = getSharedPreferences (DATA_PREFS, Context.MODE_PRIVATE);
 
+        listFragment = (NoteListFragment) getFragmentManager().findFragmentById(R.id.note_list);
+
         if (findViewById(R.id.note_detail_container) != null) {
-			// The detail container view will be present only in the
-			// large-screen layouts (res/values-large and
-			// res/values-sw600dp). If this view is present, then the
-			// activity should be in two-pane mode.
+			// The detail container view will be present only in the large-screen layouts (res/values-large and
+			// res/values-sw600dp). If this view is present, then the activity should be in two-pane mode.
 			mTwoPane = true;
 
-			// In two-pane mode, list items should be given the
-			// 'activated' state when touched.
-			((NoteListFragment) getFragmentManager().findFragmentById(
-					R.id.note_list)).setActivateOnItemClick(true);
+			// In two-pane mode, list items should be given the 'activated' state when touched.
+            listFragment.setActivateOnItemClick(true);
 		}
+
+        listFragment.setTwoPane(mTwoPane);
 
         // Carico le note dalla memoria interna
         NotesStorage.init(this, data_prefs);
         boolean loadedSomething = NotesStorage.load();
 
         // Non ho caricato note dalla memoria interna, sostituisco il fragment con quello vuoto (che istanzio adesso)
-        if (!loadedSomething) {
-//            emptyFragment = new EmptyNoteListFragment();
-//            getFragmentManager().beginTransaction().add(R.id.note_list, emptyFragment).commit();
-            swapVisibleFragment(true);
-        } else
-            swapVisibleFragment(false);
+        swapVisibleFragment(!loadedSomething);
 
 		// Gestione slide per nascondere / mostrare la lista delle note su tablet
-//		OnGestureListener gl = new GestureDetector.SimpleOnGestureListener();
-//		GestureDetector gd = new GestureDetector(this, GestureDetector.)
-        // Instantiate the gesture detector with the
-        // application context and an implementation of
-        // GestureDetector.OnGestureListener
         mDetector = new GestureDetector(getParent(), new SwipeGestureListener(this));
-//        Log.d("DEBUG", "START");
-
-//        // Animazione apertura e chiusura lista note
-//        overridePendingTransition(R.anim.push_in_from_left, R.anim.fade_out_stayright);
-		// TODO: If exposing deep links into your app, handle intents here.
 	}
 
-	
 	// Metodi per gestione dell'action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.notelist_actions, menu);
+        this.menu = menu; // aggiorno la variabile menu per poter disabilitare alcuni tasti
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-		    case R.id.action_new:
-	            newNote();
-	            return true;
-	        case R.id.action_search:
-	            openSearch();
-	            return true;
-	        case R.id.action_settings:
-	            openSettings();
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+	    // Devo gestire la pressione dei tasti dell'action bar distinguendo se sono su tablet o no.
+        if (mTwoPane) {
+            switch (item.getItemId()) {
+                case R.id.action_new:
+                    newNote();
+                    return true;
+                case R.id.action_search:
+                    openSearch();
+                    return true;
+                case R.id.action_settings:
+                    openSettings();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }
+        else {
+            // Non tablet. Cellulare
+            switch (item.getItemId()) {
+                case R.id.action_new:
+                    newNote();
+                    return true;
+                case R.id.action_search:
+                    openSearch();
+                    return true;
+                case R.id.action_settings:
+                    openSettings();
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }
 	}
 
 //    @Override
@@ -140,7 +147,6 @@ public class NoteListActivity extends Activity implements
 //    @Override
 //    protected void onPause() {
 ////        NotesStorage.save(this, ((RichEditText) findViewById(R.id.note_detail)).getText().toString());
-//        //FIXME: non salvare quando non c'è la dettagli
 //        super.onPause();
 //    }
 
@@ -161,8 +167,7 @@ public class NoteListActivity extends Activity implements
 //    }
 
 
-    /** Questo metodo controlla
-     *
+    /** Questo metodo cambia il fragment visibile: lista di note / schermata vuota
      */
     public void swapVisibleFragment(boolean emptyList) {
         if (emptyList) {
@@ -176,7 +181,6 @@ public class NoteListActivity extends Activity implements
             Log.d("DEBUG", "#### Prima di attach nuovo fragment vuoto");
 //            getFragmentManager().beginTransaction().attach(getFragmentManager().findFragmentById(R.id.empty_list));
             findViewById(R.id.empty_list).setVisibility(View.VISIBLE);
-            //TODO: forse mi conviene caricare subito il fragment vuoto e poi sostituirlo nella load... vedremo
         } else {
 //            getFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.empty_list));
 //            getFragmentManager().beginTransaction().attach(getFragmentManager().findFragmentById(R.id.note_list));
@@ -186,6 +190,23 @@ public class NoteListActivity extends Activity implements
             findViewById(R.id.note_list).setVisibility(View.VISIBLE);
         }
 
+    }
+
+    public void setDetailNoteMenuItems(boolean visibility) {
+        detailFragment.setHasOptionsMenu(visibility);
+        invalidateOptionsMenu();
+//        menu.findItem(R.menu.note_actions).setVisible(visibility);
+    }
+
+    public void updateDetailFragmentContent() {
+        detailFragment.updateCurrItem();
+    }
+
+    private boolean save() {
+        if (!NotesStorage.ITEMS.isEmpty())
+            return NotesStorage.save(this, ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString());
+        else
+            return false;
     }
 
     public void newNote() {
@@ -202,30 +223,34 @@ public class NoteListActivity extends Activity implements
 
         // Imposto le azioni dell'alert
         builder.setPositiveButton(R.string.new_note_alert_ok, new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int whichButton) {
-                       Editable value = input.getText();
-                       // Creo la nuova nota col titolo inserito o con quelo di default
-                       int id;
-                       if (value.length() != 0)
-                           id = NotesStorage.add(value.toString(), "", System.currentTimeMillis());
-                       else
-                           id = NotesStorage.add(getResources().getString(R.string.new_note_name), "", System.currentTimeMillis());
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // Salvo la nota corrente prima di creare la successiva
+                    save();
 
-                       // aggiorno la lista delle note
-//                       updateListAdapter(); // non dovrebbe più servire
-                       // se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
-                       if (NotesStorage.ITEMS.size() == 1)
-                           swapVisibleFragment(false);
+                    Editable value = input.getText();
+                    // Creo la nuova nota col titolo inserito o con quelo di default
+                    int id;
+                    if (value.length() != 0)
+                        id = NotesStorage.add(value.toString(), "", System.currentTimeMillis());
+                    else
+                        id = NotesStorage.add(getResources().getString(R.string.new_note_name), "", System.currentTimeMillis());
 
-                       // faccio un click su quell'elemento della lista
-                       NoteListFragment nlf = ((NoteListFragment) getFragmentManager().findFragmentById(R.id.note_list));
-                       nlf.getListView().performItemClick(nlf.getListView().getAdapter().getView(
-                                       0, null, null),
-                                       0,
-                                       nlf.getListView().getAdapter().getItemId(0));
-//		    onItemSelected(String.valueOf(id), 0);
-                   }
-               });
+                    // aggiorno la lista delle note
+         //                       updateListAdapter(); // non dovrebbe più servire
+                    // Se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
+                    // e aggiungo di nuovo i tasti nella action bar se è la prima nota nella lista
+                    if (NotesStorage.ITEMS.size() == 1) {
+                        swapVisibleFragment(false);
+                        if (detailFragment != null)
+                            setDetailNoteMenuItems(true);
+                    }
+
+                    // faccio un click su quell'elemento della lista
+                    ListView lv = listFragment.getListView();
+                    ListAdapter la = lv.getAdapter();
+                    lv.performItemClick(la.getView(0, null, null), 0, la.getItemId(0));
+                }
+            });
 
 //        builder.setNegativeButton(R.string.new_note_alert_cancel, new DialogInterface.OnClickListener() {
 //                    public void onClick(DialogInterface dialog, int whichButton) { } });
@@ -235,13 +260,16 @@ public class NoteListActivity extends Activity implements
         builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == keyEvent.ACTION_DOWN) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                     switch(keyCode) {
                         case KeyEvent.KEYCODE_ENTER:
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                             //TODO: Codice duplicato 15 righe sopra
+                            // Salvo la nota corrente prima di creare la successiva
+                            save();
+
                             Editable value = input.getText();
-                            // Creo la nuova nota col titolo inserito o con quelo di default
+                            // Creo la nuova nota col titolo inserito o con quello di default
                             int id;
                             if (value.length() != 0)
                                 id = NotesStorage.add(value.toString(), "", System.currentTimeMillis());
@@ -251,16 +279,27 @@ public class NoteListActivity extends Activity implements
                             // aggiorno la lista delle note
 //                            updateListAdapter(); // non dovrebbe più servire
 
-                            // se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
-                            if (NotesStorage.ITEMS.size() == 1)
+                            // Se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
+                            // e aggiungo di nuovo i tasti nella action bar se è la prima nota nella lista
+                            if (NotesStorage.ITEMS.size() == 1) {
                                 swapVisibleFragment(false);
+                                if (detailFragment != null)
+                                    setDetailNoteMenuItems(true);
+                            }
+
+                            // chiudo l'alert
+                            dialogInterface.cancel();
 
                             // faccio un click su quell'elemento della lista
-                            NoteListFragment nlf = ((NoteListFragment) getFragmentManager().findFragmentById(R.id.note_list));
-                            nlf.getListView().performItemClick(nlf.getListView().getAdapter().getView(0, null, null),
-                                                               0,
-                                                               nlf.getListView().getAdapter().getItemId(0));
-                            dialogInterface.cancel();
+                            ListView lv = listFragment.getListView();
+                            ListAdapter la = lv.getAdapter();
+                            lv.performItemClick(la.getView(0, null, null), 0, la.getItemId(0));
+
+//                            // salvo la nota apena creata così da assicurarmi che sia stata creata correttamente e per
+//                            // far funzionare subito altre funzioni, come la cancellazione
+//                            save();
+// FIXME: bug: se cancello una nota appena creata senza toccare nulla, non riesce, quindi devo prima salvarla ma così crasha
+// (chiamata NotesStorage.save - nullpointerexc)
                             break;
                         default:
                             return false;
@@ -278,13 +317,13 @@ public class NoteListActivity extends Activity implements
 	}
 	
 	public void openSearch() {
-		//TODO: implementare
+		//TODO: implementare (ricerca)
 		Toast toast = Toast.makeText(this, "tasto search", Toast.LENGTH_SHORT);
 		toast.show();
 	}
 	
 	public void openSettings() {
-		//TODO: implementare
+		//TODO: implementare (impostazioni)
 		Toast toast = Toast.makeText(this, "tasto settings", Toast.LENGTH_SHORT);
 		toast.show();
 	}
@@ -306,8 +345,8 @@ public class NoteListActivity extends Activity implements
 	public void onItemSelected(String id, int position) {
         // Salvo il contenuto della nota corrente.
 //        RichEditText det = (RichEditText) findViewById(R.id.note_detail);
-//        if (mTwoPane && NotesStorage.currPosition >= 0) // TODO: slegare da position
-//            NotesStorage.save(this, ((RichEditText) findViewById(R.id.note_detail)).getText().toString()); // TODO: *******
+//        if (mTwoPane && NotesStorage.currPosition >= 0)
+//            NotesStorage.save(this, ((RichEditText) findViewById(R.id.note_detail)).getText().toString());
 
         // Aggiorno lo stato interno di NotesStorage
 //        NotesStorage.updateCurrItem(position);
@@ -328,9 +367,10 @@ public class NoteListActivity extends Activity implements
             } else {
                 Log.d("DEBUG", "##### currFragment != null - testoCorrente: '" + ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString() + "'");
                 // ho premuto su un'altra nota, salvo quella corrente e carico la successiva
-                NotesStorage.save(this, ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString());
+                if (!deletingState && NotesStorage.getCurrNote() != null)
+                    save();
                 NotesStorage.updateCurrItem(position);
-                detailFragment.updateCurrItem();
+                updateDetailFragmentContent();
             }
 
 		} else {
@@ -344,6 +384,12 @@ public class NoteListActivity extends Activity implements
 		}
 	}
 
+    public void setDeletingState(boolean state) {
+        deletingState = state;
+    }
+
+
+
 	// METODI EVENTI TOUCH
 	@Override 
     public boolean onTouchEvent(MotionEvent event) { 
@@ -354,6 +400,7 @@ public class NoteListActivity extends Activity implements
 	
 	// Nasconde la ListView in modalità tablet
 	public void slideToLeft(View view, int newVisibility) {
+        // FIXME: funziona solo in una striscetta. SlideToRight non funziona più da quanto ho aggiunto il fragment vuota
 		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||
 				newVisibility == View.GONE) {
 			TranslateAnimation animate = new TranslateAnimation(0,-view.getWidth(),0,0);
@@ -377,7 +424,6 @@ public class NoteListActivity extends Activity implements
 		}
 		else {
 			throw new InvalidParameterException("The new visibility specified is invalid");
-			// FIXME: tenere l'eccezione?
 		}
 	}
 }

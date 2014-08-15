@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ public class NoteListFragment extends ListFragment {
 	 */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
 
+    private boolean mTwoPane; // Modalità doppia per tablet
+
 	/**
 	 * A callback interface that all activities containing this fragment must
 	 * implement. This mechanism allows activities to be notified of item
@@ -53,6 +56,9 @@ public class NoteListFragment extends ListFragment {
 		 */
 		public void onItemSelected(String id, int position);
         public void swapVisibleFragment(boolean emptyList);
+        public void updateDetailFragmentContent();
+        public void setDeletingState(boolean state);
+        public void setDetailNoteMenuItems(boolean visibility);
 	}
 
 	/**
@@ -67,6 +73,18 @@ public class NoteListFragment extends ListFragment {
         @Override
         public void swapVisibleFragment(boolean emptyList) {
         }
+
+        @Override
+        public void updateDetailFragmentContent() {
+        }
+
+        @Override
+        public void setDeletingState(boolean state) {
+        }
+
+        @Override
+        public void setDetailNoteMenuItems(boolean visibility) {
+        }
     };
 
 	/**
@@ -76,22 +94,29 @@ public class NoteListFragment extends ListFragment {
 	public NoteListFragment() {
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 
-		// TODO: replace with a real list adapter.
-//		setListAdapter(new ArrayAdapter<NotesStorage.SoundNote>(getActivity(),
-//				android.R.layout.simple_list_item_activated_1,
-//				android.R.id.text1, NotesStorage.ITEMS));
-	}
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // Activities containing this fragment must implement its callbacks.
+        if (!(activity instanceof Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        mCallbacks = (Callbacks) activity;
+    }
 
 //	@Override
-//	public View onCreateView(LayoutInflater inflater,
-//			ViewGroup container, Bundle savedInstanceState) {
+//	public void onCreate(Bundle savedInstanceState) {
+//		super.onCreate(savedInstanceState);
+//	}
+
+//	@Override
+//	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //		view.setOnTouchListener(new View.OnTouchListener() {
 //            public boolean onTouch(View v, MotionEvent event) {
-//
 //                if(event.getAction() == MotionEvent.ACTION_MOVE){
 //                    //do something
 //                }
@@ -100,35 +125,53 @@ public class NoteListFragment extends ListFragment {
 //    });
 //	}
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-		// Restore the previously serialized activated item position.
-		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-			setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-		}
-		
-		// Registro un listener sugli eventi touch che passerò all'activity
-		view.setOnTouchListener(new View.OnTouchListener() {
+        // Restore the previously serialized activated item position.
+        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+        }
+
+        // Registro un listener sugli eventi touch che passerò all'activity
+        view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-            	getActivity().onTouchEvent(event);
+                getActivity().onTouchEvent(event);
                 return true;
             }
-		});
-	}
+        });
+    }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+    // Metodo chiamato quando l'activity a cui è collegato viene creata. Serve per fare cose quando
+    // tutto è inizializzato oppure se voglio mantenerlo anche quando lo stacco da un'activity
+    @Override
+    public void onActivityCreated(Bundle savedState) {
+        super.onActivityCreated(savedState);
 
-		// Activities containing this fragment must implement its callbacks.
-		if (!(activity instanceof Callbacks)) {
-			throw new IllegalStateException("Activity must implement fragment's callbacks.");
-		}
+        setListAdapter(NotesStorage.ITEMS_ADAPTER);
 
-		mCallbacks = (Callbacks) activity;
-	}
+        // registra un menu contestuale da visualizzare (quando su una nota avviene un logpress)
+        registerForContextMenu(getListView());
+    }
+
+    // onViewStateRestored
+    // onStart
+    // onResume
+    // onPause
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mActivatedPosition != ListView.INVALID_POSITION) {
+            // Serialize and persist the activated item position.
+            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+        }
+    }
+
+    // onStop
+    // onDestroyView
+    // onDestroy
 
 	@Override
 	public void onDetach() {
@@ -137,30 +180,35 @@ public class NoteListFragment extends ListFragment {
 		mCallbacks = sStorageCallbacks;
 	}
 
-    // Metodo chiamato quando l'activity a cui è collegato viene creata. Serve per fare cose quando
-    // tutto è inizializzato oppure se volgio mantenerlo anche quando lo stacco da un'activity
-    @Override
-    public void onActivityCreated(Bundle savedState) {
-        super.onActivityCreated(savedState);
 
-        setListAdapter(NotesStorage.ITEMS_ADAPTER);
 
-        registerForContextMenu(getListView());
-
-//        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-//
-//                // NOtifico l'interfaccia dei callback (l'activity, se il fragment è
-//                // connesso ad una) che un oggetto è stato premuto a lungo
-//                mCallbacks.onItemLongPressed(NotesStorage.getNoteFromPosition(position).id, position);
-//
-//                return true;
-//            }
-//        });
+    public void setTwoPane(boolean twoPane) {
+        mTwoPane = twoPane;
     }
 
+    /**
+     * Turns on activate-on-click mode. When this mode is on, list items will be
+     * given the 'activated' state when touched.
+     */
+    public void setActivateOnItemClick(boolean activateOnItemClick) {
+        // When setting CHOICE_MODE_SINGLE, ListView will automatically
+        // give items the 'activated' state when touched.
+        getListView().setChoiceMode(activateOnItemClick ? ListView.CHOICE_MODE_SINGLE : ListView.CHOICE_MODE_NONE);
+    }
+
+    private void setActivatedPosition(int position) {
+        if (position == ListView.INVALID_POSITION) {
+            getListView().setItemChecked(mActivatedPosition, false);
+        } else {
+            getListView().setItemChecked(position, true);
+        }
+
+        mActivatedPosition = position;
+    }
+
+
+
+    // Click su nota nella lista
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
@@ -171,6 +219,7 @@ public class NoteListFragment extends ListFragment {
 
     }
 
+    // Creazione menu contestuale long press su nota in lista
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -190,51 +239,54 @@ public class NoteListFragment extends ListFragment {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
-                boolean deleted = NotesStorage.delete(getActivity(), currentPressedItem);
-
-                // Non è riuscito a cancellarlo, notifico l'utente
-                if (!deleted)
-                    (Toast.makeText(getActivity(), R.string.action_delete_fail, Toast.LENGTH_LONG)).show();
-
-                // se ora la lista è vuota sostituisco il fragment
-                if (NotesStorage.ITEMS.isEmpty())
-                    mCallbacks.swapVisibleFragment(true);
-
-                // faccio un click su quell'elemento della lista
-
+                deleteNote();
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (mActivatedPosition != ListView.INVALID_POSITION) {
-			// Serialize and persist the activated item position.
-			outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
-		}
-	}
 
-	/**
-	 * Turns on activate-on-click mode. When this mode is on, list items will be
-	 * given the 'activated' state when touched.
-	 */
-	public void setActivateOnItemClick(boolean activateOnItemClick) {
-		// When setting CHOICE_MODE_SINGLE, ListView will automatically
-		// give items the 'activated' state when touched.
-		getListView().setChoiceMode(activateOnItemClick ? ListView.CHOICE_MODE_SINGLE : ListView.CHOICE_MODE_NONE);
-	}
 
-	private void setActivatedPosition(int position) {
-		if (position == ListView.INVALID_POSITION) {
-			getListView().setItemChecked(mActivatedPosition, false);
-		} else {
-			getListView().setItemChecked(position, true);
-		}
+    // Cancella la nota SELEZIONATA nel MENU CONTESTUALE chiamato tenendo premuto su una nota.
+    private void deleteNote() {
+        boolean deleted = NotesStorage.delete(getActivity(), currentPressedItem);
 
-		mActivatedPosition = position;
-	}
-	
+        // Non è riuscito a cancellarlo, notifico l'utente
+        if (!deleted) {
+            (Toast.makeText(getActivity(), R.string.action_delete_fail, Toast.LENGTH_LONG)).show();
+        } else if (NotesStorage.ITEMS.isEmpty()) {
+            // se ho cancellato e la lista è vuota
+            mActivatedPosition = ListView.INVALID_POSITION;
+            NotesStorage.updateCurrItem(-1);
+            currentPressedItem = -1;
+            // Aggiorno il contenuto del fragment (solo su tablet) e sistemo i bottoni dell'action bar
+            if (mTwoPane) {
+                mCallbacks.updateDetailFragmentContent();
+                // Devo rimuovere dall'action bar i bottoni relativi alla nota aperta.
+                mCallbacks.setDetailNoteMenuItems(false);
+//                MenuItem detailNoteMenus = MenuItem.findItem(R.id.note_actions); refreshItem.setVisible(false);
+            }
+            //  sostituisco il fragment della nota aperta con quello vuoto
+            mCallbacks.swapVisibleFragment(true);
+        } else {
+            // Se ho cancellato una nota e ci sono note nella lista aggiorno la nota corrente nel NotesStorage.
+            // Ma SOLO se la nota corrente è quella che l'utente sta cancellando.
+            if (NotesStorage.currPosition == currentPressedItem) {
+                mCallbacks.setDeletingState(true);
+                int pos = currentPressedItem == NotesStorage.ITEMS.size() ? currentPressedItem - 1 : currentPressedItem;
+                NotesStorage.updateCurrItem(pos);
+                // su tablet faccio un click sull'elemento sopra a quello eliminato
+                if (mTwoPane) {
+                    ListAdapter la = getListView().getAdapter();
+                    getListView().performItemClick(la.getView(pos, null, null), pos, la.getItemId(pos));
+                }
+                mCallbacks.setDeletingState(false);
+            }
+        }
+// Aggiorno il contenuto del fragment (solo su tablet)
+        if (mTwoPane)
+            mCallbacks.updateDetailFragmentContent();
+    }
+
 }

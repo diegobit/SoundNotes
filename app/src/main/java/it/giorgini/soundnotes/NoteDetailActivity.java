@@ -57,13 +57,13 @@ public class NoteDetailActivity extends Activity {
 	}
 
 	// Opzioni nell'action bar
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.note_actions, menu);
-	    return super.onCreateOptionsMenu(menu);
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//	    // Inflate the menu items for use in the action bar
+//	    MenuInflater inflater = getMenuInflater();
+//	    inflater.inflate(R.menu.note_actions, menu);
+//	    return super.onCreateOptionsMenu(menu);
+//	}
 	
 	// Eseguo un'azione a seconda di quale oggetto è stato premuto:
 	// una nota o l'action bar
@@ -77,14 +77,11 @@ public class NoteDetailActivity extends Activity {
 	    	case R.id.action_rec:
 	            toggleRecording(item);
 	            return true;
-	        case R.id.action_search:
-	            openSearch();
-	            return true;
 	        case R.id.action_share_text:
 	            shareFileAsText(((RichEditText) findViewById(R.id.note_detail)).getText().toString());
 	            return true;
 	        case R.id.action_share_full:
-	            shareFileFull(currFileUri); // TODO: File completo 
+	            shareFileFull(currFileUri); // TODO: implementare (tasto condivisione)
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -112,7 +109,7 @@ public class NoteDetailActivity extends Activity {
 
     // Funzione per iniziare (e fermare) la registrazione
 	public void toggleRecording(MenuItem item) {
-		//TODO: implementare
+		//TODO: implementare (registrazione)
 		
 		isRecording = !isRecording;
 		// cambio l'icona
@@ -127,7 +124,7 @@ public class NoteDetailActivity extends Activity {
 	
 	// Funzione ricerca all'interno della nota
 	public void openSearch() {
-		//TODO: implementare
+		//TODO: implementare (ricerca)
 		Toast toast = Toast.makeText(this, "tasto search", Toast.LENGTH_SHORT);
 		toast.show();
 	}
@@ -144,7 +141,7 @@ public class NoteDetailActivity extends Activity {
 	
 	// Funzione che condivide il file corrente
 	public void shareFileFull(Uri fileUri) {
-		//TODO: implementare
+		//TODO: implementare (condivisione file)
 		Intent sendIntent = new Intent();
 		sendIntent.setAction(Intent.ACTION_SEND);
 		sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
@@ -181,7 +178,6 @@ public class NoteDetailActivity extends Activity {
 	
 //	@Override
 //	public boolean onDown(MotionEvent e) {
-//		// TODO Auto-generated method stub
 //		Log.d("TouchEvent", "onDown: " + e.toString());
 //		return true;
 //	}
@@ -199,7 +195,6 @@ public class NoteDetailActivity extends Activity {
 //	@Override
 //	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 //			float distanceY) {
-//		// TODO Auto-generated method stub
 //		if (distanceX > 10) {
 //			Log.d("TouchEvent", "onFling: " + e1.toString()+e2.toString());
 //		}

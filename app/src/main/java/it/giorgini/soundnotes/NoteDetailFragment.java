@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,6 +40,9 @@ public class NoteDetailFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+        // Dico di voler aggiungere dei botoni nella action bar
+        setHasOptionsMenu(true);
 
 //		if (getArguments().containsKey(NotesStorage.currID)) {
 			// Load the dummy content specified by the fragment
@@ -89,19 +95,44 @@ public class NoteDetailFragment extends Fragment {
 	public void onPause() {
         Log.d("DEBUG", "##### NoteDetailFragment: onPause");
 //        NotesStorage.save(getActivity(), ((RichEditText) (getView().findViewById(R.id.note_detail))).getText().toString());
-
 		super.onPause();
 	}
+
+    @Override
+    public void onStop() {
+        Log.d("DEBUG", "##### NoteDetailFragment: onStop");
+        super.onStop();
+    }
+
+    @Override
+    public void onDetach() {
+        Log.d("DEBUG", "##### NoteDetailFragment: onDetach");
+        super.onDetach();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d("DEBUG", "##### NoteDetailFragment: onDestroy");
+        super.onDestroy();
+    }
 
     // Aggiorna elemento visualizzato dal fragment
     public void updateCurrItem() {
         item = NotesStorage.getCurrNote();
-        ((RichEditText) getView().findViewById(R.id.note_detail)).setText(item.text);
-//            edt.setSelection(mItem.text.length()); //TODO: Impostazione: inizio/fine
+        if (getView() != null && item != null) {
+            ((RichEditText) getView().findViewById(R.id.note_detail)).setText(item.text);
+        }
+//            edt.setSelection(mItem.text.length()); //TODO: Implementare impostazione: edit all'inizio/fine/mai
     }
 
-//	public void saveCurrentFile() {
-//		//TODO: implementare con audio
+    // Anche il fragment contribuisce agli elementi dell'action bar.
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.note_actions, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    //	public void saveCurrentFile() {
 //		String text = ((RichEditText) getView()).getText().toString();
 //		NotesStorage.save(getActivity(), text);
 ////		SoundNote newNote = new SoundNote(ARG_ITEM_ID, NotesStorage.ITEM_MAP.get(ARG_ITEM_ID).name, text);

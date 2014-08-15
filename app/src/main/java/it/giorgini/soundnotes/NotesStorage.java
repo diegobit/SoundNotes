@@ -25,7 +25,6 @@ enum SortMode {
 }
 
 class WrongExtensionException extends Exception {
-
     public WrongExtensionException(String s) {
         super(s);
     }
@@ -40,72 +39,94 @@ public class NotesStorage {
     public static ArrayAdapter<SoundNote> ITEMS_ADAPTER;
 	public static HashMap<String, SoundNote> ITEM_MAP;
     public static String textExtensions = "txt";
-	public static String currName;
+	public static String currName ;
 	public static String currID;
 	public static int currPosition = -1;
 
     public static SortMode SORTOPTION = SortMode.CREATIONTIME_DESCENDING;
 
-//	private File internalDir;
-	
-//	private WeakReference<NoteListActivity> ctx;
-	
 	static {
-//		this.ctx = ctx;
 		ITEMS = new ArrayList<SoundNote>();
 		ITEM_MAP = new HashMap<String, SoundNote>();
-//		internalDir = ctx.get().getFilesDir();
-//		create("11", "text11", System.currentTimeMillis());
-//		create("vuota", "", System.currentTimeMillis());
 	}
-	
-//	public NotesStorage(WeakReference<NoteListActivity> ctx) {
-//		this.ctx = ctx;
-//		ITEMS = new ArrayList<SoundNote>();
-//		ITEM_MAP = new HashMap<String, SoundNote>();
-//		internalDir = ctx.get().getFilesDir();
-//	}
 
+    // Inizializzazione all'avvio dell'activity principale dell'app
     public static void init(Activity act, SharedPreferences dataPreferences) {
         currActivity = new WeakReference<Activity>(act);
         dataPrefs = dataPreferences;
     }
 
-	public static void updateCurrItem(int position) {
-//        Log.d("DEBUG", "----------updatePos: curr:" + currPosition + " new: " + position);
-        SoundNote n = getNoteFromPosition(position);
-		currID = n.id;
-		currName = n.name;
-		currPosition = position;
-	}
-//	public static void updateCurrItem(int id, int position) {
-//		currID = String.valueOf(id);
-//		currName = ITEM_MAP.get(currID).name;
-//		currPosition = position;
-//	}
-//    private static void init(boolean isFirst) {
-//        ITEMS = null;
-//        ITEM_MAP = new HashMap<String, SoundNote>();
-//
-//        if (!isFirst) {
-//            currName = null;
-//            currID = null;
-//            currPosition = -1;
-//            nextID = 1;
-//        }
-//    }
+    public static void clear() {
+        ITEMS.clear();
+        ITEM_MAP.clear();
+        ITEMS_ADAPTER.notifyDataSetChanged();
+        currName = null;
+        currID = null;
+        currPosition = -1;
+    }
+
+    public static void updateCurrItem(int position) {
+        // Se position >= 0 significa che c'è almeno una nota.
+        if (position >= 0) {
+            SoundNote n = getNoteFromPosition(position);
+            currID = n.id;
+            currName = n.name;
+            currPosition = position;
+        } else {
+            currID = "";
+            currName = "";
+            currPosition = position;
+        }
+
+    }
+
+
 
     public static SoundNote getCurrNote() {
         return ITEM_MAP.get(currID);
     }
 
-    public static SoundNote getNoteFromId(String id) {
-        return ITEM_MAP.get(id);
-    }
+//    public static SoundNote getNoteFromId(String id) {
+//        return ITEM_MAP.get(id);
+//    }
 
     public static SoundNote getNoteFromPosition(int pos) {
         return ITEMS.get(pos);
     }
+
+    /** Dato il nome di un file di una nota ritorna una coppia: id e nome della nota da mostrare
+     * 13-nomeNota.txt --> <13, nomenota>
+     * @param p path del file
+     * @return una coppia di valori, l'id della nota e il nome isolato dall'ID e dall'estensione. Se l'estensione
+     * non è tra quelle accettate (vedi textExtensions), lancia l'eccezione WrongExtensionException
+     */
+    private static String[] getTokensFromPath(String p) throws WrongExtensionException {
+        if (p == null)
+            throw new IllegalArgumentException("The argument is not initialized");
+
+        String fullname = (new File(p)).getName();
+
+        // Voglio solo il nome del file senza l'estensione. Lancio un'eccezione se
+        // l'estensione non è corretta
+        String[] tokens = fullname.split("\\.(?=[^\\.]+$)");
+        if (tokens.length < 2 || !textExtensions.contains(tokens[1]))
+            throw new IllegalArgumentException("The argument is not initialized");
+
+        // Voglio solo il nome della nota, rimuovo l'ID.
+        String[] parts = tokens[0].split("-");
+
+        return parts;
+    }
+
+    private static String getFilenameFromID (String id) {
+        return id + "-" + ITEM_MAP.get(id).name + ".txt";
+    }
+
+    private static String makeFilename (String id, String name, String extension) {
+        return id + "-" + name + extension;
+    }
+
+
 
     private static void sortList(SortMode st) {
         Comparator<SoundNote> comp;
@@ -132,7 +153,8 @@ public class NotesStorage {
                 comp = new Comparator<SoundNote>() {
                     @Override
                     public int compare(SoundNote n1, SoundNote n2) {
-                        return (new Long(n1.date)).compareTo(n2.date); // TODO: Se non ordina bene rimettere n2.date dentro un Long
+                        return (new Long(n1.date)).compareTo(n2.date);
+                        // NOTA SE CERCHERAI DEI BUG: se non ordina bene rimettere n2.date dentro un Long
                     }
                 };
                 break;
@@ -152,52 +174,9 @@ public class NotesStorage {
 
         Collections.sort(ITEMS, comp);
         ITEMS_ADAPTER.notifyDataSetChanged();
-//        ITEMS.sort(comp);
     }
 
-    /** dato il nome di un file di una nota ritorna una coppia: id e nome della nota da mostrare
-     * 13-nomeNota.txt --> <13, nomenota>
-     * @param p path del file
-     * @return una coppia di valori, l'id della nota e il nome isolato dall'ID e dall'estensione. Se l'estensione
-     * non è tra quelle accettate (vedi textExtensions), lancia l'eccezione WrongExtensionException
-     */
-    private static String[] getTokensFromPath(String p) throws WrongExtensionException {
-        if (p == null)
-            throw new IllegalArgumentException("The argument is not initialized");
 
-        String fullname = (new File(p)).getName();
-
-        // Voglio solo il nome del file senza l'estensione. Lancio un'eccezione se
-        // l'estensione non è corretta
-        String[] tokens = fullname.split("\\.(?=[^\\.]+$)");
-        if (tokens.length < 2 || !textExtensions.contains(tokens[1]))
-            throw new IllegalArgumentException("The argument is not initialized");
-
-        // Voglio solo il nome della nota, rimuovo l'ID.
-        String[] parts = tokens[0].split("-");
-
-//        Log.d("DEBUG", "#### fullname:" + fullname + "####");
-//        Log.d("DEBUG", "#### tokens:" + tokens[0] + "_" + tokens[1] + "####");
-//        Log.d("DEBUG", "#### parts:" + parts[0] + "_" + parts[1] + "####");
-
-        return parts;
-
-//        int i = fullname.lastIndexOf(".");
-//        if (i <= 0)
-//            throw new WrongExtensionException("Invalid extension");
-//        String id_name = fullname.substring(0, i - 1);
-//        String ext = fullname.substring(i, fullname.length() - 1);
-//        if (!textExtensions.contains(ext))
-//            throw new WrongExtensionException("Invalid extension");
-//
-//        // Voglio solo il nome della nota, rimuovo l'ID.
-//        String[] parts = id_name.split("-");
-
-//        Log.d("DEBUG", "#### fullname:" + fullname + "####");
-//        Log.d("DEBUG", "#### id_name:" + id_name + "####");
-//        Log.d("DEBUG", "#### ext:" + ext + "####");
-//        return parts[0] + "-" + parts[1]; // FIXME: lasciare solo parts[1]
-    }
 
 	public static int add(String name, String text, long date) {
         // recupero l'id univoco della prossima nota
@@ -225,15 +204,6 @@ public class NotesStorage {
 
         if (notifyChangesToAdapter)
             ITEMS_ADAPTER.notifyDataSetChanged();
-    }
-
-    public static void clear() {
-        ITEMS.clear();
-        ITEM_MAP.clear();
-        ITEMS_ADAPTER.notifyDataSetChanged();
-        currName = null;
-        currID = null;
-        currPosition = -1;
     }
 
     /** Carico tutti i file dalla memoria interna per mostrarne la lista. Se ritorna false è necessario sotituire il fragment della
@@ -314,11 +284,8 @@ public class NotesStorage {
 
         return false;
     }
-	
+
 	public static boolean save(Context ctx, String newText) {
-        Log.d("DEBUG", "#####save: " + newText);
-//        for (SoundNote n : ITEMS)
-//            Log.d("DEBUG", String.format("------LISTA-PRIMA: %s", n.toString2()));
         // salvo solo se ci sono delle modifiche alla nota. Questo metodo viene chiamato anche ogni
         // volta che su tablet si seleziona una nuova nota nella lista
         SoundNote currNote = getCurrNote();
@@ -326,7 +293,7 @@ public class NotesStorage {
         boolean textHasChanged = !currNote.text.equals(newText);
         // Salvo se Il testo è stato modificato oppure se sono entrambi vuoti
         // (voglio evitare di salvare più volte lo stesso testo se visualizzo senza modificare)
-        if (textHasChanged || (!textHasChanged && newText.equals(""))) {
+        if (textHasChanged || newText.equals("")) {
             FileOutputStream outStream;
 
             try {
@@ -341,8 +308,6 @@ public class NotesStorage {
                 return false;
             }
 
-//            for (SoundNote n : ITEMS)
-//                Log.d("DEBUG", String.format("------LISTA-DOPO: %s", n.toString2()));
             return true;
         }
 
@@ -350,19 +315,13 @@ public class NotesStorage {
 	}
 
 	public static boolean delete(Context ctx, int position) {
-        Log.d("DEBUG", "@@@@ delete: pos: " + position + " - " + NotesStorage.getNoteFromPosition(position).name);
-        String id = ITEMS.get(position).id;
+        String id = getNoteFromPosition(position).id;
         File file = new File(ctx.getFilesDir(), getFilenameFromID(id));
-        Log.d("DEBUG", "@@@@ delete: file: " + file.getAbsolutePath());
         boolean deleted = file.delete();
         File[] files = ctx.getFilesDir().listFiles();
-        for (File f : files) {
-            Log.d("DEBUG", "@@@@ for: " + f.getAbsolutePath());
-        }
 
         if (deleted) {
             ITEM_MAP.remove(id);
-//            ITEMS.remove(getNoteFromId(id));
             ITEMS.remove(position);
             ITEMS_ADAPTER.notifyDataSetChanged();
         }
@@ -370,13 +329,10 @@ public class NotesStorage {
         return deleted;
     }
 
-    private static String getFilenameFromID (String id) {
-        return id + "-" + ITEM_MAP.get(id).name + ".txt";
-    }
 
-    private static String makeFilename (String id, String name, String extension) {
-        return id + "-" + name + extension;
-    }
+
+
+
 
 
 
@@ -398,12 +354,8 @@ public class NotesStorage {
 
 		@Override
 		public String toString() {
-			return name; // Metterei la rappresentazione completa del dato ma l'Array Adapter che
+			return "    " + name; // Metterei la rappresentazione completa del dato ma l'Array Adapter che
                          // uso per la lista di note visualizza il valore di ritorno di toString
 		}
-
-//        public String toString2() { //TODO: RIMUOVI!
-//            return String.format("%s:%s:%s", id, name, text);
-//        }
 	}
 }
