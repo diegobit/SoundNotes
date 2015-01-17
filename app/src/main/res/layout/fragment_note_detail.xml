@@ -4,24 +4,15 @@
 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginLeft="35dp"
-    android:layout_marginRight="0dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginBottom="0dp"
-
-    android:inputType="textMultiLine"
+    android:layout_marginStart="40dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:gravity="top"
+
+    android:textColor="@color/textPrimary"
+
+    android:inputType="textMultiLine|textCapSentences"
     />
-
-    <!--android:textColor="#262626"-->
-    <!--/>-->
-
-<!-- <TextView xmlns:android="http://schemas.android.com/apk/res/android" -->
-<!--     xmlns:tools="http://schemas.android.com/tools" -->
-<!--     android:id="@+id/note_detail" -->
-<!--     style="?android:attr/textAppearanceLarge" -->
-<!--     android:layout_width="match_parent" -->
-<!--     android:layout_height="match_parent" -->
-<!--     android:padding="16dp" -->
-<!--     android:textIsSelectable="true" -->
-<!--     tools:context="it.giorgini.soundnotes.NoteDetailFragment" /> -->

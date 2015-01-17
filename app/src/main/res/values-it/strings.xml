@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SoundNotes</string>
+    <string name="title_note_detail">Nota</string>
+
+    <string name="empty_list_msg">"La lista è vuota.\nPremi '+' per creare una nuova nota!"</string>
+
+    <string name="new_note_name">Untitled</string>
+    <string name="new_note_alert_title">Nuova nota</string>
+    <string name="new_note_alert_message">Titolo:</string>
+    <string name="renaming_title">Rinomina nota</string>
+    <string name="renaming_message">Nuovo titolo:</string>
+
+    <string name="alert_key_ok">OK</string>
+    <string name="alert_key_cancel">Annulla</string>
+
+    <string name="action_new">Nuova nota</string>
+    <string name="action_hide_note_list">Nascondi lista delle note</string>
+    <string name="action_rec">Registra</string>
+    <string name="action_search">Cerc</string>
+    <string name="action_share_full">Condividi testo e audio</string>
+    <string name="action_share_full_chooser">Condividi testo e audio a&#8230;</string>
+    <string name="action_share_text">Condividi testo</string>
+    <string name="action_share_text_chooser">Condividi testo a&#8230;</string>
+    <string name="action_settings">Impostazioni</string>
+
+    <string name="action_rename">Rinomina</string>
+    <string name="action_delete">Cancella</string>
+    <string name="action_rename_fail">Non riesco a rinominare la nota. Per favore riprova.</string>
+    <string name="action_delete_fail">Non riesco a cancellare la nota. Per favore riprova.</string>
+
+    <string name="fab_new">Bottone nuova nota</string>
+
+    <string name="rec_prepare_error">Errore durante l\'inizializzazione del registratore. Per favore inviami una segnalazione.</string>
+
+    <string name="recorder_manager">Registratore 1</string>
+    <string name="recorder_manager_two">Registratore 2</string>
+
+</resources>

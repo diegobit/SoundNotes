@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:soundnotes="http://schemas.android.com/apk/res-auto">
 
-    <!-- New Note -->
-    <item android:id="@+id/action_new"
-        android:icon="@drawable/ic_action_new"
-        android:title="@string/action_new"
-        android:showAsAction="always" />
+    <!--&lt;!&ndash; New Note &ndash;&gt;-->
+    <!--<item android:id="@+id/action_new"-->
+        <!--android:icon="@drawable/ic_action_new"-->
+        <!--android:title="@string/action_new"-->
+        <!--soundnotes:showAsAction="always" />-->
+
+    <!--Tasto per nascondere la lista delle note-->
+    <item android:id="@+id/action_hide_note_list"
+        android:icon="@drawable/ic_action_full_screen"
+        android:title="@string/action_hide_note_list"
+        soundnotes:showAsAction="always" />
 
     <!-- Tasto registrazione audio -->
     <item android:id="@+id/action_rec"
         android:icon="@drawable/ic_action_mic"
         android:title="@string/action_rec"
-        android:showAsAction="always" />
+        soundnotes:showAsAction="always" />
 
     <!-- Search -->
     <item android:id="@+id/action_search"
         android:icon="@drawable/ic_action_search"
         android:title="@string/action_search"
-        android:showAsAction="ifRoom" />
+        soundnotes:showAsAction="ifRoom" />
 
     <!-- Share file as text-->
     <item android:id="@+id/action_share_text"
         android:icon="@drawable/ic_action_search"
         android:title="@string/action_share_text"
-        android:showAsAction="never" />
+        soundnotes:showAsAction="never" />
 
     <!-- Share entire file -->
     <item android:id="@+id/action_share_full"
         android:title="@string/action_share_full"
-        android:showAsAction="never" />
+        soundnotes:showAsAction="never" />
 
     <!-- Settings -->
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:showAsAction="never" />
+        soundnotes:showAsAction="never" />
 </menu>

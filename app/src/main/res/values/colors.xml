@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main theme colors -->
+    <item name="primary" type="color">#FFFB8C00</item>
+    <item name="primaryDark" type="color">#FFEF6C00</item>
+    <item name="accent" type="color">#FFEF6C00</item>
+
+    <!-- The selected FAB button for API < 21 -->
+    <item name="accentSelected" type="color">#FFd25f00</item>
+
+    <!-- Text color for list items and body text -->
+    <item name="textPrimary" type="color">#DE000000</item>
+    <!-- Text color for empty list -->
+    <item name="textLight" type="color">#FFb4b4b4</item>
+
+    <!--list colors-->
+    <color name="cyan">#FF1BA1E2</color>
+    <color name="grey">#ffcccccc</color>
+    <color name="light_blue">#ff64c2f4</color>
+
+</resources>

@@ -18,27 +18,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 enum SortMode {
     ALPHABETIC_ASCENDING, ALPHABETIC_DESCENDING, CREATIONTIME_ASCENDING, CREATIONTIME_DESCENDING
 }
 
-class WrongExtensionException extends Exception {
-    public WrongExtensionException(String s) {
-        super(s);
-    }
-}
 
-public class NotesStorage {
+
+public class StorageManager {
 
     private static WeakReference<Activity> currActivity;
     private static SharedPreferences dataPrefs;
 
 	public static ArrayList<SoundNote> ITEMS;
-    public static ArrayAdapter<SoundNote> ITEMS_ADAPTER;
+    public static RichArrayAdapter<SoundNote> ITEMS_ADAPTER;
 	public static HashMap<String, SoundNote> ITEM_MAP;
-    public static String textExtensions = "txt";
+    public static String textExtensions = ".txt";
+    public static String audioExtensions = ".m4a";
 	public static String currName ;
 	public static String currID;
 	public static int currPosition = -1;
@@ -86,47 +83,72 @@ public class NotesStorage {
         return ITEM_MAP.get(currID);
     }
 
-//    public static SoundNote getNoteFromId(String id) {
-//        return ITEM_MAP.get(id);
-//    }
+    public static SoundNote getNoteFromId(String id) {
+        return ITEM_MAP.get(id);
+    }
 
     public static SoundNote getNoteFromPosition(int pos) {
         return ITEMS.get(pos);
     }
 
-    /** Dato il nome di un file di una nota ritorna una coppia: id e nome della nota da mostrare
-     * 13-nomeNota.txt --> <13, nomenota>
+    /** Dato il nome di un file di una nota ritorna una tripla: id, nome della nota da mostrare, estensione
+     * 13-nomeNota.txt --> <13, nomenota, txt>
      * @param p path del file
      * @return una coppia di valori, l'id della nota e il nome isolato dall'ID e dall'estensione. Se l'estensione
      * non è tra quelle accettate (vedi textExtensions), lancia l'eccezione WrongExtensionException
      */
-    private static String[] getTokensFromPath(String p) throws WrongExtensionException {
+    private static String[] getTokensFromFilename(String p) throws WrongFileNameException {
         if (p == null)
             throw new IllegalArgumentException("The argument is not initialized");
 
-        String fullname = (new File(p)).getName();
+        // Cerco il primo "-" che divide id da nome, e l'ultimo "." che segnala l'estensione.
+        // Se non ne trovo uno lancio subito un'eccezione, i file devono sempre avere nomi ben formati.
+        int firstMinus = p.indexOf("-");
+        int lastDot = p.lastIndexOf(".");
+        if (firstMinus == 0 || lastDot == 0)
+            throw new WrongFileNameException("Incorrect filename. Should be id-name.ext");
 
-        // Voglio solo il nome del file senza l'estensione. Lancio un'eccezione se
-        // l'estensione non è corretta
-        String[] tokens = fullname.split("\\.(?=[^\\.]+$)");
-        if (tokens.length < 2 || !textExtensions.contains(tokens[1]))
-            throw new IllegalArgumentException("The argument is not initialized");
+        // Divido la stringa in tre
+        String[] tokens = { "", "", "" };
+        tokens[0] = p.substring(0, firstMinus);
+        tokens[1] = p.substring(firstMinus + 1, lastDot);
+        tokens[2] = p.substring(lastDot + 1);
 
-        // Voglio solo il nome della nota, rimuovo l'ID.
-        String[] parts = tokens[0].split("-");
+        // controllo che l'id sia un numero e che l'estensione sia tra quelle previste.
+        if (!isInteger(tokens[0]) || textExtensions.contains(tokens[0]) || audioExtensions.contains(tokens[0]))
+            throw new WrongFileNameException("Incorrect filename. Should be id-name.ext");
 
-        return parts;
+        return tokens;
     }
 
     private static String getFilenameFromID (String id) {
         return id + "-" + ITEM_MAP.get(id).name + ".txt";
     }
 
-    private static String makeFilename (String id, String name, String extension) {
-        return id + "-" + name + extension;
+    private static String makeFilename (String id, String name, String extension) throws WrongFileNameException{
+        if (textExtensions.contains(extension) || audioExtensions.contains(extension)) {
+            boolean hasDot = extension.contains(".");
+            if (hasDot && extension.length() == 4) {
+                return id + "-" + name + extension;
+            }
+            else if (!hasDot && extension.length() == 3) {
+                return id + "-" + name + "." + extension;
+            }
+        }
+        throw new WrongFileNameException("The extension given is wrong/unsupported");
     }
 
 
+
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        }
+        // Arrivo qui solo se è possibile fare il parse della stringa s in un intero.
+        return true;
+    }
 
     private static void sortList(SortMode st) {
         Comparator<SoundNote> comp;
@@ -214,10 +236,10 @@ public class NotesStorage {
      */
 
     public static boolean load() { //TODO: farlo in backgroud
-        ITEMS_ADAPTER = new ArrayAdapter<SoundNote>(currActivity.get(),
-                    android.R.layout.simple_list_item_activated_1,
-                    android.R.id.text1,
-                    ITEMS);
+        ITEMS_ADAPTER = new RichArrayAdapter<SoundNote>(currActivity.get(),
+                                                        android.R.layout.simple_list_item_activated_1,
+                                                        android.R.id.text1,
+                                                        ITEMS);
 
         String[] files = currActivity.get().fileList();
 
@@ -225,41 +247,50 @@ public class NotesStorage {
         if (files.length != 0) {
             int counter = 0;
             long date = 0;
-            String[] id_and_name;
+            String[] id_name_ext;
             StringBuilder text = new StringBuilder();
 
             // Itero: per ogni file creo una nuova nota
             for (String path : files) {
                 try {
                     // Isolo il nome della nota dal nome del file (e ignoro il file se non è uno corretto)
-                    id_and_name = getTokensFromPath(path);
+                    id_name_ext = getTokensFromFilename(path);
 
-                    // Leggo dal file
-                    FileInputStream is = currActivity.get().openFileInput(path);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                    String line = reader.readLine();
-//                    while (line != null && !line.equals("null")) {
-                    while (line != null) {
-                        // prima linea del file: se date == 0 allora sto controllando la prima linea
-                        if (date == 0)
-                            date = Long.parseLong(line);
-                            // Aggiorno il contenuto della nota
-                        else
-                            text.append(line).append("\n");
+                    // Devo leggere il file. Può essere la parte testuale o una audio
+                    if (textExtensions.contains(id_name_ext[2])) {
+                        // Parte testuale: Leggo riga per riga
+                        FileInputStream is = currActivity.get().openFileInput(path);
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                        String line = reader.readLine();
+                        while (line != null) {
+                            // prima linea del file: se date == 0 allora sto controllando la prima linea
+                            if (date == 0)
+                                date = Long.parseLong(line);
+                                // Aggiorno il contenuto della nota
+                            else
+                                text.append(line).append("\n");
 
-                        line = reader.readLine();
+                            line = reader.readLine();
+                        }
+                        is.close();
+
+                        // creo la nota da mostrare nella lista e aggiorno il contatore
+                        create(id_name_ext[0], id_name_ext[1], text.toString(), date, false);
+                        counter++;
+
+                        // azzero la data, sto per controllare una nuova nota
+                        date = 0;
+                    } else {
+                        // Parte audio:
+
+                        //
+                        //TODO: IMPLEMENTARE
+                        //
                     }
-                    is.close();
 
-                    // creo la nota da mostrare nella lista e aggiorno il contatore
-                    create(id_and_name[0], id_and_name[1], text.toString(), date, false);
-                    counter++;
-
-                    // azzero la data, sto per controllare una nuova nota
-                    date = 0;
-
-                } catch (WrongExtensionException e) {
-                    // non faccio nulla perchè voglio solamente ignorare il file corrente
+                } catch (WrongFileNameException e) {
+                    // Non faccio nulla perchè voglio solamente ignorare il file corrente se non riconosco il formato del nome.
+                    // Non voglio che crashi o vengano caricare note non consistenti
                 } catch (OutOfMemoryError e) {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {
@@ -297,14 +328,15 @@ public class NotesStorage {
             FileOutputStream outStream;
 
             try {
-                outStream = ctx.openFileOutput(makeFilename(currID, currName, ".txt"), Context.MODE_PRIVATE);
+                String fn = makeFilename(currID, currName, ".txt");
+                outStream = ctx.openFileOutput(fn, Context.MODE_PRIVATE);
                 outStream.write((Long.toString(currNote.date) + "\n" + newText).getBytes());
                 outStream.close();
                 ITEM_MAP.get(currID).text = newText;
                 ITEMS.get(currPosition).text = newText;
                 ITEMS_ADAPTER.notifyDataSetChanged();
             } catch (Exception e) {
-                Log.d("DEBUG", "Unable to save the note '" + currName + "'");
+                Log.d("DEBUG", e.toString() + " -- Unable to save the note '" + currName + "'");
                 return false;
             }
 
@@ -314,11 +346,38 @@ public class NotesStorage {
         return true;
 	}
 
+    public static boolean rename(Context ctx, int position, String newName) {
+        boolean renamed = false;
+        String id = getNoteFromPosition(position).id;
+        String filename = getFilenameFromID(id);
+        File file = new File(ctx.getFilesDir(), filename);
+
+        try {
+            String[] tokens = getTokensFromFilename(filename);
+            String newFilename = makeFilename(id, newName, tokens[2]);
+            File newFile = new File(ctx.getFilesDir(), newFilename);
+
+            renamed = file.renameTo(newFile);
+
+            if (renamed) {
+                SoundNote sn = ITEM_MAP.get(id);
+                SoundNote newSn = new SoundNote(id, newName, sn.text, sn.date);
+
+                ITEM_MAP.put(id, newSn);
+                ITEMS.set(position, newSn);
+                ITEMS_ADAPTER.notifyDataSetChanged();
+            }
+        } catch (WrongFileNameException e) {
+            Log.d("DEBUG", "Renaming note, catched WrongFileNameException");
+        }
+
+        return renamed;
+    }
+
 	public static boolean delete(Context ctx, int position) {
         String id = getNoteFromPosition(position).id;
         File file = new File(ctx.getFilesDir(), getFilenameFromID(id));
         boolean deleted = file.delete();
-        File[] files = ctx.getFilesDir().listFiles();
 
         if (deleted) {
             ITEM_MAP.remove(id);

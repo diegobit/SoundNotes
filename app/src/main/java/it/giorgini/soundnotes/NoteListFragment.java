@@ -1,14 +1,20 @@
 package it.giorgini.soundnotes;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.text.InputType;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -45,7 +51,7 @@ public class NoteListFragment extends ListFragment {
 
     private boolean mTwoPane; // Modalità doppia per tablet
 
-	/**
+    /**
 	 * A callback interface that all activities containing this fragment must
 	 * implement. This mechanism allows activities to be notified of item
 	 * selections.
@@ -67,24 +73,19 @@ public class NoteListFragment extends ListFragment {
 	 */
 	private static Callbacks sStorageCallbacks = new Callbacks() {
 		@Override
-        public void onItemSelected(String id, int position) {
-        }
+        public void onItemSelected(String id, int position) { }
 
         @Override
-        public void swapVisibleFragment(boolean emptyList) {
-        }
+        public void swapVisibleFragment(boolean emptyList) { }
 
         @Override
-        public void updateDetailFragmentContent() {
-        }
+        public void updateDetailFragmentContent() { }
 
         @Override
-        public void setDeletingState(boolean state) {
-        }
+        public void setDeletingState(boolean state) { }
 
         @Override
-        public void setDetailNoteMenuItems(boolean visibility) {
-        }
+        public void setDetailNoteMenuItems(boolean visibility) { }
     };
 
 	/**
@@ -149,7 +150,12 @@ public class NoteListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedState) {
         super.onActivityCreated(savedState);
 
-        setListAdapter(NotesStorage.ITEMS_ADAPTER);
+        setListAdapter(StorageManager.ITEMS_ADAPTER);
+
+//        // Cambio il font (non si può fare da xml)
+//        TextView tv = (TextView) getActivity().findViewById(R.id.note_list);
+//        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "RobotoSlab-Regular.ttf");
+//        tv.setTypeface(tf);
 
         // registra un menu contestuale da visualizzare (quando su una nota avviene un logpress)
         registerForContextMenu(getListView());
@@ -215,7 +221,7 @@ public class NoteListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(NotesStorage.getNoteFromPosition(position).id, position);
+        mCallbacks.onItemSelected(StorageManager.getNoteFromPosition(position).id, position);
 
     }
 
@@ -229,8 +235,9 @@ public class NoteListFragment extends ListFragment {
         currentPressedItem = info.position;
 
         // Titolo del menu e aggiungo le opzioni
-        NotesStorage.SoundNote n = NotesStorage.getNoteFromPosition(info.position);
+        StorageManager.SoundNote n = StorageManager.getNoteFromPosition(info.position);
         menu.setHeaderTitle(n.name);
+        menu.add(Menu.NONE, R.id.action_rename, Menu.NONE, R.string.action_rename);
         menu.add(Menu.NONE, R.id.action_delete, Menu.NONE, R.string.action_delete);
     }
 
@@ -238,6 +245,9 @@ public class NoteListFragment extends ListFragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_rename:
+                renameNote();
+                return true;
             case R.id.action_delete:
                 deleteNote();
                 return true;
@@ -248,17 +258,88 @@ public class NoteListFragment extends ListFragment {
 
 
 
+    // Rinomina la nota selezionata nel menu contestuale
+    private void renameNote() {
+        // ALERT: chiedo nuovo titolo per la nota
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle(R.string.renaming_title)
+               .setMessage(R.string.renaming_message);
+
+        // creo campo input testo, lo imposto al nome corrente
+        final EditText input = new EditText(getActivity());
+        input.setSingleLine(true);
+        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        final String oldName = StorageManager.getNoteFromPosition(currentPressedItem).name;
+        input.setText(oldName);
+        input.selectAll();
+
+        builder.setView(input);
+
+        // Imposto le azioni dell'alert
+        builder.setPositiveButton(R.string.alert_key_ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                renameNote_OKButton(input, oldName);
+            }
+        });
+
+        builder.setNegativeButton(R.string.alert_key_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // nulla da fare
+            }
+        });
+
+        // Registro un listener sul tasto invio che crea la nota col testo scritto (evito che si
+        // possa andare accapo nel titolo
+        builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch(keyCode) {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                        case KeyEvent.KEYCODE_NUMPAD_ENTER:
+                            renameNote_OKButton(input, oldName);
+                            break;
+                        default:
+                            return false;
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // mostro l'alert
+        AlertDialog alert = builder.create();
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        alert.show();
+    }
+
+    // Metodo che si occupa di rinominare la nota (fa poco, chiama un metodo di StorageManager
+    public void renameNote_OKButton(EditText input, String oldName) {
+        String newName = input.getText().toString();
+
+        // Se ho cambiato qualcosa allora rinomino, altrimenti non faccio nulla.
+        if (newName != oldName) {
+            boolean renamed = StorageManager.rename(getActivity(), currentPressedItem, newName);
+            if (!renamed)
+                Toast.makeText(getActivity(), R.string.action_rename_fail, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // Cancella la nota SELEZIONATA nel MENU CONTESTUALE chiamato tenendo premuto su una nota.
     private void deleteNote() {
-        boolean deleted = NotesStorage.delete(getActivity(), currentPressedItem);
+        boolean deleted = StorageManager.delete(getActivity(), currentPressedItem);
 
         // Non è riuscito a cancellarlo, notifico l'utente
         if (!deleted) {
             (Toast.makeText(getActivity(), R.string.action_delete_fail, Toast.LENGTH_LONG)).show();
-        } else if (NotesStorage.ITEMS.isEmpty()) {
+        } else if (StorageManager.ITEMS.isEmpty()) {
             // se ho cancellato e la lista è vuota
             mActivatedPosition = ListView.INVALID_POSITION;
-            NotesStorage.updateCurrItem(-1);
+            StorageManager.updateCurrItem(-1);
             currentPressedItem = -1;
             // Aggiorno il contenuto del fragment (solo su tablet) e sistemo i bottoni dell'action bar
             if (mTwoPane) {
@@ -272,10 +353,10 @@ public class NoteListFragment extends ListFragment {
         } else {
             // Se ho cancellato una nota e ci sono note nella lista aggiorno la nota corrente nel NotesStorage.
             // Ma SOLO se la nota corrente è quella che l'utente sta cancellando.
-            if (NotesStorage.currPosition == currentPressedItem) {
+            if (StorageManager.currPosition == currentPressedItem) {
                 mCallbacks.setDeletingState(true);
-                int pos = currentPressedItem == NotesStorage.ITEMS.size() ? currentPressedItem - 1 : currentPressedItem;
-                NotesStorage.updateCurrItem(pos);
+                int pos = currentPressedItem == StorageManager.ITEMS.size() ? currentPressedItem - 1 : currentPressedItem;
+                StorageManager.updateCurrItem(pos);
                 // su tablet faccio un click sull'elemento sopra a quello eliminato
                 if (mTwoPane) {
                     ListAdapter la = getListView().getAdapter();

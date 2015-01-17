@@ -1,3 +1,8 @@
+<!--
+    This layout is a two-pane layout for the Notes master/detail flow.
+    I'm called from refs.xml inside values-large and values-sw600dp.
+-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,62 +15,34 @@
     android:showDividers="middle"
     tools:context="it.giorgini.soundnotes.NoteListActivity" >
 
-    <!--
-    This layout is a two-pane layout for the Notes
-    master/detail flow. See res/values-large/refs.xml and
-    res/values-sw600dp/refs.xml for an example of layout aliases
-    that replace the single-pane version of the layout with
-    this two-pane version.
-
-    For more on layout aliases, see:
-    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
-    -->
-
-    <fragment
-        android:id="@+id/note_list"
-        android:name="it.giorgini.soundnotes.NoteListFragment"
+    <!-- Lista delle note e fab -->
+    <RelativeLayout
+        android:id="@+id/note_list_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:layout="@android:layout/list_content" />
+        android:layout_weight="2">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/empty_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:context="it.giorgini.soundnotes.NoteDetailActivity"
-        tools:ignore="MergeRootFrame"
-        android:gravity="center">
+        <!-- Lista delle note -->
+        <fragment
+            android:id="@+id/note_list"
+            android:name="it.giorgini.soundnotes.NoteListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@android:layout/list_content" />
 
-        <ImageView
-            android:src="@drawable/empty_list_wallpaper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/empty_list_image"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true" />
+        <!-- La schermata quando la lista è vuota -->
+        <include layout="@layout/empty_note_list"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_list_msg"
-            android:id="@+id/textView"
-            android:textSize="18sp"
-            android:typeface="sans"
-            android:textColor="#ffb4b4b4"
-            android:gravity="center_horizontal"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/empty_list_image"
-            android:singleLine="false"
-            android:paddingTop="25dp"
-            android:lineSpacingMultiplier="1.1" />
+        <!-- il bottone fab per creare una nuova nota -->
+        <include layout="@layout/fab"/>
+
     </RelativeLayout>
 
+    <!-- Il contenuto della nota selezionata -->
     <FrameLayout
         android:id="@+id/note_detail_container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_weight="5" />
 
 </LinearLayout>

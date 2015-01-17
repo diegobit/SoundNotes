@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:soundnotes="http://schemas.android.com/apk/res-auto">
     
     <!-- Tasto registrazione audio -->
     <item android:id="@+id/action_rec"
           android:icon="@drawable/ic_action_mic"
           android:title="@string/action_rec"
-        android:orderInCategory="5"
-          android:showAsAction="always" />
+          android:orderInCategory="5"
+          soundnotes:showAsAction="ifRoom" />
     
     <!-- Search -->
     <!--<item android:id="@+id/action_search"-->
@@ -18,12 +19,12 @@
     <!-- Share file as text-->
     <item android:id="@+id/action_share_text"
           android:title="@string/action_share_text"
-        android:orderInCategory="15"
-          android:showAsAction="never" />
+          android:orderInCategory="15"
+          soundnotes:showAsAction="never" />
     
     <!-- Share entire file -->
     <item android:id="@+id/action_share_full"
           android:title="@string/action_share_full"
-        android:orderInCategory="16"
-          android:showAsAction="never" />
+          android:orderInCategory="16"
+          soundnotes:showAsAction="never" />
 </menu>

@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 
 public class RichEditText extends EditText {
@@ -40,5 +42,13 @@ public class RichEditText extends EditText {
         canvas.drawLine(0, 5, 0, canvas.getHeight()-5, lgrey);
 		super.onDraw(canvas);
 	}
-	
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        boolean touched = super.onTouchEvent(event);
+//        if (event.getAction() == MotionEvent.ACTION_SCROLL) {
+//            return false;
+//        }
+//        return touched;
+//    }
 }
