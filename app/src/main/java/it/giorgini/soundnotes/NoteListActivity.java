@@ -1,8 +1,9 @@
 package it.giorgini.soundnotes;
 
-import java.security.InvalidParameterException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,19 +11,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * An activity representing a list of Notes. This activity has different
@@ -39,7 +41,7 @@ import android.widget.Toast;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends Activity implements NoteListFragment.Callbacks {
+public class NoteListActivity extends ActionBarActivity implements View.OnClickListener, NoteListFragment.Callbacks{
 	private boolean mTwoPane = false; // Modalità doppia per tablet
     private NoteDetailFragment detailFragment; // Solo se mTwoPane è definito // FIXME: e se lo mettessi in un WeakReference?
     private NoteListFragment listFragment; // fragment per visualizzare una lista di elementi
@@ -49,7 +51,6 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
     private boolean deletingState = false; // Indica che l'elemento selezionato dal ListFragment è quello attualmente visualizzato.
     // mi serve questa variabile perchè il fragment chiama un metodo di NoteListActivity che deve comportarsi in modi differenti.
 
-	private GestureDetector mDetector; // Per ascoltare le gesture del touchpad
     public static final String DATA_PREFS = "DataPreferences";
     public static final String APP_PREFS = "MyPreferences";
 	
@@ -77,21 +78,44 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
 
         listFragment.setTwoPane(mTwoPane);
 
+        // Associo la pressione del fab alla creazione di una nuova nota
+        ImageButton button = (ImageButton)findViewById(R.id.fab);
+        button.setOnClickListener(this);
+
         // Carico le note dalla memoria interna
-        NotesStorage.init(this, data_prefs);
-        boolean loadedSomething = NotesStorage.load();
+        StorageManager.init(this, data_prefs);
+        boolean loadedSomething = StorageManager.load();
 
         // Non ho caricato note dalla memoria interna, sostituisco il fragment con quello vuoto (che istanzio adesso)
         swapVisibleFragment(!loadedSomething);
 
-		// Gestione slide per nascondere / mostrare la lista delle note su tablet
-        mDetector = new GestureDetector(getParent(), new SwipeGestureListener(this));
+        // Cambio il colore dell'header nella schermata della app recenti perché altrimenti android scrive di nero su arancione :(
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+//            this.setTaskDescription(new ActivityManager.TaskDescription(null, null, R.color.primaryDark));
+//        }
 	}
 
-	// Metodi per gestione dell'action bar
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Il service forse potrebbe non essere più attivo (solo tablet)
+        if (mTwoPane) {
+            Intent i = new Intent(this, RecorderManager.class);
+            i.setAction(RecorderManager.ACTION_SERVICE_INIT);
+            i.putExtra("mainPath", getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
+            // devo ancora aggiornare l'id della nota...
+            startService(i);
+        }
+    }
+
+    // Metodi per gestione dell'action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    // Inflate the menu items for use in the action bar
+        // ombra della actionbar
+        getSupportActionBar().setElevation(4);
+        // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.notelist_actions, menu);
         this.menu = menu; // aggiorno la variabile menu per poter disabilitare alcuni tasti
@@ -100,37 +124,19 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Devo gestire la pressione dei tasti dell'action bar distinguendo se sono su tablet o no.
-        if (mTwoPane) {
-            switch (item.getItemId()) {
-                case R.id.action_new:
-                    newNote();
-                    return true;
-                case R.id.action_search:
-                    openSearch();
-                    return true;
-                case R.id.action_settings:
-                    openSettings();
-                    return true;
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
-        }
-        else {
-            // Non tablet. Cellulare
-            switch (item.getItemId()) {
-                case R.id.action_new:
-                    newNote();
-                    return true;
-                case R.id.action_search:
-                    openSearch();
-                    return true;
-                case R.id.action_settings:
-                    openSettings();
-                    return true;
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
+	    // Devo gestire la pressione dei tasti principali dell'action bar. Altri saranno gestiti dal fragment
+        switch (item.getItemId()) {
+//            case R.id.action_new:
+//                newNote();
+//                return true;
+            case R.id.action_search:
+                openSearch();
+                return true;
+            case R.id.action_settings:
+                openSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 	}
 
@@ -157,7 +163,7 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
 
     @Override
     protected void onDestroy() {
-        NotesStorage.clear();
+        StorageManager.clear();
         super.onDestroy();
     }
 
@@ -203,57 +209,54 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
     }
 
     private boolean save() {
-        if (!NotesStorage.ITEMS.isEmpty())
-            return NotesStorage.save(this, ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString());
-        else
+        if (!StorageManager.ITEMS.isEmpty()) {
+            String newText = ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString();
+            return StorageManager.save(this, newText);
+        } else
             return false;
     }
 
     public void newNote() {
+
+//        Display display = getWindowManager().getDefaultDisplay();
+//        DisplayMetrics outMetrics = new DisplayMetrics();
+//        display.getMetrics(outMetrics);
+//
+//        float density  = getResources().getDisplayMetrics().density;
+//        float dpHeight = outMetrics.heightPixels / density;
+//        float dpWidth  = outMetrics.widthPixels / density;
+//
+//        Log.d("DEBUG","••••• dens:" + density + " - dpH:" + dpHeight + " - dpW:" + dpWidth);
+
 		// ALERT: chiedo titolo nuova nota
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(R.string.new_note_alert_title)
                .setMessage(R.string.new_note_alert_message);
 
-        // creo campo input testo
+        // creo campo input testo, lo imposto alla data corrente e lo seleziono per creare il titolo facilmente
         final EditText input = new EditText(this);
-//        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        String timeStamp = new SimpleDateFormat("30 MMM yyyy - HH:mm", Locale.getDefault()).format(Calendar.getInstance().getTime());
+        input.setSingleLine(true);
+        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        input.setText(timeStamp);
+        input.selectAll();
+
         builder.setView(input);
 
         // Imposto le azioni dell'alert
-        builder.setPositiveButton(R.string.new_note_alert_ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Salvo la nota corrente prima di creare la successiva
-                    save();
+        builder.setPositiveButton(R.string.alert_key_ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // funzione che salva la nota, crea la nuova (chiede all'utente il nome) e la apre
+                NewNote_OKButton(input, null);
+            }
+        });
 
-                    Editable value = input.getText();
-                    // Creo la nuova nota col titolo inserito o con quelo di default
-                    int id;
-                    if (value.length() != 0)
-                        id = NotesStorage.add(value.toString(), "", System.currentTimeMillis());
-                    else
-                        id = NotesStorage.add(getResources().getString(R.string.new_note_name), "", System.currentTimeMillis());
-
-                    // aggiorno la lista delle note
-         //                       updateListAdapter(); // non dovrebbe più servire
-                    // Se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
-                    // e aggiungo di nuovo i tasti nella action bar se è la prima nota nella lista
-                    if (NotesStorage.ITEMS.size() == 1) {
-                        swapVisibleFragment(false);
-                        if (detailFragment != null)
-                            setDetailNoteMenuItems(true);
-                    }
-
-                    // faccio un click su quell'elemento della lista
-                    ListView lv = listFragment.getListView();
-                    ListAdapter la = lv.getAdapter();
-                    lv.performItemClick(la.getView(0, null, null), 0, la.getItemId(0));
-                }
-            });
-
-//        builder.setNegativeButton(R.string.new_note_alert_cancel, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int whichButton) { } });
+        builder.setNegativeButton(R.string.alert_key_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // nulla da fare
+            }
+        });
 
         // Registro un listener sul tasto invio che crea la nota col testo scritto (evito che si
         // possa andare accapo nel titolo
@@ -262,44 +265,11 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
             public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
                 if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                     switch(keyCode) {
-                        case KeyEvent.KEYCODE_ENTER:
                         case KeyEvent.KEYCODE_DPAD_CENTER:
-                            //TODO: Codice duplicato 15 righe sopra
-                            // Salvo la nota corrente prima di creare la successiva
-                            save();
-
-                            Editable value = input.getText();
-                            // Creo la nuova nota col titolo inserito o con quello di default
-                            int id;
-                            if (value.length() != 0)
-                                id = NotesStorage.add(value.toString(), "", System.currentTimeMillis());
-                            else
-                                id = NotesStorage.add(getResources().getString(R.string.new_note_name), "", System.currentTimeMillis());
-
-                            // aggiorno la lista delle note
-//                            updateListAdapter(); // non dovrebbe più servire
-
-                            // Se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
-                            // e aggiungo di nuovo i tasti nella action bar se è la prima nota nella lista
-                            if (NotesStorage.ITEMS.size() == 1) {
-                                swapVisibleFragment(false);
-                                if (detailFragment != null)
-                                    setDetailNoteMenuItems(true);
-                            }
-
-                            // chiudo l'alert
-                            dialogInterface.cancel();
-
-                            // faccio un click su quell'elemento della lista
-                            ListView lv = listFragment.getListView();
-                            ListAdapter la = lv.getAdapter();
-                            lv.performItemClick(la.getView(0, null, null), 0, la.getItemId(0));
-
-//                            // salvo la nota apena creata così da assicurarmi che sia stata creata correttamente e per
-//                            // far funzionare subito altre funzioni, come la cancellazione
-//                            save();
-// FIXME: bug: se cancello una nota appena creata senza toccare nulla, non riesce, quindi devo prima salvarla ma così crasha
-// (chiamata NotesStorage.save - nullpointerexc)
+                        case KeyEvent.KEYCODE_ENTER:
+                        case KeyEvent.KEYCODE_NUMPAD_ENTER:
+                            // funzione che salva la nota, crea la nuova (chiede all'utente il nome) e la apre
+                            NewNote_OKButton(input, dialogInterface);
                             break;
                         default:
                             return false;
@@ -313,9 +283,44 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
 
 		// mostro l'alert
         AlertDialog alert = builder.create();
+        alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		alert.show();
 	}
-	
+
+    // funzione che gestisce la creazione di una nuova nota se l'utente ha inserito un nome e premuto ok
+    public void NewNote_OKButton(EditText input, DialogInterface dialog) {
+        // Salvo la nota corrente prima di creare la successiva (solo su tablet)
+        if (mTwoPane)
+            save();
+
+        Editable value = input.getText();
+        // Creo la nuova nota col titolo inserito o con quello di default
+        int id;
+        if (value.length() != 0)
+            id = StorageManager.add(value.toString(), "", System.nanoTime());
+        else
+            id = StorageManager.add(getResources().getString(R.string.new_note_name), "", System.nanoTime());
+
+        // aggiorno la lista delle note
+        //                       updateListAdapter(); // non dovrebbe più servire
+        // Se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
+        // e aggiungo di nuovo i tasti nella action bar se è la prima nota nella lista
+        if (StorageManager.ITEMS.size() == 1) {
+            swapVisibleFragment(false);
+            if (detailFragment != null)
+                setDetailNoteMenuItems(true);
+        }
+
+        // chiudo l'alert
+        if (dialog != null)
+            dialog.cancel();
+
+        // faccio un click su quell'elemento della lista
+        ListView lv = listFragment.getListView();
+        ListAdapter la = lv.getAdapter();
+        lv.performItemClick(la.getView(0, null, null), 0, la.getItemId(0));
+    }
+
 	public void openSearch() {
 		//TODO: implementare (ricerca)
 		Toast toast = Toast.makeText(this, "tasto search", Toast.LENGTH_SHORT);
@@ -353,30 +358,32 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
 
 		if (mTwoPane) {
             Log.d("DEBUG", "##### mTwoPane");
-			// In two-pane mode, show the detail view in this activity by
-			// adding or replacing the detail fragment using a
+			// In two-pane mode, show the detail view in this activity by adding or replacing the detail fragment using a
 			// fragment transaction.
             if (detailFragment == null) {
                 Log.d("DEBUG", "##### currFragment == null");
-                NotesStorage.updateCurrItem(position);
+                StorageManager.updateCurrItem(position);
 //                Bundle arguments = new Bundle();
 //			    arguments.putString(id);
                 detailFragment = new NoteDetailFragment();
+                detailFragment.setTwoPane(true);
 //			    fragment.setArguments(arguments);
                 getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment).commit();
             } else {
                 Log.d("DEBUG", "##### currFragment != null - testoCorrente: '" + ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString() + "'");
                 // ho premuto su un'altra nota, salvo quella corrente e carico la successiva
-                if (!deletingState && NotesStorage.getCurrNote() != null)
+                if (!deletingState && StorageManager.getCurrNote() != null)
                     save();
-                NotesStorage.updateCurrItem(position);
+                StorageManager.updateCurrItem(position);
                 updateDetailFragmentContent();
+//                // Rilascio il MediaRecorder
+//                detailFragment.releaseRecorder();
             }
 
 		} else {
 			// In single-pane mode, simply start the detail activity
 			// for the selected item ID after updating the current note in NotesStorage
-            NotesStorage.updateCurrItem(position);
+            StorageManager.updateCurrItem(position);
 			Intent detailIntent = new Intent(this, NoteDetailActivity.class);
 //			detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
@@ -388,42 +395,65 @@ public class NoteListActivity extends Activity implements NoteListFragment.Callb
         deletingState = state;
     }
 
-
-
-	// METODI EVENTI TOUCH
-	@Override 
-    public boolean onTouchEvent(MotionEvent event) { 
+    @Override
+    public void onBackPressed() {
+        // Se sono su tablet il tasto back chiude l'app. Se non ho ancora salvato la nota lo faccio qui.
         if (mTwoPane)
-        	this.mDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+            save();
+
+        super.onBackPressed();
     }
-	
-	// Nasconde la ListView in modalità tablet
-	public void slideToLeft(View view, int newVisibility) {
-        // FIXME: funziona solo in una striscetta. SlideToRight non funziona più da quanto ho aggiunto il fragment vuota
-		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||
-				newVisibility == View.GONE) {
-			TranslateAnimation animate = new TranslateAnimation(0,-view.getWidth(),0,0);
-			animate.setDuration(200);
-			animate.setFillAfter(true);
-			view.startAnimation(animate);
-			view.setVisibility(newVisibility);
-		}
-		else throw new InvalidParameterException("The new visibility specified is invalid");
-	}
-	
-	// Riattiva la ListView in modalità tablet
-	public void slideToRight(View view, int newVisibility) {
-		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||
-				newVisibility == View.GONE) {
-			view.setVisibility(View.VISIBLE);
-			TranslateAnimation animate = new TranslateAnimation(-view.getWidth(),0,0,0);
-			animate.setDuration(200);
-			animate.setFillAfter(true);
-			view.startAnimation(animate);
-		}
-		else {
-			throw new InvalidParameterException("The new visibility specified is invalid");
-		}
-	}
+
+    // Implement the OnClickListener callback
+    public void onClick(View v) {
+        newNote();
+    }
+
+//    // METODI EVENTI TOUCH
+////    public void setOnTouchEventListenerTo() {
+////        view.setOnTouchListener(gestureListener);
+////    }
+//
+//	@Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        boolean touched = super.onTouchEvent(event);
+//        if (mTwoPane)
+//        	this.gestureDetector.onTouchEvent(event);
+//        return touched;
+//    }
+//
+//	// Nasconde la ListView in modalità tablet
+//	public void slideToLeft(View view, int newVisibility) {
+//        // FIXME: funziona solo in una striscetta. SlideToRight non funziona più da quanto ho aggiunto il fragment vuota
+//		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||
+//				newVisibility == View.GONE) {
+//			TranslateAnimation animate = new TranslateAnimation(0,-view.getWidth(),0,0);
+//			animate.setDuration(200);
+//			animate.setFillAfter(true);
+//
+//            // Animo e nascondo la lista
+//            View v = findViewById(R.id.note_list_container);
+//            view.startAnimation(animate);
+//			v.setVisibility(newVisibility);
+//		}
+//		else throw new InvalidParameterException("The new visibility specified is invalid");
+//	}
+//
+//	// Riattiva la ListView in modalità tablet
+//	public void slideToRight(View view, int newVisibility) {
+//		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||
+//				newVisibility == View.GONE) {
+//			TranslateAnimation animate = new TranslateAnimation(-view.getWidth(),0,0,0);
+//			animate.setDuration(200);
+//			animate.setFillAfter(true);
+//
+//            // Animo e mostro la lista
+//            View v = findViewById(R.id.note_list_container);
+//            v.startAnimation(animate);
+//            v.setVisibility(newVisibility);
+//		}
+//		else {
+//			throw new InvalidParameterException("The new visibility specified is invalid");
+//		}
+//	}
 }
