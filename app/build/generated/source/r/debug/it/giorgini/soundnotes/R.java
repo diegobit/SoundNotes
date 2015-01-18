@@ -15,11 +15,11 @@ public final class R {
         public static final int abc_slide_in_top=0x7f050003;
         public static final int abc_slide_out_bottom=0x7f050004;
         public static final int abc_slide_out_top=0x7f050005;
-        public static final int fab=0x7f050006;
-        public static final int fade_in_stayleft=0x7f050007;
-        public static final int fade_out_stayleft=0x7f050008;
-        public static final int fade_out_stayright=0x7f050009;
-        public static final int push_in_from_left=0x7f05000a;
+        public static final int del_fade_out_stayright=0x7f050006;
+        public static final int del_push_in_from_left=0x7f050007;
+        public static final int fab=0x7f050008;
+        public static final int fade_in_stayleft=0x7f050009;
+        public static final int fade_out_stayleft=0x7f05000a;
         public static final int push_in_from_right=0x7f05000b;
         public static final int push_out_to_right=0x7f05000c;
     }
@@ -1318,17 +1318,14 @@ containing a value of this type.
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020031;
         public static final int abc_textfield_search_material=0x7f020032;
         public static final int empty_list_wallpaper=0x7f020033;
-        public static final int empty_list_wallpaper_orig=0x7f020034;
-        public static final int ic_action_full_screen=0x7f020035;
-        public static final int ic_action_mic=0x7f020036;
-        public static final int ic_action_mic_active=0x7f020037;
-        public static final int ic_action_mic_activecopia=0x7f020038;
-        public static final int ic_action_mic_copia=0x7f020039;
-        public static final int ic_action_new=0x7f02003a;
-        public static final int ic_action_return_from_full_screen=0x7f02003b;
-        public static final int ic_action_search=0x7f02003c;
-        public static final int ripple=0x7f02003d;
-        public static final int touch_selector=0x7f02003e;
+        public static final int ic_action_full_screen=0x7f020034;
+        public static final int ic_action_mic=0x7f020035;
+        public static final int ic_action_mic_active=0x7f020036;
+        public static final int ic_action_new=0x7f020037;
+        public static final int ic_action_return_from_full_screen=0x7f020038;
+        public static final int ic_action_search=0x7f020039;
+        public static final int ripple=0x7f02003a;
+        public static final int touch_selector=0x7f02003b;
     }
     public static final class id {
         public static final int action_bar=0x7f090031;
@@ -1339,17 +1336,16 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f09001f;
         public static final int action_bar_title=0x7f09001e;
         public static final int action_context_bar=0x7f090032;
-        public static final int action_delete=0x7f09004e;
-        public static final int action_hide_note_list=0x7f09004a;
+        public static final int action_delete=0x7f09004d;
         public static final int action_menu_divider=0x7f090002;
         public static final int action_menu_presenter=0x7f090003;
         public static final int action_mode_bar=0x7f09002e;
         public static final int action_mode_bar_stub=0x7f09002d;
         public static final int action_mode_close_button=0x7f090020;
         public static final int action_rec=0x7f090047;
-        public static final int action_rename=0x7f09004d;
-        public static final int action_search=0x7f09004b;
-        public static final int action_settings=0x7f09004c;
+        public static final int action_rename=0x7f09004c;
+        public static final int action_search=0x7f09004a;
+        public static final int action_settings=0x7f09004b;
         public static final int action_share_full=0x7f090049;
         public static final int action_share_text=0x7f090048;
         public static final int activity_chooser_view_content=0x7f090021;
@@ -1448,9 +1444,8 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int note_actions=0x7f0d0000;
-        public static final int note_twopane_actions=0x7f0d0001;
-        public static final int notelist_actions=0x7f0d0002;
-        public static final int notelist_longpress_actions=0x7f0d0003;
+        public static final int notelist_actions=0x7f0d0001;
+        public static final int notelist_longpress_actions=0x7f0d0002;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;

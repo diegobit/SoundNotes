@@ -109,22 +109,8 @@ public class NoteListFragment extends ListFragment {
         mCallbacks = (Callbacks) activity;
     }
 
-//	@Override
-//	public void onCreate(Bundle savedInstanceState) {
-//		super.onCreate(savedInstanceState);
-//	}
-
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//		view.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if(event.getAction() == MotionEvent.ACTION_MOVE){
-//                    //do something
-//                }
-//                return true;
-//            }
-//    });
-//	}
+    // onCreate
+    // onCreateView
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -151,11 +137,6 @@ public class NoteListFragment extends ListFragment {
         super.onActivityCreated(savedState);
 
         setListAdapter(StorageManager.ITEMS_ADAPTER);
-
-//        // Cambio il font (non si può fare da xml)
-//        TextView tv = (TextView) getActivity().findViewById(R.id.note_list);
-//        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "RobotoSlab-Regular.ttf");
-//        tv.setTypeface(tf);
 
         // registra un menu contestuale da visualizzare (quando su una nota avviene un logpress)
         registerForContextMenu(getListView());
@@ -279,7 +260,7 @@ public class NoteListFragment extends ListFragment {
         // Imposto le azioni dell'alert
         builder.setPositiveButton(R.string.alert_key_ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                renameNote_OKButton(input, oldName);
+                renameNote_OKButton(input, oldName, dialog);
             }
         });
 
@@ -299,7 +280,7 @@ public class NoteListFragment extends ListFragment {
                         case KeyEvent.KEYCODE_DPAD_CENTER:
                         case KeyEvent.KEYCODE_ENTER:
                         case KeyEvent.KEYCODE_NUMPAD_ENTER:
-                            renameNote_OKButton(input, oldName);
+                            renameNote_OKButton(input, oldName, dialogInterface);
                             break;
                         default:
                             return false;
@@ -318,15 +299,19 @@ public class NoteListFragment extends ListFragment {
     }
 
     // Metodo che si occupa di rinominare la nota (fa poco, chiama un metodo di StorageManager
-    public void renameNote_OKButton(EditText input, String oldName) {
+    public void renameNote_OKButton(EditText input, String oldName, DialogInterface dialog) {
         String newName = input.getText().toString();
 
         // Se ho cambiato qualcosa allora rinomino, altrimenti non faccio nulla.
-        if (newName != oldName) {
+        if (!newName.equals(oldName)) {
             boolean renamed = StorageManager.rename(getActivity(), currentPressedItem, newName);
             if (!renamed)
                 Toast.makeText(getActivity(), R.string.action_rename_fail, Toast.LENGTH_SHORT).show();
         }
+
+        // chiudo l'alert
+        if (dialog != null)
+            dialog.cancel();
     }
 
     // Cancella la nota SELEZIONATA nel MENU CONTESTUALE chiamato tenendo premuto su una nota.
@@ -365,9 +350,8 @@ public class NoteListFragment extends ListFragment {
                 mCallbacks.setDeletingState(false);
             }
         }
-// Aggiorno il contenuto del fragment (solo su tablet)
+        // Aggiorno il contenuto del fragment (solo su tablet)
         if (mTwoPane)
             mCallbacks.updateDetailFragmentContent();
     }
-
 }

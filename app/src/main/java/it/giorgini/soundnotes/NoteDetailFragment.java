@@ -6,19 +6,14 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Handler;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * A fragment representing a single Note detail screen. This fragment is either
@@ -26,11 +21,6 @@ import android.widget.Toast;
  * {@link NoteDetailActivity} on handsets.
  */
 public class NoteDetailFragment extends Fragment {
-//	/**
-//	 * The fragment argument representing the item ID that this fragment represents.
-//	 */
-//	public static final String ARG_ITEM_ID = "item_id";
-
     /**
      * The fragment's current callback object, which is notified of list item
      * clicks.
@@ -41,9 +31,6 @@ public class NoteDetailFragment extends Fragment {
 
 	private StorageManager.SoundNote item;
 
-    private Handler handlerUI; // Mi serve per aspettare un secondo in stop()
-
-//    private RecorderManager recorderManager;
     private Uri currFileUri;
     private boolean isRecording = false;
 //    private boolean isListVisible = true;
@@ -60,8 +47,6 @@ public class NoteDetailFragment extends Fragment {
         public void returnToList();
 //        public void slideToLeft(int newVisibility);
 //        public void slideToRight(int newVisibility);
-        /* Per controllare lo swipe */
-//        public void setOnTouchEventListenerTo();
     }
 
     /**
@@ -73,8 +58,6 @@ public class NoteDetailFragment extends Fragment {
         public void returnToList() { }
 //        public void slideToLeft(int newVisibility) { }
 //        public void slideToRight(int newVisibility) { }
-//        @Override
-//        public void setOnTouchEventListenerTo() { }
     };
 
 	/**
@@ -103,43 +86,11 @@ public class NoteDetailFragment extends Fragment {
 
         // Dico di voler aggiungere dei botoni nella action bar
         setHasOptionsMenu(true);
-
-//		if (getArguments().containsKey(NotesStorage.currID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
-//        Log.d("DEBUG", "----------NoteDetailFragment onCreate");
-
-//		}
-
-//		// Gestione slide per nascondere / mostrare la lista delle note su tablet
-////		OnGestureListener gl = new GestureDetector.SimpleOnGestureListener();
-////		GestureDetector gd = new GestureDetector(this, GestureDetector.)
-//        // Instantiate the gesture detector with the
-//        // application context and an implementation of
-//        // GestureDetector.OnGestureListener
-//        mDetector = new GestureDetector(this.getActivity(), new SwipeGestureListener(this.getActivity()));
-//        Log.d("DEBUG", "START");
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-//		View rootView = inflater.inflate(R.layout.fragment_note_detail,
-//				container, false);
-
-		// Show the content as text in the TextView.
-//        updateCurrItem();
-
-//		// Registro un listener sugli eventi touch che passerò all'activity
-//		getView().setOnTouchListener(new View.OnTouchListener() {
-//			@Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//            	getActivity().onTouchEvent(event);
-//                return false;
-//            }
-//		});
-
         return inflater.inflate(R.layout.fragment_note_detail, container, false);
 	}
 
@@ -159,18 +110,6 @@ public class NoteDetailFragment extends Fragment {
         if (StorageManager.getCurrNote().text.equals("")) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
-
-        // Creo l'handler UI
-        handlerUI = new Handler();
-
-//        // Mi registro agli eventi touch attraverso un callback con l'activity
-//        mCallbacks.setOnTouchEventListenerTo();
-
-//        // Istanzio un recorder manager per gestire le registrazioni audio.
-//        recorderManager = new RecorderManager(getActivity(), handlerUI, getActivity().getFilesDir().getAbsolutePath(), item.id);
-        // **** SPOSTATO IN NOTELISTACTIVITY e NOTEDETAILACTIVITY
-
-//        recorderManager.prepare();
     }
 
     @Override
@@ -186,7 +125,6 @@ public class NoteDetailFragment extends Fragment {
     @Override
 	public void onPause() {
         Log.d("DEBUG", "##### NoteDetailFragment: onPause");
-//        NotesStorage.save(getActivity(), ((RichEditText) (getView().findViewById(R.id.note_detail))).getText().toString());
 		super.onPause();
 	}
 
@@ -220,7 +158,6 @@ public class NoteDetailFragment extends Fragment {
         if (getView() != null && item != null) {
             ((RichEditText) getView().findViewById(R.id.note_detail)).setText(item.text);
         }
-//            edt.setSelection(mItem.text.length()); //TODO: Implementare impostazione: edit all'inizio/fine/mai
     }
 
 
@@ -241,12 +178,10 @@ public class NoteDetailFragment extends Fragment {
             item.setIcon(R.drawable.ic_action_mic_active);
             i.setAction(RecorderManager.ACTION_START);
             getActivity().startService(i);
-//            recorderManager.start();
         } else {
             item.setIcon(R.drawable.ic_action_mic);
             i.setAction(RecorderManager.ACTION_STOP);
             getActivity().startService(i);
-//            recorderManager.pause();
         }
     }
 
@@ -269,7 +204,7 @@ public class NoteDetailFragment extends Fragment {
     // Se non sto registrando
     public void releaseRecorder() {
         Log.d("DEBUG", "#### RecMan releaseRecorder: called");
-        
+        //TODO: Implementare releaseRecorder?
     }
 
     // Funzione che condivide il file corrente
@@ -309,7 +244,8 @@ public class NoteDetailFragment extends Fragment {
 //                toggleNotesListVisibility(item);
 //                return true;
             case R.id.action_share_text:
-                shareFileAsText(((RichEditText) getView().findViewById(R.id.note_detail)).getText().toString());
+                RichEditText ret = (RichEditText) getActivity().findViewById(R.id.note_detail);
+                shareFileAsText((ret.getText().toString()));
                 return true;
             case R.id.action_share_full:
                 shareFileFull(currFileUri); // TODO: implementare (tasto condivisione)
@@ -318,17 +254,4 @@ public class NoteDetailFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-    //	public void saveCurrentFile() {
-//		String text = ((RichEditText) getView()).getText().toString();
-//		NotesStorage.save(getActivity(), text);
-////		SoundNote newNote = new SoundNote(ARG_ITEM_ID, NotesStorage.ITEM_MAP.get(ARG_ITEM_ID).name, text);
-////		NotesStorage.ITEM_MAP.put(getArguments().getString(ARG_ITEM_ID), newNote);
-//	}
-	
-//	@Override
-//	public boolean onInterceptTouchEvent(MotionEvent ev) {
-//		
-//	}
 }

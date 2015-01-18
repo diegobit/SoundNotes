@@ -29,10 +29,6 @@
             android:name="it.giorgini.soundnotes.NoteDetailActivity"
             android:label="@string/title_note_detail"
             android:windowSoftInputMode="stateHidden|adjustResize" >
-            <!--android:parentActivityName="it.giorgini.soundnotes.NoteListActivity" >-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value="it.giorgini.soundnotes.NoteListActivity" />-->
         </activity>
 
         <service

@@ -46,7 +46,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     private NoteDetailFragment detailFragment; // Solo se mTwoPane è definito // FIXME: e se lo mettessi in un WeakReference?
     private NoteListFragment listFragment; // fragment per visualizzare una lista di elementi
 
-    private Menu menu; // L'oggetto menu dell'action bar che contiene tutti i bottoni.
+//    private Menu menu; // L'oggetto menu dell'action bar che contiene tutti i bottoni.
 
     private boolean deletingState = false; // Indica che l'elemento selezionato dal ListFragment è quello attualmente visualizzato.
     // mi serve questa variabile perchè il fragment chiama un metodo di NoteListActivity che deve comportarsi in modi differenti.
@@ -118,7 +118,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
         // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.notelist_actions, menu);
-        this.menu = menu; // aggiorno la variabile menu per poter disabilitare alcuni tasti
+//        this.menu = menu; // aggiorno la variabile menu per poter disabilitare alcuni tasti
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -126,9 +126,6 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Devo gestire la pressione dei tasti principali dell'action bar. Altri saranno gestiti dal fragment
         switch (item.getItemId()) {
-//            case R.id.action_new:
-//                newNote();
-//                return true;
             case R.id.action_search:
                 openSearch();
                 return true;
@@ -172,24 +169,16 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 //        super.onRestart();
 //    }
 
-
     /** Questo metodo cambia il fragment visibile: lista di note / schermata vuota
      */
     public void swapVisibleFragment(boolean emptyList) {
         if (emptyList) {
-            // sostituisco il fragment con la lista delle note...
-//            getFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.note_list));
-
-            // ...con quello vuoto speciale
+            // sostituisco il fragment con la lista delle note con quello vuoto speciale
             if (mTwoPane)
                 findViewById(R.id.note_detail_container).setVisibility(View.GONE);
             findViewById(R.id.note_list).setVisibility(View.GONE);
-            Log.d("DEBUG", "#### Prima di attach nuovo fragment vuoto");
-//            getFragmentManager().beginTransaction().attach(getFragmentManager().findFragmentById(R.id.empty_list));
             findViewById(R.id.empty_list).setVisibility(View.VISIBLE);
         } else {
-//            getFragmentManager().beginTransaction().detach(getFragmentManager().findFragmentById(R.id.empty_list));
-//            getFragmentManager().beginTransaction().attach(getFragmentManager().findFragmentById(R.id.note_list));
             if (mTwoPane)
                 findViewById(R.id.note_detail_container).setVisibility(View.VISIBLE);
             findViewById(R.id.empty_list).setVisibility(View.GONE);
@@ -201,7 +190,6 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     public void setDetailNoteMenuItems(boolean visibility) {
         detailFragment.setHasOptionsMenu(visibility);
         invalidateOptionsMenu();
-//        menu.findItem(R.menu.note_actions).setVisible(visibility);
     }
 
     public void updateDetailFragmentContent() {
@@ -295,11 +283,11 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 
         Editable value = input.getText();
         // Creo la nuova nota col titolo inserito o con quello di default
-        int id;
+//        int id;
         if (value.length() != 0)
-            id = StorageManager.add(value.toString(), "", System.nanoTime());
+            StorageManager.add(value.toString(), "", System.nanoTime());
         else
-            id = StorageManager.add(getResources().getString(R.string.new_note_name), "", System.nanoTime());
+            StorageManager.add(getResources().getString(R.string.new_note_name), "", System.nanoTime());
 
         // aggiorno la lista delle note
         //                       updateListAdapter(); // non dovrebbe più servire
@@ -333,29 +321,12 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 		toast.show();
 	}
 	
-//	public void updateListAdapter() {
-//		// aggiorno la lista delle note
-//		ArrayAdapter <NotesStorage.SoundNote> ad = new ArrayAdapter<NotesStorage.SoundNote>(
-//				this,
-//				android.R.layout.simple_list_item_activated_1,
-//				android.R.id.text1, NotesStorage.ITEMS);
-//		((NoteListFragment) getFragmentManager().findFragmentById(R.id.note_list)).setListAdapter(ad);
-//	}
-	
 	/**
      * Callback method from {@link NoteListFragment.Callbacks} indicating that
      * the item with the given ID was selected.
      */
 	@Override
 	public void onItemSelected(String id, int position) {
-        // Salvo il contenuto della nota corrente.
-//        RichEditText det = (RichEditText) findViewById(R.id.note_detail);
-//        if (mTwoPane && NotesStorage.currPosition >= 0)
-//            NotesStorage.save(this, ((RichEditText) findViewById(R.id.note_detail)).getText().toString());
-
-        // Aggiorno lo stato interno di NotesStorage
-//        NotesStorage.updateCurrItem(position);
-
 		if (mTwoPane) {
             Log.d("DEBUG", "##### mTwoPane");
 			// In two-pane mode, show the detail view in this activity by adding or replacing the detail fragment using a
@@ -363,11 +334,8 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             if (detailFragment == null) {
                 Log.d("DEBUG", "##### currFragment == null");
                 StorageManager.updateCurrItem(position);
-//                Bundle arguments = new Bundle();
-//			    arguments.putString(id);
                 detailFragment = new NoteDetailFragment();
                 detailFragment.setTwoPane(true);
-//			    fragment.setArguments(arguments);
                 getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment).commit();
             } else {
                 Log.d("DEBUG", "##### currFragment != null - testoCorrente: '" + ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString() + "'");
@@ -376,8 +344,6 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
                     save();
                 StorageManager.updateCurrItem(position);
                 updateDetailFragmentContent();
-//                // Rilascio il MediaRecorder
-//                detailFragment.releaseRecorder();
             }
 
 		} else {
@@ -385,7 +351,6 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 			// for the selected item ID after updating the current note in NotesStorage
             StorageManager.updateCurrItem(position);
 			Intent detailIntent = new Intent(this, NoteDetailActivity.class);
-//			detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, id);
 			startActivity(detailIntent);
             overridePendingTransition(R.anim.push_in_from_right, R.anim.fade_out_stayleft);
 		}
@@ -408,52 +373,4 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     public void onClick(View v) {
         newNote();
     }
-
-//    // METODI EVENTI TOUCH
-////    public void setOnTouchEventListenerTo() {
-////        view.setOnTouchListener(gestureListener);
-////    }
-//
-//	@Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        boolean touched = super.onTouchEvent(event);
-//        if (mTwoPane)
-//        	this.gestureDetector.onTouchEvent(event);
-//        return touched;
-//    }
-//
-//	// Nasconde la ListView in modalità tablet
-//	public void slideToLeft(View view, int newVisibility) {
-//        // FIXME: funziona solo in una striscetta. SlideToRight non funziona più da quanto ho aggiunto il fragment vuota
-//		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||
-//				newVisibility == View.GONE) {
-//			TranslateAnimation animate = new TranslateAnimation(0,-view.getWidth(),0,0);
-//			animate.setDuration(200);
-//			animate.setFillAfter(true);
-//
-//            // Animo e nascondo la lista
-//            View v = findViewById(R.id.note_list_container);
-//            view.startAnimation(animate);
-//			v.setVisibility(newVisibility);
-//		}
-//		else throw new InvalidParameterException("The new visibility specified is invalid");
-//	}
-//
-//	// Riattiva la ListView in modalità tablet
-//	public void slideToRight(View view, int newVisibility) {
-//		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||
-//				newVisibility == View.GONE) {
-//			TranslateAnimation animate = new TranslateAnimation(-view.getWidth(),0,0,0);
-//			animate.setDuration(200);
-//			animate.setFillAfter(true);
-//
-//            // Animo e mostro la lista
-//            View v = findViewById(R.id.note_list_container);
-//            v.startAnimation(animate);
-//            v.setVisibility(newVisibility);
-//		}
-//		else {
-//			throw new InvalidParameterException("The new visibility specified is invalid");
-//		}
-//	}
 }

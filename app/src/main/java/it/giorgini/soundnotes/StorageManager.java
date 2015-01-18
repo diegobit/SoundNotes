@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 enum SortMode {
     ALPHABETIC_ASCENDING, ALPHABETIC_DESCENDING, CREATIONTIME_ASCENDING, CREATIONTIME_DESCENDING
@@ -43,13 +42,13 @@ public class StorageManager {
     public static SortMode SORTOPTION = SortMode.CREATIONTIME_DESCENDING;
 
 	static {
-		ITEMS = new ArrayList<SoundNote>();
-		ITEM_MAP = new HashMap<String, SoundNote>();
+		ITEMS = new ArrayList<>();
+		ITEM_MAP = new HashMap<>();
 	}
 
     // Inizializzazione all'avvio dell'activity principale dell'app
     public static void init(Activity act, SharedPreferences dataPreferences) {
-        currActivity = new WeakReference<Activity>(act);
+        currActivity = new WeakReference<>(act);
         dataPrefs = dataPreferences;
     }
 
@@ -83,9 +82,9 @@ public class StorageManager {
         return ITEM_MAP.get(currID);
     }
 
-    public static SoundNote getNoteFromId(String id) {
-        return ITEM_MAP.get(id);
-    }
+//    public static SoundNote getNoteFromId(String id) {
+//        return ITEM_MAP.get(id);
+//    }
 
     public static SoundNote getNoteFromPosition(int pos) {
         return ITEMS.get(pos);
@@ -140,13 +139,35 @@ public class StorageManager {
 
 
 
-    public static boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-        } catch(NumberFormatException e) {
+//    public static boolean isInteger(String s) {
+//        try {
+//            Integer.parseInt(s);
+//            return true;
+//        } catch(NumberFormatException e) {
+//            return false;
+//        }
+//    }
+    public static boolean isInteger(String str) {
+        if (str == null) {
             return false;
         }
-        // Arrivo qui solo se è possibile fare il parse della stringa s in un intero.
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c <= '/' || c >= ':') {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -175,7 +196,7 @@ public class StorageManager {
                 comp = new Comparator<SoundNote>() {
                     @Override
                     public int compare(SoundNote n1, SoundNote n2) {
-                        return (new Long(n1.date)).compareTo(n2.date);
+                        return (Long.valueOf(n1.date)).compareTo(n2.date);
                         // NOTA SE CERCHERAI DEI BUG: se non ordina bene rimettere n2.date dentro un Long
                     }
                 };
@@ -185,7 +206,7 @@ public class StorageManager {
                 comp = new Comparator<SoundNote>() {
                     @Override
                     public int compare(SoundNote n1, SoundNote n2) {
-                        return (new Long(n2.date)).compareTo(n1.date);
+                        return (Long.valueOf(n2.date)).compareTo(n1.date);
                     }
                 };
                 break;
@@ -236,10 +257,10 @@ public class StorageManager {
      */
 
     public static boolean load() { //TODO: farlo in backgroud
-        ITEMS_ADAPTER = new RichArrayAdapter<SoundNote>(currActivity.get(),
-                                                        android.R.layout.simple_list_item_activated_1,
-                                                        android.R.id.text1,
-                                                        ITEMS);
+        ITEMS_ADAPTER = new RichArrayAdapter<>(currActivity.get(),
+                                               android.R.layout.simple_list_item_activated_1,
+                                               android.R.id.text1,
+                                               ITEMS);
 
         String[] files = currActivity.get().fileList();
 
@@ -282,7 +303,7 @@ public class StorageManager {
                         date = 0;
                     } else {
                         // Parte audio:
-
+                        Log.d("DEBUG", "### Load: trovato file audio: " + path);
                         //
                         //TODO: IMPLEMENTARE
                         //
