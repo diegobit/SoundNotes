@@ -32,9 +32,15 @@
 
     <string name="fab_new">New note button</string>
 
-    <string name="rec_prepare_error">Error during recorder initialization. Please send a bug report.</string>
+    <!--<string name="rec_prepare_error">Error during recorder initialization. Please send a bug report.</string>-->
+    <string name="action_rec_startfail">There was an error with the audio recorder. Please restart your phone and try again.</string>
 
-    <string name="recorder_manager">Recorder 1</string>
-    <string name="recorder_manager_two">Recorder 2</string>
+    <string name="notif_title">Recording</string>
+    <!--<string name="notif_text">Recording…</string>-->
+    <string name="notif_stop">Stop recording</string>
+
+    <string name="time_preposition">at</string>
+
+    <string name="setting_hide_note_text">Hide note title in the notification</string>
 
 </resources>

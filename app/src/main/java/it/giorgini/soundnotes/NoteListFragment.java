@@ -39,10 +39,9 @@ public class NoteListFragment extends ListFragment {
 	private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
 	/**
-	 * The fragment's current callback object, which is notified of list item
-	 * clicks.
+	 * The fragment's current callback object, which is notified of list item clicks.
 	 */
-	private Callbacks mCallbacks = sStorageCallbacks;
+	private Callbacks callbacks_ListActivity = defaultCallbacks_ListActivity;
 
 	/**
 	 * The current activated item position. Only used on tablets.
@@ -71,7 +70,7 @@ public class NoteListFragment extends ListFragment {
 	 * Questo metodo viene chiamato solo se il fragment non è attaccato ad un'activity, altrimenti
      * viene chiamato il metodo dell'activity connessa.
 	 */
-	private static Callbacks sStorageCallbacks = new Callbacks() {
+	private static Callbacks defaultCallbacks_ListActivity = new Callbacks() {
 		@Override
         public void onItemSelected(String id, int position) { }
 
@@ -106,7 +105,7 @@ public class NoteListFragment extends ListFragment {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (Callbacks) activity;
+        callbacks_ListActivity = (Callbacks) activity;
     }
 
     // onCreate
@@ -163,8 +162,8 @@ public class NoteListFragment extends ListFragment {
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		// Reset the active callbacks interface to the dummy implementation.
-		mCallbacks = sStorageCallbacks;
+		// Reset the active callbacks interface
+		callbacks_ListActivity = defaultCallbacks_ListActivity;
 	}
 
 
@@ -202,7 +201,7 @@ public class NoteListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(StorageManager.getNoteFromPosition(position).id, position);
+        callbacks_ListActivity.onItemSelected(StorageManager.getNoteFromPosition(position).id, position);
 
     }
 
@@ -306,7 +305,7 @@ public class NoteListFragment extends ListFragment {
         if (!newName.equals(oldName)) {
             boolean renamed = StorageManager.rename(getActivity(), currentPressedItem, newName);
             if (!renamed)
-                Toast.makeText(getActivity(), R.string.action_rename_fail, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.action_rename_fail, Toast.LENGTH_LONG).show();
         }
 
         // chiudo l'alert
@@ -328,18 +327,18 @@ public class NoteListFragment extends ListFragment {
             currentPressedItem = -1;
             // Aggiorno il contenuto del fragment (solo su tablet) e sistemo i bottoni dell'action bar
             if (mTwoPane) {
-                mCallbacks.updateDetailFragmentContent();
+                callbacks_ListActivity.updateDetailFragmentContent();
                 // Devo rimuovere dall'action bar i bottoni relativi alla nota aperta.
-                mCallbacks.setDetailNoteMenuItems(false);
+                callbacks_ListActivity.setDetailNoteMenuItems(false);
 //                MenuItem detailNoteMenus = MenuItem.findItem(R.id.note_actions); refreshItem.setVisible(false);
             }
             //  sostituisco il fragment della nota aperta con quello vuoto
-            mCallbacks.swapVisibleFragment(true);
+            callbacks_ListActivity.swapVisibleFragment(true);
         } else {
             // Se ho cancellato una nota e ci sono note nella lista aggiorno la nota corrente nel NotesStorage.
             // Ma SOLO se la nota corrente è quella che l'utente sta cancellando.
             if (StorageManager.currPosition == currentPressedItem) {
-                mCallbacks.setDeletingState(true);
+                callbacks_ListActivity.setDeletingState(true);
                 int pos = currentPressedItem == StorageManager.ITEMS.size() ? currentPressedItem - 1 : currentPressedItem;
                 StorageManager.updateCurrItem(pos);
                 // su tablet faccio un click sull'elemento sopra a quello eliminato
@@ -347,11 +346,11 @@ public class NoteListFragment extends ListFragment {
                     ListAdapter la = getListView().getAdapter();
                     getListView().performItemClick(la.getView(pos, null, null), pos, la.getItemId(pos));
                 }
-                mCallbacks.setDeletingState(false);
+                callbacks_ListActivity.setDeletingState(false);
             }
         }
         // Aggiorno il contenuto del fragment (solo su tablet)
         if (mTwoPane)
-            mCallbacks.updateDetailFragmentContent();
+            callbacks_ListActivity.updateDetailFragmentContent();
     }
 }

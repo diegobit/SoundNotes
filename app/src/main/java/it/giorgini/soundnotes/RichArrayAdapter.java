@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by diego on 16/01/15.
- */
 public class RichArrayAdapter<T> extends ArrayAdapter<T> {
 
     public RichArrayAdapter(Context context, int resource, int textViewResourceId, List<T> objects) {

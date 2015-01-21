@@ -3,6 +3,7 @@ package it.giorgini.soundnotes;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -25,14 +26,16 @@ public class NoteDetailFragment extends Fragment {
      * The fragment's current callback object, which is notified of list item
      * clicks.
      */
-    private Callbacks mCallbacks = sStorageCallbacks;
+    private Callbacks callbacks_DetailActivity = defaultCallbacks_DetailActivity;
 
     private boolean mTwoPane = false;
 
+    // the actionbar menu that this fragments inflates in onCreateOptionsMenu
+    private Menu menu;
 	private StorageManager.SoundNote item;
 
     private Uri currFileUri;
-    private boolean isRecording = false;
+//    private boolean isRecording = false;
 //    private boolean isListVisible = true;
 
     /**
@@ -45,6 +48,7 @@ public class NoteDetailFragment extends Fragment {
          * Callback for when an item has been selected.
          */
         public void returnToList();
+//        public void saveCurrentNote();
 //        public void slideToLeft(int newVisibility);
 //        public void slideToRight(int newVisibility);
     }
@@ -53,9 +57,10 @@ public class NoteDetailFragment extends Fragment {
      * Questo metodo viene chiamato solo se il fragment non è attaccato ad un'activity, altrimenti
      * viene chiamato il metodo dell'activity connessa.
      */
-    private static Callbacks sStorageCallbacks = new Callbacks() {
+    private static Callbacks defaultCallbacks_DetailActivity = new Callbacks() {
         @Override
         public void returnToList() { }
+//        public void saveCurrentNote() { }
 //        public void slideToLeft(int newVisibility) { }
 //        public void slideToRight(int newVisibility) { }
     };
@@ -76,7 +81,7 @@ public class NoteDetailFragment extends Fragment {
             if (!(activity instanceof Callbacks)) {
                 throw new IllegalStateException("Activity must implement fragment's callbacks.");
             }
-            mCallbacks = (Callbacks) activity;
+            callbacks_DetailActivity = (Callbacks) activity;
         }
     }
 
@@ -84,19 +89,22 @@ public class NoteDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-        // Dico di voler aggiungere dei botoni nella action bar
+        // Dico di voler aggiungere dei bottoni nella action bar
         setHasOptionsMenu(true);
+        Log.i("SN ###", "NoteDetailFragment onCreate");
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+        Log.i("SN ###", "NoteDetailFragment onCreateView");
         return inflater.inflate(R.layout.fragment_note_detail, container, false);
 	}
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.i("SN ###", "NoteDetailFragment onActivityCreated");
 
         // Show the content as text in the TextView.
         updateCurrItem();
@@ -114,37 +122,41 @@ public class NoteDetailFragment extends Fragment {
 
     @Override
     public void onResume() {
+        Log.i("SN ###", "NoteDetailFragment onResume");
         super.onResume();
 
-        Intent i = new Intent(getActivity(), RecorderManager.class);
-        i.setAction(RecorderManager.ACTION_PREPARE);
-        i.putExtra("noteID", item.id);
-        getActivity().startService(i);
+        // Se lo stato è recording vuol dire che era già avviato, non serve fargli eseguire la prepare
+        if (RecorderManager.getState() != MRState.RECORDING) {
+            Intent i = new Intent(getActivity(), RecorderManager.class);
+            i.setAction(RecorderManager.ACTION_PREPARE);
+            i.putExtra("noteID", item.id);
+            getActivity().startService(i);
+        }
     }
 
     @Override
 	public void onPause() {
-        Log.d("DEBUG", "##### NoteDetailFragment: onPause");
+        Log.i("SN ###", "NoteDetailFragment: onPause");
 		super.onPause();
 	}
 
     @Override
     public void onStop() {
-        Log.d("DEBUG", "##### NoteDetailFragment: onStop");
+        Log.i("SN ###", "NoteDetailFragment: onStop");
         super.onStop();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d("DEBUG", "##### NoteDetailFragment: onDetach");
+        Log.i("SN ###", "NoteDetailFragment: onDetach");
         // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sStorageCallbacks;
+        callbacks_DetailActivity = defaultCallbacks_DetailActivity;
     }
 
     @Override
     public void onDestroy() {
-        Log.d("DEBUG", "##### NoteDetailFragment: onDestroy");
+        Log.i("SN ###", "NoteDetailFragment: onDestroy");
         super.onDestroy();
     }
 
@@ -164,24 +176,47 @@ public class NoteDetailFragment extends Fragment {
     // Anche il fragment contribuisce agli elementi dell'action bar.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.i("SN ###", "NoteDetailFragment onCreateOptionsMenu");
+        this.menu = menu;
         inflater.inflate(R.menu.note_actions, menu);
+
+        // Controllo se sto registrando, in quel caso setto l'icona appropriata
+        // Se no, non devo fare nulla, c'è già quella giusta
+//        if (RecorderManager.getState() == MRState.RECORDING) {
+//            MenuItem menuItem = menu.findItem(R.id.action_rec);
+//            setRecordingIcon(menuItem, true);
+//        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     // Funzione per iniziare (e fermare) la registrazione
     public void toggleRecording(MenuItem item) {
-
-        isRecording = !isRecording;
-        // cambio l'icona
         Intent i = new Intent(getActivity(), RecorderManager.class);
-        if(isRecording) {
-            item.setIcon(R.drawable.ic_action_mic_active);
+
+        // Non sto registrando, devo avviarlo
+        if(RecorderManager.getState() != MRState.RECORDING) {
+            setRecordingIcon(true);
             i.setAction(RecorderManager.ACTION_START);
-            getActivity().startService(i);
+        // Sto già registrando, stoppo
         } else {
-            item.setIcon(R.drawable.ic_action_mic);
+            setRecordingIcon(false);
             i.setAction(RecorderManager.ACTION_STOP);
-            getActivity().startService(i);
+        }
+
+        getActivity().startService(i);
+    }
+
+    // Setta l'icona del registratore attiva/spenta
+    public void setRecordingIcon(boolean recording) {
+        MenuItem i = menu.findItem(R.id.action_rec);
+
+        if (recording) {
+            i.setIcon(R.drawable.ic_action_mic_active);
+            AnimationDrawable icon = (AnimationDrawable) i.getIcon();
+            icon.start();
+        } else {
+            i.setIcon(R.drawable.ic_action_mic);
         }
     }
 
@@ -190,10 +225,10 @@ public class NoteDetailFragment extends Fragment {
 //            Toast.makeText(getActivity(), "DENTRO TOGGLE", Toast.LENGTH_SHORT).show();
 //            isListVisible = !isListVisible;
 //            if (isListVisible) {
-//                mCallbacks.slideToRight(View.VISIBLE);
+//                callbacks_DetailActivity.slideToRight(View.VISIBLE);
 //                item.setIcon(R.drawable.ic_action_full_screen);
 //            } else {
-//                mCallbacks.slideToLeft(View.GONE);
+//                callbacks_DetailActivity.slideToLeft(View.GONE);
 //                item.setIcon(R.drawable.ic_action_return_from_full_screen);
 //            }
 //        } else {
@@ -201,11 +236,11 @@ public class NoteDetailFragment extends Fragment {
 //        }
 //    }
 
-    // Se non sto registrando
-    public void releaseRecorder() {
-        Log.d("DEBUG", "#### RecMan releaseRecorder: called");
-        //TODO: Implementare releaseRecorder?
-    }
+//    // Se non sto registrando
+//    public void releaseRecorder() {
+//        Log.d("SN ###", "RecMan releaseRecorder: called");
+//        //TODO: Implementare releaseRecorder?
+//    }
 
     // Funzione che condivide il file corrente
     public void shareFileAsText(String text) {
@@ -235,7 +270,7 @@ public class NoteDetailFragment extends Fragment {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Up button. Solo su cellulare
-                mCallbacks.returnToList();
+                callbacks_DetailActivity.returnToList();
                 return true;
             case R.id.action_rec:
                 toggleRecording(item);

@@ -5,4 +5,7 @@
 
     <dimen name="button_elevation">3dp</dimen>
     <dimen name="button_press_elevation">6dp</dimen>
+
+    <dimen name="rec_left_margin">46dp</dimen>
+    <dimen name="rec_upper_margin">2dp</dimen>
 </resources>

@@ -303,7 +303,8 @@ public class StorageManager {
                         date = 0;
                     } else {
                         // Parte audio:
-                        Log.d("DEBUG", "### Load: trovato file audio: " + path);
+                        File f = new File(path);
+                        Log.i("SN ###", "Load: trovato file audio: " + path + ", size: " + f.length() + " Bytes");
                         //
                         //TODO: IMPLEMENTARE
                         //
@@ -315,10 +316,10 @@ public class StorageManager {
                 } catch (OutOfMemoryError e) {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {
-                    Log.d("DEBUG", "Strange, I scan for file and then read them");
+                    Log.w("SN ###", "Strange, I scan for file and then read them");
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
-                    Log.d("DEBUG", "Strange, I save this files myself in UTF-8");
+                    Log.w("SN ###", "Strange, I save this files myself in UTF-8");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -357,7 +358,7 @@ public class StorageManager {
                 ITEMS.get(currPosition).text = newText;
                 ITEMS_ADAPTER.notifyDataSetChanged();
             } catch (Exception e) {
-                Log.d("DEBUG", e.toString() + " -- Unable to save the note '" + currName + "'");
+                Log.d("SN ###", e.toString() + " -- Unable to save the note '" + currName + "'");
                 return false;
             }
 
@@ -389,7 +390,7 @@ public class StorageManager {
                 ITEMS_ADAPTER.notifyDataSetChanged();
             }
         } catch (WrongFileNameException e) {
-            Log.d("DEBUG", "Renaming note, catched WrongFileNameException");
+            Log.d("SN ###", "Renaming note, catched WrongFileNameException");
         }
 
         return renamed;
@@ -434,7 +435,7 @@ public class StorageManager {
 
 		@Override
 		public String toString() {
-			return "    " + name; // Metterei la rappresentazione completa del dato ma l'Array Adapter che
+			return name; // Metterei la rappresentazione completa del dato ma l'Array Adapter che
                          // uso per la lista di note visualizza il valore di ritorno di toString
 		}
 	}

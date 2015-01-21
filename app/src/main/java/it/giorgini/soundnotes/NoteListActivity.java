@@ -9,7 +9,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceScreen;
 import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
@@ -41,8 +43,9 @@ import android.support.v7.app.ActionBarActivity;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends ActionBarActivity implements View.OnClickListener, NoteListFragment.Callbacks{
-	private boolean mTwoPane = false; // Modalità doppia per tablet
+public class NoteListActivity extends ActionBarActivity implements View.OnClickListener, NoteListFragment.Callbacks {
+    public static String PACKAGE_NAME;
+    private static boolean mTwoPane = false; // Modalità doppia per tablet
     private NoteDetailFragment detailFragment; // Solo se mTwoPane è definito // FIXME: e se lo mettessi in un WeakReference?
     private NoteListFragment listFragment; // fragment per visualizzare una lista di elementi
 
@@ -59,6 +62,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 	// Metodi Inizializzazione
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        Log.i("SN ###", "NoteListActivity onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note_list);
 
@@ -98,16 +102,27 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 
     @Override
     protected void onResume() {
+        Log.i("SN ###", "NoteListActivity onResume");
         super.onResume();
 
-        // Il service forse potrebbe non essere più attivo (solo tablet)
+        // Il service forse potrebbe non essere più attivo (solo tablet).
         if (mTwoPane) {
             Intent i = new Intent(this, RecorderManager.class);
-            i.setAction(RecorderManager.ACTION_SERVICE_INIT);
+            i.putExtra("mTwoPane", mTwoPane);
             i.putExtra("mainPath", getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
-            // devo ancora aggiornare l'id della nota...
+            // TODO: devo ancora aggiornare l'id della nota... (?)
             startService(i);
         }
+
+//        // Controllo se sono stato avviato da una notifica per andare ad una nota precisa in quel caso
+//        // apro quella nota. Lo faccio nella onResume per assicurarmi di aver fatto tutto
+//        Intent i = getIntent();
+//        int pos = i.getIntExtra("openedNotePosition", -1);
+//        if (pos != -1) {
+//            // chiamo onItemSelected come se avessi selezionato davvero quella nota nella lista... mah
+//            //TODO: cambiare modo di accedere alla nota dalla notifica
+//            onItemSelected(null, pos);
+//        }
     }
 
     // Metodi per gestione dell'action bar
@@ -121,8 +136,8 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 //        this.menu = menu; // aggiorno la variabile menu per poter disabilitare alcuni tasti
 	    return super.onCreateOptionsMenu(menu);
 	}
-	
-	@Override
+
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Devo gestire la pressione dei tasti principali dell'action bar. Altri saranno gestiti dal fragment
         switch (item.getItemId()) {
@@ -149,14 +164,27 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 
 //    @Override
 //    protected void onPause() {
-////        NotesStorage.save(this, ((RichEditText) findViewById(R.id.note_detail)).getText().toString());
 //        super.onPause();
 //    }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//    }
+    @Override
+    protected void onStop() {
+        Log.i("SN ###", "NoteListActivity onStop");
+        super.onStop();
+
+        // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra):
+        // - se sono su tablet e ho una nota da salvare lo faccio
+        // - se non sto registrando rilascio il MediaRecorder
+        if (!LifecycleHandler.isApplicationVisible()) {
+            if (mTwoPane) {
+                saveCurrentNote();
+            }
+            if (RecorderManager.getState() != MRState.RECORDING) {
+                Log.d("SN ###", "stopService called from NoteListActivity");
+                stopService(new Intent(this, RecorderManager.class));
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -164,10 +192,50 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
         super.onDestroy();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.i("SN ###", "Service: rotated in landscape");
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Log.i("SN ###", "Service: rotated in portrait");
+        }
+    }
+
 //    @Override
+//    protected void onNewIntent(Intent intent) {
+//        Log.i("SN ###", "onNewIntent");
+//        super.onNewIntent(intent);
+//
+//        // Controllo se sono stato avviato da una notifica per andare ad una nota precisa in quel caso
+//        // apro quella nota. Lo faccio nella onResume per assicurarmi di aver fatto tutto
+//        int pos = intent.getIntExtra("openedNotePosition", -1);
+//        if (pos != -1) {
+//            // chiamo onItemSelected come se avessi selezionato davvero quella nota nella lista... mah
+//            //TODO: cambiare modo di accedere alla nota dalla notifica
+//            onItemSelected(null, pos);
+//        }
+//    }
+
+    //    @Override
 //    protected void onRestart() {
 //        super.onRestart();
 //    }
+
+    // salva la nota corrente.
+    // NB: codice uguale alla metodo saveCurrentNote di NoteDetailActivity
+    public void saveCurrentNote() {
+        Log.i("SN ###", "NoteListActivity saveCurrentNote called");
+        RichEditText ret = (RichEditText) findViewById(R.id.note_detail);
+        if (ret != null) {
+            String s = ret.getText().toString();
+            StorageManager.save(this, s);
+        } else {
+            Log.d("SN ###", "NoteListActivity saveCurrentNote: EditText nota = null, non salvo nulla (forse è giusto, non sempre c'è una nota aperta su tablet");
+        }
+    }
 
     /** Questo metodo cambia il fragment visibile: lista di note / schermata vuota
      */
@@ -224,7 +292,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 
         // creo campo input testo, lo imposto alla data corrente e lo seleziono per creare il titolo facilmente
         final EditText input = new EditText(this);
-        String timeStamp = new SimpleDateFormat("30 MMM yyyy - HH:mm", Locale.getDefault()).format(Calendar.getInstance().getTime());
+        String timeStamp = new SimpleDateFormat("dd MMM yyyy '" + getString(R.string.time_preposition) + "' HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().getTime());
         input.setSingleLine(true);
         input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         input.setText(timeStamp);
@@ -317,8 +385,9 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 	
 	public void openSettings() {
 		//TODO: implementare (impostazioni)
-		Toast toast = Toast.makeText(this, "tasto settings", Toast.LENGTH_SHORT);
-		toast.show();
+		Toast.makeText(this, "tasto settings", Toast.LENGTH_SHORT).show();
+
+//        Object aa = PreferenceScreen.createPreferenceScreen(this);
 	}
 	
 	/**
@@ -328,17 +397,16 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 	@Override
 	public void onItemSelected(String id, int position) {
 		if (mTwoPane) {
-            Log.d("DEBUG", "##### mTwoPane");
 			// In two-pane mode, show the detail view in this activity by adding or replacing the detail fragment using a
 			// fragment transaction.
             if (detailFragment == null) {
-                Log.d("DEBUG", "##### currFragment == null");
+                Log.d("SN ###", "currFragment == null");
                 StorageManager.updateCurrItem(position);
                 detailFragment = new NoteDetailFragment();
                 detailFragment.setTwoPane(true);
                 getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment).commit();
             } else {
-                Log.d("DEBUG", "##### currFragment != null - testoCorrente: '" + ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString() + "'");
+                Log.d("SN ###", "currFragment != null - testoCorrente: '" + ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString() + "'");
                 // ho premuto su un'altra nota, salvo quella corrente e carico la successiva
                 if (!deletingState && StorageManager.getCurrNote() != null)
                     save();
@@ -351,6 +419,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 			// for the selected item ID after updating the current note in NotesStorage
             StorageManager.updateCurrItem(position);
 			Intent detailIntent = new Intent(this, NoteDetailActivity.class);
+            detailIntent.putExtra("mTwoPane", mTwoPane);
 			startActivity(detailIntent);
             overridePendingTransition(R.anim.push_in_from_right, R.anim.fade_out_stayleft);
 		}

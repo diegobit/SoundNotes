@@ -32,9 +32,15 @@
 
     <string name="fab_new">Bottone nuova nota</string>
 
-    <string name="rec_prepare_error">Errore durante l\'inizializzazione del registratore. Per favore inviami una segnalazione.</string>
+    <!--<string name="rec_prepare_error">Errore durante l\'inizializzazione del registratore. Per favore inviami una segnalazione.</string>-->
+    <string name="action_rec_startfail">C\'è stato un errore con il registratore. Riavvia il telefono e riprova.</string>
 
-    <string name="recorder_manager">Registratore 1</string>
-    <string name="recorder_manager_two">Registratore 2</string>
+    <string name="notif_title">Registrazione in corso</string>
+    <!--<string name="notif_text">Sto registrando…</string>-->
+    <string name="notif_stop">Ferma registrazione</string>
+
+    <string name="time_preposition">alle</string>
+
+    <string name="setting_hide_note_text">Nascondi titolo della nota nella notifica</string>
 
 </resources>

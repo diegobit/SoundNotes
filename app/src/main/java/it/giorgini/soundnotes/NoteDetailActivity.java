@@ -1,9 +1,14 @@
 package it.giorgini.soundnotes;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 //import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * An activity representing a single Note detail screen. This activity is only
@@ -14,10 +19,8 @@ import android.support.v7.app.ActionBarActivity;
  * a {@link NoteDetailFragment}.
  */
 public class NoteDetailActivity extends ActionBarActivity implements NoteDetailFragment.Callbacks {
-//    private GestureDetector gestureDetector; // Per ascoltare le gesture del touchpad
-//    private View.OnTouchListener gestureListener;
-
-//	private GestureDetector mDetector; 
+//    public boolean mTwoPane;
+    NoteDetailFragment detailFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +33,18 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         // ombra dell'actionbar
         getSupportActionBar().setElevation(4);
 
+//        mTwoPane = getIntent().getExtras().getBoolean("mTwoPane");
+
 		// savedInstanceState is non-null when there is fragment state saved from previous configurations of this activity
 		// (e.g. when rotating the screen from portrait to landscape). In this case, the fragment will automatically be re-added
 		// to its container so we don't need to manually add it.
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity using a fragment transaction.
 			Bundle arguments = new Bundle();
-			NoteDetailFragment fragment = new NoteDetailFragment();
-			fragment.setArguments(arguments);
+			detailFragment = new NoteDetailFragment();
+            detailFragment.setArguments(arguments);
 			getFragmentManager().beginTransaction()
-					.add(R.id.note_detail_container, fragment).commit();
+					.add(R.id.note_detail_container, detailFragment).commit();
 		}
 		
 		// cambio il titolo nella action bar
@@ -52,9 +57,76 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
         // Il service forse potrebbe non essere più attivo (solo tablet)
         Intent i = new Intent(this, RecorderManager.class);
-        i.setAction(RecorderManager.ACTION_SERVICE_INIT);
+//        i.putExtra("mTwoPane", mTwoPane);
         i.putExtra("mainPath", getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
         startService(i);
+    }
+
+    @Override
+    protected void onPause() {
+        Log.i("SN ###", "NoteDetailActivity onPause");
+        super.onPause();
+
+//        // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra). Due cose:
+//        // - salvo la nota corrente
+//        // - posso rilasciare il MediaRecorder (se non sto registrando)
+//        if (!LifecycleHandler.isApplicationVisible()) {
+//            saveCurrentNote();
+//
+//            if (RecorderManager.getState() != MRState.RECORDING) {
+//                Log.d("SN ###", "stopService called from NoteDetailActivity");
+//                stopService(new Intent(this, RecorderManager.class));
+//            }
+//        }
+    }
+
+    @Override
+    protected void onStop() {
+        Log.i("SN ###", "NoteDetailActivity onStop");
+        super.onStop();
+
+//        // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra).
+//        // posso rilasciare il MediaRecorder (se non sto registrando)
+//        if (!LifecycleHandler.isApplicationVisible() && RecorderManager.getState() != MRState.RECORDING) {
+//            Log.d("SN ###", "stopService called from NoteDetailActivity");
+//            stopService(new Intent(this, RecorderManager.class));
+//        }
+        // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra). Due cose:
+        // - salvo la nota corrente
+        // - posso rilasciare il MediaRecorder (se non sto registrando)
+        if (!LifecycleHandler.isApplicationVisible()) {
+            saveCurrentNote();
+
+            if (RecorderManager.getState() != MRState.RECORDING) {
+                Log.d("SN ###", "stopService called from NoteDetailActivity");
+                stopService(new Intent(this, RecorderManager.class));
+            }
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.i("SN ###", "Service: rotated in landscape");
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Log.i("SN ###", "Service: rotated in portrait");
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        Log.i("SN ###", "NoteDetailActivity onWindowFocusChanged");
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            if (RecorderManager.getState() == MRState.RECORDING)
+                detailFragment.setRecordingIcon(true);
+            else
+                detailFragment.setRecordingIcon(false);
+        }
     }
 
     @Override
@@ -64,7 +136,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
     // Metodo per tornare alla lista delle note per cellulare (nuovo intent con animazione custom)
     public void returnToList() {
-        StorageManager.save(this, ((RichEditText) findViewById(R.id.note_detail)).getText().toString());
+        saveCurrentNote();
 
         Intent intent = new Intent(this, NoteListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -74,6 +146,18 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         overridePendingTransition(R.anim.fade_in_stayleft, R.anim.push_out_to_right);
     }
 
+    // salva la nota corrente.
+    // NB: codice uguale alla metodo saveCurrentNote di NoteListActivity
+    public void saveCurrentNote() {
+        Log.i("SN ###", "NoteDetailActivity saveCurrentNote called");
+        RichEditText ret = (RichEditText) findViewById(R.id.note_detail);
+        if (ret != null) {
+            String s = ret.getText().toString();
+            StorageManager.save(this, s);
+        } else {
+            Log.d("SN ###", "NoteDetailActivity saveCurrentNote: EditText nota = null, non salvo nulla");
+        }
+    }
 //	// Nasconde la ListView in modalità tablet
 //	public void slideToLeft(int newVisibility) {
 //        // FIXME: funziona solo in una striscetta. SlideToRight non funziona più da quanto ho aggiunto il fragment vuota
