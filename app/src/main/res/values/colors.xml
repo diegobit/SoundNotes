@@ -20,7 +20,7 @@
 
     <!--lines color for the DetailNote views-->
     <color name="line_lgrey">#FFBEBEBE</color>
-    <color name="line_orange">#4BFB8C00</color>
-    <color name="line_shadow">#32FB8C00</color>
+    <color name="line_orange">#64FB8C00</color>
+    <color name="line_shadow">#3cFB8C00</color>
 
 </resources>

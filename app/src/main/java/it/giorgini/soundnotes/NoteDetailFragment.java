@@ -48,6 +48,7 @@ public class NoteDetailFragment extends Fragment {
          * Callback for when an item has been selected.
          */
         public void returnToList();
+        public void setDetailFragmentView(RichEditText view);
 //        public void saveCurrentNote();
 //        public void slideToLeft(int newVisibility);
 //        public void slideToRight(int newVisibility);
@@ -60,6 +61,7 @@ public class NoteDetailFragment extends Fragment {
     private static Callbacks defaultCallbacks_DetailActivity = new Callbacks() {
         @Override
         public void returnToList() { }
+        public void setDetailFragmentView(RichEditText view) { }
 //        public void saveCurrentNote() { }
 //        public void slideToLeft(int newVisibility) { }
 //        public void slideToRight(int newVisibility) { }
@@ -98,7 +100,10 @@ public class NoteDetailFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
         Log.i("SN ###", "NoteDetailFragment onCreateView");
-        return inflater.inflate(R.layout.fragment_note_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_detail, container, false);
+        callbacks_DetailActivity.setDetailFragmentView((RichEditText) view);
+
+        return view;
 	}
 
     @Override

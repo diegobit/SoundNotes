@@ -26,7 +26,7 @@ public class ScrollRecordingsView extends ScrollView {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        Log.i("SN @@@", "Scroll - dispatch");
+//        Log.i("SN @@@", "Scroll - dispatch");
         super.dispatchTouchEvent(ev);
         return false;
     }

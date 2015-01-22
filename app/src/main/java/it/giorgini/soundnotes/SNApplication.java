@@ -2,9 +2,6 @@ package it.giorgini.soundnotes;
 
 import android.app.Application;
 
-/**
- * Created by diego on 18/01/15.
- */
 public class SNApplication extends Application {
     @Override
     public void onCreate() {
@@ -13,4 +10,5 @@ public class SNApplication extends Application {
         // with just a few lines of code. Now *that's* nice.
         registerActivityLifecycleCallbacks(new LifecycleHandler());
     }
+
 }

@@ -54,43 +54,27 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="sn" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="dens" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: it.giorgini.soundnotes" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d6d50ff-5b9d-4819-957e-67ae7595f4b4" name="Default" comment="- pulizia generale del codice&#10;- piccola aggiunta, non ricordo&#10;&#10;- aggiustato metodo release del RecorderManager&#10;- durante le onStop dell'activity termino il service se non sta registrando&#10;- rinominato lì &quot;pause&quot; in &quot;stop&quot;&#10;- l'activity non si ricrea più quando cambio orientamento&#10;- cambiata l'icona nell'actionbar mentre registro: è animata!&#10;- non crasha se chiudo l'app e la riapro con una registrazione aperta&#10;- notifica mentre sto registrando. Cliccabile: riporta alla nota&#10;&#10;- cambiata piccola icona notifica: ora è bella (solo il registratore)&#10;- aggiunto bottone stop nella notifica&#10;- aggiustata toggleRecording del NoteDetailFragment e adesso la notifica cambia anche l'icona&#10;&#10; - cambiate varie stringhe&#10; - aggiunta varie funzioni&#10; - notifica ben funzionante&#10; - il nome della nota non si legge se è attivato il blocco in lockscreen&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/LifecycleHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsViewContainer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNApplication.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNPreferenceActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/ScrollRecordingsView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_action_mic_active.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_action_mic_active.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_action_mic_active.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_action_mic_active.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_action_mic_active.png" afterPath="" />
+    <list default="true" id="4d6d50ff-5b9d-4819-957e-67ae7595f4b4" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/it/giorgini/soundnotes/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/it/giorgini/soundnotes/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecorderManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecorderManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichArrayAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichArrayAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichEditText.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichEditText.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/StorageManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/StorageManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNApplication.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNApplication.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/ScrollRecordingsView.java" afterPath="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/ScrollRecordingsView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_note_detail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_note_detail.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/dimen.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimen.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/anim/fade_in_stayleft.xml" afterPath="$PROJECT_DIR$/app/src/main/res/anim/fade_in_stayleft.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/anim/fade_out_stayleft.xml" afterPath="$PROJECT_DIR$/app/src/main/res/anim/fade_out_stayleft.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_note_detail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_note_detail.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/anim/push_in_from_right" afterPath="$PROJECT_DIR$/app/src/main/res/anim/push_in_from_right" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/anim/push_out_to_right" afterPath="$PROJECT_DIR$/app/src/main/res/anim/push_out_to_right" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values-it/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-it/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SoundNotes.iws" />
@@ -119,50 +103,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="RecordingsView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="395" max-vertical-offset="2205">
+              <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="RichEditText.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichEditText.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.55482817" vertical-offset="651" max-vertical-offset="2145">
-              <caret line="77" column="46" selection-start-line="77" selection-start-column="46" selection-end-line="77" selection-end-column="46" />
-              <folding>
-                <element signature="e#784#836#0" expanded="true" />
-                <element signature="e#876#929#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dimen.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimen.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.55288464" vertical-offset="0" max-vertical-offset="2115">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="46" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_note_detail.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_note_detail.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="RecorderManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecorderManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="19.375" vertical-offset="630" max-vertical-offset="1230">
-              <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4320" max-vertical-offset="6270">
+              <caret line="288" column="60" selection-start-line="288" selection-start-column="60" selection-end-line="288" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_note_detail.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_note_detail.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="colors.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="375">
-              <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="465">
+              <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -779,10 +754,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/anim/fade_out_stayleft.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/push_in_from_right" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/push_out_to_right" />
-        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/LifecycleHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_action_mic_active.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/note_actions.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNPreferenceActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
@@ -790,20 +763,22 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/preference_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichArrayAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecorderManager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/CircularView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/Recordings_view_container.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsViewContainer.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/ScrollRecordingsView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/StorageManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNApplication.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/ScrollRecordingsView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_note_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/dimen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_note_detail.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecorderManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/dimen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichEditText.java" />
       </list>
     </option>
@@ -880,9 +855,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1019,6 +991,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="mipmap-xhdpi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoundNotes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoundNotes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1055,6 +1057,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1069,7 +1074,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="96a3a32a" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4DEAQ8AAYLZPLRJZ" />
     <property name="FullScreen" value="false" />
     <property name="SearchEverywhereHistoryKey" value="action_service_name&#9;PSI&#9;JAVA://it.giorgini.soundnotes.RecorderManager#ACTION_SERVICE_NAME&#10;makefilename&#9;PSI&#9;JAVA://it.giorgini.soundnotes.StorageManager#makeFilename&#10;recordermanager&#9;PSI&#9;JAVA://it.giorgini.soundnotes.NoteDetailFragment#recorderManager&#10;exception&#9;PSI&#9;JAVA://it.giorgini.soundnotes.WrongFileNameException&#10;progress&#9;FILE&#9;file:///Users/diego/.android_sdk/platforms/android-21/data/res/drawable/progress_large_material.xml&#10;manifest&#9;FILE&#9;file:///Users/diego/Documents/MieiProgetti/SoundNotes/app/src/main/AndroidManifest.xml&#10;manifes&#9;FILE&#9;file:///Users/diego/Documents/MieiProgetti/SoundNotes/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/AndroidManifest.xml&#10;getTokens&#9;PSI&#9;JAVA://it.giorgini.soundnotes.StorageManager#getTokensFromPath" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res" />
@@ -1318,7 +1323,11 @@
       <created>1421590461435</created>
       <updated>1421590461435</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="RICHTEXTEDIT unica con coordinate spostate ma non va bene&#10;&#10;----&#10;&#10;&#10;- pulizia generale del codice&#10;- piccola aggiunta, non ricordo&#10;&#10;- aggiustato metodo release del RecorderManager&#10;- durante le onStop dell'activity termino il service se non sta registrando&#10;- rinominato lì &quot;pause&quot; in &quot;stop&quot;&#10;- l'activity non si ricrea più quando cambio orientamento&#10;- cambiata l'icona nell'actionbar mentre registro: è animata!&#10;- non crasha se chiudo l'app e la riapro con una registrazione aperta&#10;- notifica mentre sto registrando. Cliccabile: riporta alla nota&#10;&#10;- cambiata piccola icona notifica: ora è bella (solo il registratore)&#10;- aggiunto bottone stop nella notifica&#10;- aggiustata toggleRecording del NoteDetailFragment e adesso la notifica cambia anche l'icona&#10;&#10; - cambiate varie stringhe&#10; - aggiunta varie funzioni&#10; - notifica ben funzionante&#10; - il nome della nota non si legge se è attivato il blocco in lockscreen&#10;&#10;altra roba">
+      <created>1421860675683</created>
+      <updated>1421860675684</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1345,7 +1354,6 @@
     <frame x="0" y="23" width="1366" height="741" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19683258" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" x="952" y="453" width="391" height="268" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.75808936" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1357,7 +1365,6 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32857144" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750398" sideWeight="0.44794953" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19591528" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266564" sideWeight="0.5520505" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45916796" sideWeight="0.32579187" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32880846" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32857144" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1365,15 +1372,17 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22473605" sideWeight="0.36825398" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22322775" sideWeight="0.36825398" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266564" sideWeight="0.32579187" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45916796" sideWeight="0.67420816" order="15" side_tool="true" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19683258" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" x="952" y="453" width="391" height="268" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24980299" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819724" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266564" sideWeight="0.5520505" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1433,7 +1442,8 @@
     <MESSAGE value="- pressione lunga su nota ora permette anche di RINOMINARLA&#10;- i campi di testo iniziano con una maiuscola&#10;- nuova nota scrive in automatico la data&#10;- rinomina e crea selezionano tutto il testo&#10;- premendo invio crea la nota&#10;- tolto il tasto + dall'action bar&#10;- tolto l'animazione per nascondere la lista su tablet&#10;- miglior ombra sotto il fab&#10;- ombra sotto l'action bar&#10;- la tastiera si apre in automatico nel dialog di una nuova nota e quando la nota vera e propria è vuota.&#10;- migliorati i bordi&#10;- localizzazione in ITALIANO/inglese&#10;- tasti bianchi migliorati&#10;- rimpicciolito font nel dettaglio nota&#10;- cambiato FONT - roboto slab medium&#10;- completata la gestione dello STATO dell'automa del mediarecorder&#10;- non si blocca più facendo play/pausa della registrazione&#10;- conversione RecorderManager in un SERVICE" />
     <MESSAGE value="- pulizia generale del codice&#10;- aggiunta" />
     <MESSAGE value="- pulizia generale del codice&#10;- piccola aggiunta, non ricordo&#10;- aggiustato metodo release del RecorderManager anche se non lo uso ancora&#10;- rinominato lì &quot;pause&quot; in &quot;stop&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="- pulizia generale del codice&#10;- piccola aggiunta, non ricordo&#10;- aggiustato metodo release del RecorderManager anche se non lo uso ancora&#10;- rinominato lì &quot;pause&quot; in &quot;stop&quot;" />
+    <MESSAGE value="RICHTEXTEDIT unica con coordinate spostate ma non va bene&#10;&#10;----&#10;&#10;&#10;- pulizia generale del codice&#10;- piccola aggiunta, non ricordo&#10;&#10;- aggiustato metodo release del RecorderManager&#10;- durante le onStop dell'activity termino il service se non sta registrando&#10;- rinominato lì &quot;pause&quot; in &quot;stop&quot;&#10;- l'activity non si ricrea più quando cambio orientamento&#10;- cambiata l'icona nell'actionbar mentre registro: è animata!&#10;- non crasha se chiudo l'app e la riapro con una registrazione aperta&#10;- notifica mentre sto registrando. Cliccabile: riporta alla nota&#10;&#10;- cambiata piccola icona notifica: ora è bella (solo il registratore)&#10;- aggiunto bottone stop nella notifica&#10;- aggiustata toggleRecording del NoteDetailFragment e adesso la notifica cambia anche l'icona&#10;&#10; - cambiate varie stringhe&#10; - aggiunta varie funzioni&#10; - notifica ben funzionante&#10; - il nome della nota non si legge se è attivato il blocco in lockscreen&#10;&#10;altra roba" />
+    <option name="LAST_COMMIT_MESSAGE" value="RICHTEXTEDIT unica con coordinate spostate ma non va bene&#10;&#10;----&#10;&#10;&#10;- pulizia generale del codice&#10;- piccola aggiunta, non ricordo&#10;&#10;- aggiustato metodo release del RecorderManager&#10;- durante le onStop dell'activity termino il service se non sta registrando&#10;- rinominato lì &quot;pause&quot; in &quot;stop&quot;&#10;- l'activity non si ricrea più quando cambio orientamento&#10;- cambiata l'icona nell'actionbar mentre registro: è animata!&#10;- non crasha se chiudo l'app e la riapro con una registrazione aperta&#10;- notifica mentre sto registrando. Cliccabile: riporta alla nota&#10;&#10;- cambiata piccola icona notifica: ora è bella (solo il registratore)&#10;- aggiunto bottone stop nella notifica&#10;- aggiustata toggleRecording del NoteDetailFragment e adesso la notifica cambia anche l'icona&#10;&#10; - cambiate varie stringhe&#10; - aggiunta varie funzioni&#10; - notifica ben funzionante&#10; - il nome della nota non si legge se è attivato il blocco in lockscreen&#10;&#10;altra roba" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1441,14 +1451,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-sw600dp/refs.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28846154" vertical-offset="0" max-vertical-offset="624">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.android_sdk/sources/android-21/java/io/File.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="14128" max-vertical-offset="16575">
@@ -1535,7 +1537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.62684125" vertical-offset="247852" max-vertical-offset="306960">
           <caret line="16966" column="7" selection-start-line="16966" selection-start-column="7" selection-end-line="16966" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1581,13 +1582,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17529215" vertical-offset="0" max-vertical-offset="599">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_action_mic_active.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
@@ -1614,14 +1608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.16887417" vertical-offset="18348" max-vertical-offset="75810">
           <caret line="1375" column="0" selection-start-line="1375" selection-start-column="0" selection-end-line="1375" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36548224" vertical-offset="234" max-vertical-offset="825">
-          <caret line="30" column="53" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1673,7 +1659,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="5.3125" vertical-offset="0" max-vertical-offset="5010">
           <caret line="242" column="0" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1717,14 +1702,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.571192" vertical-offset="0" max-vertical-offset="604">
-          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.android_sdk/sources/android-21/java/lang/Override.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37251654" vertical-offset="0" max-vertical-offset="604">
@@ -1732,26 +1709,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/ScrollRecordingsView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/StorageManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5844371" vertical-offset="3967" max-vertical-offset="6225">
           <caret line="321" column="23" selection-start-line="321" selection-start-column="23" selection-end-line="321" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32994923" vertical-offset="3795" max-vertical-offset="6180">
-          <caret line="294" column="181" selection-start-line="294" selection-start-column="8" selection-end-line="294" selection-end-column="181" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1762,46 +1723,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailActivity.java">
+    <entry file="file://$USER_HOME$/.android_sdk/sources/android-21/android/widget/TextView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3150">
-          <caret line="20" column="88" selection-start-line="20" selection-start-column="88" selection-end-line="20" selection-end-column="88" />
+        <state vertical-scroll-proportion="0.2284264" vertical-offset="0" max-vertical-offset="137130">
+          <caret line="145" column="37" selection-start-line="145" selection-start-column="29" selection-end-line="145" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/SNApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28846154" vertical-offset="0" max-vertical-offset="624">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/ScrollRecordingsView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60096157" vertical-offset="0" max-vertical-offset="624">
+          <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_note_detail.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.875" vertical-offset="0" max-vertical-offset="1230">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecorderManager.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.42132" vertical-offset="45" max-vertical-offset="5715">
-          <caret line="284" column="0" selection-start-line="284" selection-start-column="0" selection-end-line="284" selection-end-column="0" />
-          <folding>
-            <element signature="e#8006#8035#0" expanded="true" />
-            <element signature="e#11198#11229#0" expanded="true" />
-            <element signature="e#11400#11430#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.56" vertical-offset="701" max-vertical-offset="4230">
-          <caret line="65" column="6" selection-start-line="59" selection-start-column="4" selection-end-line="65" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.5778146" vertical-offset="146" max-vertical-offset="840">
+          <caret line="33" column="41" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="365" max-vertical-offset="1245">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
+          <caret line="23" column="33" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimen.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.5392157" vertical-offset="0" max-vertical-offset="306">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="3810">
+          <caret line="38" column="44" selection-start-line="38" selection-start-column="44" selection-end-line="38" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteDetailFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="4545">
+          <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
           <folding />
         </state>
       </provider>
@@ -1811,31 +1800,41 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="375">
-          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.175" vertical-offset="0" max-vertical-offset="600">
+          <caret line="7" column="34" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_note_detail.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecorderManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="19.375" vertical-offset="630" max-vertical-offset="1230">
-          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4320" max-vertical-offset="6270">
+          <caret line="288" column="60" selection-start-line="288" selection-start-column="60" selection-end-line="288" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/NoteListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26350245" vertical-offset="6169" max-vertical-offset="6780">
+          <caret line="422" column="56" selection-start-line="422" selection-start-column="56" selection-end-line="422" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RecordingsView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="395" max-vertical-offset="2205">
+          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/it/giorgini/soundnotes/RichEditText.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55482817" vertical-offset="651" max-vertical-offset="2145">
-          <caret line="77" column="46" selection-start-line="77" selection-start-column="46" selection-end-line="77" selection-end-column="46" />
-          <folding>
-            <element signature="e#784#836#0" expanded="true" />
-            <element signature="e#876#929#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.55288464" vertical-offset="0" max-vertical-offset="2115">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="46" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

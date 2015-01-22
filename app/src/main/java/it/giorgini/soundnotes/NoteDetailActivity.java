@@ -1,10 +1,14 @@
 package it.giorgini.soundnotes;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 //import android.support.v4.app.NavUtils;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.util.Log;
@@ -21,6 +25,21 @@ import android.widget.Toast;
 public class NoteDetailActivity extends ActionBarActivity implements NoteDetailFragment.Callbacks {
 //    public boolean mTwoPane;
     NoteDetailFragment detailFragment;
+//    RichEditText noteDetailView;
+    RecordingsView recordingsView;
+    //Your activity will respond to this action String
+    public static final String REC_STARTED = "com.your.package.RECEIVE_JSON";
+
+    private BroadcastReceiver bReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals(REC_STARTED)) {
+//                String recTime = intent.getStringExtra("recordingStarted");
+                Log.d("SN @@@", "3 - onNewIntent dentro");
+                recordingsView.newRecording();
+            }
+        }
+    };
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +62,18 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 			Bundle arguments = new Bundle();
 			detailFragment = new NoteDetailFragment();
             detailFragment.setArguments(arguments);
-			getFragmentManager().beginTransaction()
-					.add(R.id.note_detail_container, detailFragment).commit();
+//			getFragmentManager().beginTransaction().add(R.id.note_detail_container, detailFragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment).commit();
 		}
 		
 		// cambio il titolo nella action bar
 		setTitle(StorageManager.currName);
+
+        // Mi registro agli intent del service
+        LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(REC_STARTED);
+        bManager.registerReceiver(bReceiver, intentFilter);
 	}
 
     @Override
@@ -158,7 +183,16 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
             Log.d("SN ###", "NoteDetailActivity saveCurrentNote: EditText nota = null, non salvo nulla");
         }
     }
-//	// Nasconde la ListView in modalità tablet
+
+    @Override
+    public void setDetailFragmentView(RichEditText view) {
+//        noteDetailView = view;
+        recordingsView = (RecordingsView) findViewById(R.id.rec_view);
+        view.recView = recordingsView;
+        recordingsView.editText = view;
+    }
+
+    //	// Nasconde la ListView in modalità tablet
 //	public void slideToLeft(int newVisibility) {
 //        // FIXME: funziona solo in una striscetta. SlideToRight non funziona più da quanto ho aggiunto il fragment vuota
 //		if (newVisibility == View.VISIBLE || newVisibility == View.INVISIBLE ||

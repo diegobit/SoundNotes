@@ -3,8 +3,11 @@ package it.giorgini.soundnotes;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.ActivityManager;
 import android.app.FragmentManager;
@@ -23,6 +26,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -282,8 +286,13 @@ public class RecorderManager extends Service {
     }
 
     public void createRecOnText() {
+        Intent i = new Intent(NoteDetailActivity.REC_STARTED);
+        i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        i.putExtra("recordingStarted",
+////                new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(Calendar.getInstance().getTime()));
+//                   "rec");
 
-
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
     public void SetRecLenghtOnText() {
@@ -342,7 +351,7 @@ public class RecorderManager extends Service {
                 CharSequence d = taskInfo.description;
                 int id = taskInfo.id;
                 String st = taskInfo.toString();
-                Log.d("SN ###", "desc: " + d + " - id: " + id + " - st: " + st);
+                //TODO:ISMAINACTIVITYRUNNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //                ComponentName activity = taskInfo.origActivity;
 //                Log.d("SN ###", "activity orig name: " + activity.getPackageName());
 //                if (activity.getPackageName().equals(NoteListActivity.PACKAGE_NAME))

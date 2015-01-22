@@ -419,6 +419,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 			// for the selected item ID after updating the current note in NotesStorage
             StorageManager.updateCurrItem(position);
 			Intent detailIntent = new Intent(this, NoteDetailActivity.class);
+            detailIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             detailIntent.putExtra("mTwoPane", mTwoPane);
 			startActivity(detailIntent);
             overridePendingTransition(R.anim.push_in_from_right, R.anim.fade_out_stayleft);
