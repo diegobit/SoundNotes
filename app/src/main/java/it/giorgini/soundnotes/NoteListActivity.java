@@ -1,5 +1,6 @@
 package it.giorgini.soundnotes;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -11,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceScreen;
 import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
@@ -46,8 +46,8 @@ import android.support.v7.app.ActionBarActivity;
 public class NoteListActivity extends ActionBarActivity implements View.OnClickListener, NoteListFragment.Callbacks {
     public static String PACKAGE_NAME;
     private static boolean mTwoPane = false; // Modalità doppia per tablet
-    private NoteDetailFragment detailFragment; // Solo se mTwoPane è definito // FIXME: e se lo mettessi in un WeakReference?
-    private NoteListFragment listFragment; // fragment per visualizzare una lista di elementi
+    private WeakReference<NoteDetailFragment> detailFragment; // Solo se mTwoPane è definito // FIXME: e se lo mettessi in un WeakReference?
+    private WeakReference<NoteListFragment> listFragment; // fragment per visualizzare una lista di elementi
 
 //    private Menu menu; // L'oggetto menu dell'action bar che contiene tutti i bottoni.
 
@@ -69,7 +69,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
         SharedPreferences app_prefs = getSharedPreferences (APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences data_prefs = getSharedPreferences (DATA_PREFS, Context.MODE_PRIVATE);
 
-        listFragment = (NoteListFragment) getFragmentManager().findFragmentById(R.id.note_list);
+        listFragment = new WeakReference<>((NoteListFragment) getFragmentManager().findFragmentById(R.id.note_list));
 
         if (findViewById(R.id.note_detail_container) != null) {
 			// The detail container view will be present only in the large-screen layouts (res/values-large and
@@ -77,10 +77,10 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 			mTwoPane = true;
 
 			// In two-pane mode, list items should be given the 'activated' state when touched.
-            listFragment.setActivateOnItemClick(true);
+            listFragment.get().setActivateOnItemClick(true);
 		}
 
-        listFragment.setTwoPane(mTwoPane);
+        listFragment.get().setTwoPane(mTwoPane);
 
         // Associo la pressione del fab alla creazione di una nuova nota
         ImageButton button = (ImageButton)findViewById(R.id.fab);
@@ -107,7 +107,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 
         // Il service forse potrebbe non essere più attivo (solo tablet).
         if (mTwoPane) {
-            Intent i = new Intent(this, RecorderManager.class);
+            Intent i = new Intent(this, RecorderService.class);
             i.putExtra("mTwoPane", mTwoPane);
             i.putExtra("mainPath", getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
             // TODO: devo ancora aggiornare l'id della nota... (?)
@@ -122,6 +122,10 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 //            // chiamo onItemSelected come se avessi selezionato davvero quella nota nella lista... mah
 //            //TODO: cambiare modo di accedere alla nota dalla notifica
 //            onItemSelected(null, pos);
+//        }
+
+//        if (RecorderService.isRecording()) {
+        StorageManager.toggleRecState();
 //        }
     }
 
@@ -179,15 +183,16 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             if (mTwoPane) {
                 saveCurrentNote();
             }
-            if (RecorderManager.getState() != MRState.RECORDING) {
+            if (!RecorderService.isRecording() && !RecorderService.isPlaying()) {
                 Log.d("SN ###", "stopService called from NoteListActivity");
-                stopService(new Intent(this, RecorderManager.class));
+                stopService(new Intent(this, RecorderService.class));
             }
         }
     }
 
     @Override
     protected void onDestroy() {
+        Log.d("SN ###", "NoteListActivity onDestroy");
         StorageManager.clear();
         super.onDestroy();
     }
@@ -256,12 +261,12 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     }
 
     public void setDetailNoteMenuItems(boolean visibility) {
-        detailFragment.setHasOptionsMenu(visibility);
+        detailFragment.get().setHasOptionsMenu(visibility);
         invalidateOptionsMenu();
     }
 
     public void updateDetailFragmentContent() {
-        detailFragment.updateCurrItem();
+        detailFragment.get().updateCurrItem();
     }
 
     private boolean save() {
@@ -372,7 +377,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             dialog.cancel();
 
         // faccio un click su quell'elemento della lista
-        ListView lv = listFragment.getListView();
+        ListView lv = listFragment.get().getListView();
         ListAdapter la = lv.getAdapter();
         lv.performItemClick(la.getView(0, null, null), 0, la.getItemId(0));
     }
@@ -402,9 +407,9 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             if (detailFragment == null) {
                 Log.d("SN ###", "currFragment == null");
                 StorageManager.updateCurrItem(position);
-                detailFragment = new NoteDetailFragment();
-                detailFragment.setTwoPane(true);
-                getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment).commit();
+                detailFragment = new WeakReference<>(new NoteDetailFragment());
+                detailFragment.get().setTwoPane(true);
+                getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment.get()).commit();
             } else {
                 Log.d("SN ###", "currFragment != null - testoCorrente: '" + ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString() + "'");
                 // ho premuto su un'altra nota, salvo quella corrente e carico la successiva
@@ -420,7 +425,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             StorageManager.updateCurrItem(position);
 			Intent detailIntent = new Intent(this, NoteDetailActivity.class);
             detailIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            detailIntent.putExtra("mTwoPane", mTwoPane);
+            detailIntent.putExtra(RecorderService.EXTRA_TWO_PANE, mTwoPane);
 			startActivity(detailIntent);
             overridePendingTransition(R.anim.push_in_from_right, R.anim.fade_out_stayleft);
 		}
@@ -442,5 +447,23 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     // Implement the OnClickListener callback
     public void onClick(View v) {
         newNote();
+    }
+
+    // returns true if current Android OS on device is >= verCode
+    public static boolean deviceApiIsAtLeast(int verCode) {
+        if (android.os.Build.VERSION.RELEASE.startsWith("4.1"))
+            return 16 >= verCode;
+        else if (android.os.Build.VERSION.RELEASE.startsWith("4.2")) {
+            return 17 >= verCode;
+        } else if (android.os.Build.VERSION.RELEASE.startsWith("4.3")) {
+            return 18 >= verCode;
+        } else if (android.os.Build.VERSION.RELEASE.startsWith("4.4")) {
+            return 19 >= verCode;
+        } else if (android.os.Build.VERSION.RELEASE.startsWith("5.")) {
+            return 21 >= verCode;
+        } else {
+            Log.i("SN", "Application: device minimum must be upgraded for the newer build");
+            return true;
+        }
     }
 }

@@ -1,0 +1,9 @@
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recording"
+    android:src="@drawable/note_list_rec"
+    android:scaleType="centerCrop"
+    android:layout_gravity="start|center_vertical"
+    android:layout_width="22dip"
+    android:layout_height="22dip"
+    android:paddingLeft="3dp"
+    android:contentDescription="@string/list_rec_description" />

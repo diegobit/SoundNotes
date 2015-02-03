@@ -1,14 +1,13 @@
 package it.giorgini.soundnotes;
 
 import android.app.Application;
+import android.util.Log;
 
 public class SNApplication extends Application {
     @Override
     public void onCreate() {
-        // Simply add the handler, and that's it! No need to add any code
-        // to every activity. Everything is contained in MyLifecycleHandler
-        // with just a few lines of code. Now *that's* nice.
+        super.onCreate();
+        // Handler per sapere quando l'app è/non è visibile/in foreground/in background
         registerActivityLifecycleCallbacks(new LifecycleHandler());
     }
-
 }

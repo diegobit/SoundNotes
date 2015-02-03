@@ -15,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
+
+import java.lang.ref.WeakReference;
 
 /**
  * A fragment representing a single Note detail screen. This fragment is either
@@ -28,10 +31,12 @@ public class NoteDetailFragment extends Fragment {
      */
     private Callbacks callbacks_DetailActivity = defaultCallbacks_DetailActivity;
 
+    private boolean firstStart = true;
+
     private boolean mTwoPane = false;
 
     // the actionbar menu that this fragments inflates in onCreateOptionsMenu
-    private Menu menu;
+    private WeakReference<Menu> menu;
 	private StorageManager.SoundNote item;
 
     private Uri currFileUri;
@@ -48,7 +53,10 @@ public class NoteDetailFragment extends Fragment {
          * Callback for when an item has been selected.
          */
         public void returnToList();
-        public void setDetailFragmentView(RichEditText view);
+        public void initConnections(RichEditText view);
+        public void initRecList();
+        public void onPlayRequest(MenuItem item);
+        public void onPauseRequest(MenuItem item);
 //        public void saveCurrentNote();
 //        public void slideToLeft(int newVisibility);
 //        public void slideToRight(int newVisibility);
@@ -61,7 +69,10 @@ public class NoteDetailFragment extends Fragment {
     private static Callbacks defaultCallbacks_DetailActivity = new Callbacks() {
         @Override
         public void returnToList() { }
-        public void setDetailFragmentView(RichEditText view) { }
+        public void initConnections(RichEditText view) { }
+        public void initRecList() { }
+        public void onPlayRequest(MenuItem item) { }
+        public void onPauseRequest(MenuItem item) { }
 //        public void saveCurrentNote() { }
 //        public void slideToLeft(int newVisibility) { }
 //        public void slideToRight(int newVisibility) { }
@@ -101,7 +112,10 @@ public class NoteDetailFragment extends Fragment {
 			Bundle savedInstanceState) {
         Log.i("SN ###", "NoteDetailFragment onCreateView");
         View view = inflater.inflate(R.layout.fragment_note_detail, container, false);
-        callbacks_DetailActivity.setDetailFragmentView((RichEditText) view);
+        RichEditText ret = (RichEditText) view;
+
+        // inizializzo certe cose delle mie view: RichEditText e RecordingsView
+        callbacks_DetailActivity.initConnections((RichEditText) view);
 
         return view;
 	}
@@ -123,6 +137,7 @@ public class NoteDetailFragment extends Fragment {
         if (StorageManager.getCurrNote().text.equals("")) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
+
     }
 
     @Override
@@ -130,13 +145,14 @@ public class NoteDetailFragment extends Fragment {
         Log.i("SN ###", "NoteDetailFragment onResume");
         super.onResume();
 
-        // Se lo stato è recording vuol dire che era già avviato, non serve fargli eseguire la prepare
-        if (RecorderManager.getState() != MRState.RECORDING) {
-            Intent i = new Intent(getActivity(), RecorderManager.class);
-            i.setAction(RecorderManager.ACTION_PREPARE);
-            i.putExtra("noteID", item.id);
+        // Se lo stato è recording o playing vuol dire che era già avviato, non serve fargli eseguire la prepare
+        if (!RecorderService.isRecording() && !RecorderService.isPlaying()) {
+            Intent i = new Intent(getActivity(), RecorderService.class);
+            i.setAction(RecorderService.ACTION_PREPARE);
+            i.putExtra(RecorderService.EXTRA_NOTEID, item.id);
             getActivity().startService(i);
         }
+
     }
 
     @Override
@@ -182,12 +198,12 @@ public class NoteDetailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.i("SN ###", "NoteDetailFragment onCreateOptionsMenu");
-        this.menu = menu;
+        this.menu = new WeakReference<>(menu);
         inflater.inflate(R.menu.note_actions, menu);
 
         // Controllo se sto registrando, in quel caso setto l'icona appropriata
         // Se no, non devo fare nulla, c'è già quella giusta
-//        if (RecorderManager.getState() == MRState.RECORDING) {
+//        if (RecorderService.getState() == MRState.RECORDING) {
 //            MenuItem menuItem = menu.findItem(R.id.action_rec);
 //            setRecordingIcon(menuItem, true);
 //        }
@@ -197,24 +213,45 @@ public class NoteDetailFragment extends Fragment {
 
     // Funzione per iniziare (e fermare) la registrazione
     public void toggleRecording(MenuItem item) {
-        Intent i = new Intent(getActivity(), RecorderManager.class);
+        if (!RecorderService.isPlaying()) {
+            Intent i = new Intent(getActivity(), RecorderService.class);
 
-        // Non sto registrando, devo avviarlo
-        if(RecorderManager.getState() != MRState.RECORDING) {
-            setRecordingIcon(true);
-            i.setAction(RecorderManager.ACTION_START);
-        // Sto già registrando, stoppo
+            if (!RecorderService.isRecording()) {
+                // Non sto registrando, devo avviarlo
+                setRecordingIcon(true);
+                i.setAction(RecorderService.ACTION_START);
+            } else if (RecorderService.isInTheSameNoteAsRecording()) {
+                // Sto già registrando, stoppo. Sono nella stessa nota della registrazione
+                setRecordingIcon(false);
+                i.setAction(RecorderService.ACTION_STOP);
+            } else {
+                // non stoppo
+                Toast.makeText(getActivity(), R.string.rec_forbidden_stop, Toast.LENGTH_LONG).show();
+
+            }
+
+            getActivity().startService(i);
         } else {
-            setRecordingIcon(false);
-            i.setAction(RecorderManager.ACTION_STOP);
+            Toast.makeText(getActivity(), R.string.rec_forbidden_rec_playing, Toast.LENGTH_LONG).show();
         }
+    }
 
-        getActivity().startService(i);
+    public void togglePlayPause(MenuItem item) {
+        if (!RecorderService.isRecording()) {
+            if (!RecorderService.isPlaying()) {
+                // dico di riprodurre
+                callbacks_DetailActivity.onPlayRequest(item);
+            } else {
+                // lo fermo
+                callbacks_DetailActivity.onPauseRequest(item);
+            }
+        } else
+            Toast.makeText(getActivity(), R.string.rec_forbidden_play, Toast.LENGTH_LONG).show();
     }
 
     // Setta l'icona del registratore attiva/spenta
     public void setRecordingIcon(boolean recording) {
-        MenuItem i = menu.findItem(R.id.action_rec);
+        MenuItem i = menu.get().findItem(R.id.action_rec);
 
         if (recording) {
             i.setIcon(R.drawable.ic_action_mic_active);
@@ -276,6 +313,9 @@ public class NoteDetailFragment extends Fragment {
             case android.R.id.home:
                 // Up button. Solo su cellulare
                 callbacks_DetailActivity.returnToList();
+                return true;
+            case R.id.action_play:
+                togglePlayPause(item);
                 return true;
             case R.id.action_rec:
                 toggleRecording(item);

@@ -6,6 +6,8 @@
 
     <string name="empty_list_msg">"The list is empty.\nTap the button '+' to create a new note!"</string>
 
+    <string name="list_rec_description">recording</string>
+
     <string name="new_note_name">Untitled</string>
     <string name="new_note_alert_title">New Note</string>
     <string name="new_note_alert_message">Title:</string>
@@ -18,6 +20,7 @@
     <string name="action_new">New note</string>
     <string name="action_hide_note_list">Hide note list</string>
     <string name="action_rec">Recording</string>
+    <string name="action_play">Play</string>
     <string name="action_search">Search</string>
     <string name="action_share_full">Share text and audio</string>
     <string name="action_share_full_chooser">Share text and audio to&#8230;</string>
@@ -34,12 +37,27 @@
 
     <!--<string name="rec_prepare_error">Error during recorder initialization. Please send a bug report.</string>-->
     <string name="action_rec_startfail">There was an error with the audio recorder. Please restart your phone and try again.</string>
+    <string name="action_rec_stopfail">I couldn\'t stop the recording.</string>
 
-    <string name="notif_title">Recording</string>
-    <!--<string name="notif_text">Recording…</string>-->
-    <string name="notif_stop">Stop recording</string>
+    <string name="notif_rec_title">Recording</string>
+    <string name="notif_play_title">Playing recording</string>
+    <!--<string name="notif_text_prefix">Note name: \'</string>-->
+    <!--<string name="notif_text_suffix">\'</string>-->
+    <string name="notif_rec_stop">Stop recording</string>
+    <string name="notif_play_stop">Stop playing</string>
 
     <string name="time_preposition">at</string>
+
+    <string name="rec_forbidden_backspace">You can\'t delete that. There\'s some text in the previous line.</string>
+    <string name="rec_forbidden_backspace_rec_before">You can\'t delete that. The previous line belongs to another recording.</string>
+    <string name="rec_forbidden_del_middle_rec">You can only delete text from a single recording.</string>
+    <string name="rec_forbidden_cut_middle_rec">You can only cut text from a single recording.</string>
+    <string name="rec_forbidden_position">I can\'t. There\'s already a recording here.</string>
+    <string name="rec_forbidden_start">I can\'t. I\'m already recording.</string>
+    <string name="rec_forbidden_stop">You can only stop recording from the note in which you started.</string>
+    <string name="rec_forbidden_play">You can\'t play while recording.</string>
+    <string name="rec_forbidden_play_empty">There are no recordings to play here.</string>
+    <string name="rec_forbidden_rec_playing">You can\'t record audio while playing.</string>
 
     <string name="setting_hide_note_text">Hide note title in the notification</string>
 

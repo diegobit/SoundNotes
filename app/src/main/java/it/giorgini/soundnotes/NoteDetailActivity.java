@@ -5,14 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.media.MediaRecorder;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.support.v4.app.NavUtils;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.lang.ref.WeakReference;
 
 /**
  * An activity representing a single Note detail screen. This activity is only
@@ -24,23 +27,83 @@ import android.widget.Toast;
  */
 public class NoteDetailActivity extends ActionBarActivity implements NoteDetailFragment.Callbacks {
 //    public boolean mTwoPane;
-    NoteDetailFragment detailFragment;
+    private WeakReference<NoteDetailFragment> detailFragment;
+    private WeakReference<RichEditText> editText;
 //    RichEditText noteDetailView;
-    RecordingsView recordingsView;
+    private RecordingsView recordingsView;
+    private WeakReference<MenuItem> playIcon;
     //Your activity will respond to this action String
-    public static final String REC_STARTED = "com.your.package.RECEIVE_JSON";
+    public static final String REC_START_REQUEST = "it.giorgini.soundnotes.recstartrequest";
+    public static final String REC_STOPPED = "it.giorgini.soundnotes.recstopped";
+    public static final String PLAYER_STARTED = "it.giorgini.soundnotes.playerstarted";
+    public static final String PLAYER_STOPPED = "it.giorgini.soundnotes.playerstopped";
 
     private BroadcastReceiver bReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(REC_STARTED)) {
-//                String recTime = intent.getStringExtra("recordingStarted");
-                Log.d("SN @@@", "3 - onNewIntent dentro");
-                recordingsView.newRecording();
+            if (intent.getAction().equals(REC_START_REQUEST)) {
+                Log.d("SN @@@", "broadRec - onNewIntent rec started");
+                if (recordingsView != null) {
+                    Log.d("SN @@@", "recView != null -1-, ok, niente asynctask");
+                    boolean canRecord = recordingsView.newRecording();
+                    if (canRecord) {
+                        // lo dico al service con un intent
+                        Intent i = new Intent(context, RecorderService.class);
+                        i.setAction(RecorderService.ACTION_START_ACCEPTED);
+                        startService(i);
+                    } else {
+                        // cambio l'icona del registratore nell'action bar
+                        detailFragment.get().setRecordingIcon(false);
+                    }
+                } else {
+                    // in questo asynctask aspetto che recordingsView venga inizializzato, poi chiamo
+                    // recordingsView.get(). newRecording();
+                    Log.d("SN @@@", "recView == null -2- , vado di asynctask");
+                    new newRecordingSafe().execute("");
+                }
+            } else if (intent.getAction().equals((REC_STOPPED))) {
+                long recTime = intent.getLongExtra(RecorderService.EXTRA_REC_TIME, 0);
+                Log.d("SN @@@", "broadRec - onNewIntent rec stopped - " + recTime);
+                recordingsView.stoppedRecording(recTime);
+            // In questi due devo solo cambiare l'icona dell'action bar
+            } else if (intent.getAction().equals(PLAYER_STARTED)) {
+                setPlayerIcon(true, null);
+            } else if (intent.getAction().equals(PLAYER_STOPPED)) {
+                setPlayerIcon(false, null);
             }
         }
     };
-	
+
+    private class newRecordingSafe extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                while (recordingsView == null) {
+                    Log.d("SN @@@", "recView != null -2.5-, ancora null, richiamo wait");
+                    Thread.sleep(500);
+                }
+                Log.d("SN @@@", "recView != null -3- finalmente!, eseguo newRecording");
+                boolean canRecord = recordingsView.newRecording();
+                if (canRecord) {
+                    // lo dico al service con un intent
+                    Intent i = new Intent(getApplicationContext(), RecorderService.class);
+                    i.setAction(RecorderService.ACTION_START_ACCEPTED);
+                    startService(i);
+                } else {
+                    // cambio l'icona del registratore nell'action bar
+                    detailFragment.get().setRecordingIcon(false);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,30 +123,40 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 		if (savedInstanceState == null) {
 			// Create the detail fragment and add it to the activity using a fragment transaction.
 			Bundle arguments = new Bundle();
-			detailFragment = new NoteDetailFragment();
-            detailFragment.setArguments(arguments);
-//			getFragmentManager().beginTransaction().add(R.id.note_detail_container, detailFragment).commit();
-            getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment).commit();
+			detailFragment = new WeakReference<>(new NoteDetailFragment());
+            detailFragment.get().setArguments(arguments);
+            getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment.get()).commit();
 		}
 		
 		// cambio il titolo nella action bar
 		setTitle(StorageManager.currName);
 
+	}
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.i("SN @@@", "noteDetAct onStart");
+
         // Mi registro agli intent del service
         LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(REC_STARTED);
+        intentFilter.addAction(REC_START_REQUEST);
+        intentFilter.addAction(REC_STOPPED);
+        intentFilter.addAction(PLAYER_STARTED);
+        intentFilter.addAction(PLAYER_STOPPED);
         bManager.registerReceiver(bReceiver, intentFilter);
-	}
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
 
         // Il service forse potrebbe non essere più attivo (solo tablet)
-        Intent i = new Intent(this, RecorderManager.class);
+        Intent i = new Intent(this, RecorderService.class);
 //        i.putExtra("mTwoPane", mTwoPane);
-        i.putExtra("mainPath", getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
+//        i.putExtra(RecorderService.EXTRA_MAIN_PATH, getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
         startService(i);
     }
 
@@ -98,9 +171,9 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 //        if (!LifecycleHandler.isApplicationVisible()) {
 //            saveCurrentNote();
 //
-//            if (RecorderManager.getState() != MRState.RECORDING) {
+//            if (RecorderService.getState() != MRState.RECORDING) {
 //                Log.d("SN ###", "stopService called from NoteDetailActivity");
-//                stopService(new Intent(this, RecorderManager.class));
+//                stopService(new Intent(this, RecorderService.class));
 //            }
 //        }
     }
@@ -112,21 +185,42 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
 //        // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra).
 //        // posso rilasciare il MediaRecorder (se non sto registrando)
-//        if (!LifecycleHandler.isApplicationVisible() && RecorderManager.getState() != MRState.RECORDING) {
+//        if (!LifecycleHandler.isApplicationVisible() && RecorderService.getState() != MRState.RECORDING) {
 //            Log.d("SN ###", "stopService called from NoteDetailActivity");
-//            stopService(new Intent(this, RecorderManager.class));
+//            stopService(new Intent(this, RecorderService.class));
 //        }
+
+        // Tolgo la registrazione al broacast receiver
+        LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
+        bManager.unregisterReceiver(bReceiver);
+
         // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra). Due cose:
         // - salvo la nota corrente
         // - posso rilasciare il MediaRecorder (se non sto registrando)
         if (!LifecycleHandler.isApplicationVisible()) {
             saveCurrentNote();
 
-            if (RecorderManager.getState() != MRState.RECORDING) {
-                Log.d("SN ###", "stopService called from NoteDetailActivity");
-                stopService(new Intent(this, RecorderManager.class));
+            if (!RecorderService.isRecording() && !RecorderService.isPlaying()) {
+                Log.d("SN ###", "stopService called from NoteDetailActivity onStop");
+                stopService(new Intent(this, RecorderService.class));
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("SN ###", "NoteDetailActivity onDestroy");
+
+        // Vengo chiamato per esempio quando chiudo l'app dalla lista delle recenti.
+        // Devo terminare il service
+        if (!LifecycleHandler.isApplicationVisible()) {
+            Log.d("SN ###", "stopService called from NoteDetailActivity onDestroy");
+            stopService(new Intent(this, RecorderService.class));
+        }
+
+        recordingsView.clear();
+
+        super.onDestroy();
     }
 
     @Override
@@ -147,10 +241,15 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
-            if (RecorderManager.getState() == MRState.RECORDING)
-                detailFragment.setRecordingIcon(true);
+            if (RecorderService.isRecording())
+                detailFragment.get().setRecordingIcon(true);
             else
-                detailFragment.setRecordingIcon(false);
+                detailFragment.get().setRecordingIcon(false);
+
+            if (RecorderService.isPlaying())
+                setPlayerIcon(true, null);
+            else
+                setPlayerIcon(false, null);
         }
     }
 
@@ -185,11 +284,72 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
     }
 
     @Override
-    public void setDetailFragmentView(RichEditText view) {
-//        noteDetailView = view;
+    public void initConnections(RichEditText editText) {
+//        noteDetailView = editText;
         recordingsView = (RecordingsView) findViewById(R.id.rec_view);
-        view.recView = recordingsView;
-        recordingsView.editText = view;
+        if (recordingsView != null) {
+            Log.d("SN @@@", "recView != null -0- inizial da initCOnnections");
+        }
+        this.editText = new WeakReference<RichEditText>(editText);
+        editText.setRecView(recordingsView);
+        recordingsView.setAssociatedEditText(editText);
+
+        // I also set the RichEditText's reference to this context and recView's edittextlinecount
+        editText.setContext(this);
+        editText.initRecViewDevLineCount();
+
+        // Imposterei le note alla recordingsView ma lo faccio nella initReclist (ora i layout non sono definiti)
+//        recView.setCurrRecList();
+    }
+
+    public void initRecList() {
+//        recordingsView.setCurrRecList();
+    }
+
+    public void onPlayRequest(MenuItem item) {
+        int line = editText.get().getCurrLine();
+        int recLine = recordingsView.lineBelongsToRecording(line);
+        if (recLine != -1) {
+            Intent i = new Intent(this, RecorderService.class);
+            i.setAction(RecorderService.ACTION_PLAYER_START);
+            // calcolo il path della registrazione da riprodurre e la linea della rec (prima di spostarla... forse voglio
+            // andare in pausa, potrei aver inserito/cancellato linee, devo sapere quella prima di queste azioni
+            RecordingsView.Recording rec = StorageManager.getCurrNote().recList.get(recLine);
+            String path = rec.position + "-" + rec.lenghtMillis + ".aac";
+            i.putExtra("line", rec.position);
+            i.putExtra("path", path);
+            startService(i);
+
+            // cambio l'icona nella action bar nel tasto della pausa
+            setPlayerIcon(true, item);
+        } else {
+            Toast.makeText(this, R.string.rec_forbidden_play_empty, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onPauseRequest(MenuItem item) {
+        Intent i = new Intent(this, RecorderService.class);
+        i.setAction(RecorderService.ACTION_PLAYER_PAUSE);
+        i.putExtra("stop", false);
+        startService(i);
+
+        // cambio l'icona nella action bar nel tasto play
+        setPlayerIcon(false, item);
+    }
+
+    public void setPlayerIcon(boolean playing, MenuItem playerNewItem) {
+        // Aggiorno l'icona per le prossime volte
+        if (playerNewItem != null)
+            playIcon = new WeakReference<>(playerNewItem);
+
+        // cambio l'icona nella action bar nel tasto play o pausa
+        if (playIcon != null) {
+            if (playing)
+                playIcon.get().setIcon(R.drawable.ic_action_pause);
+            else
+                playIcon.get().setIcon(R.drawable.ic_action_play);
+        } else
+            Log.w("SN @@@", "NoteDetAct richiesto cambio di icona play ma playicon = null");
     }
 
     //	// Nasconde la ListView in modalità tablet

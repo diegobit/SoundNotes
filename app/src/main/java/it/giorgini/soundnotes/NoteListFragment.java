@@ -51,9 +51,8 @@ public class NoteListFragment extends ListFragment {
     private boolean mTwoPane; // Modalità doppia per tablet
 
     /**
-	 * A callback interface that all activities containing this fragment must
-	 * implement. This mechanism allows activities to be notified of item
-	 * selections.
+	 * A callback interface that all activities containing this fragment must implement.
+     * This mechanism allows activities to be notified of item selections.
 	 */
 	public interface Callbacks {
 		/**
@@ -304,8 +303,12 @@ public class NoteListFragment extends ListFragment {
         // Se ho cambiato qualcosa allora rinomino, altrimenti non faccio nulla.
         if (!newName.equals(oldName)) {
             boolean renamed = StorageManager.rename(getActivity(), currentPressedItem, newName);
-            if (!renamed)
+            if (renamed) {
+                // devo anche aggiornare il nome della nota corrente nel service
+                RecorderService.setCurrRecNoteName(newName);
+            } else {
                 Toast.makeText(getActivity(), R.string.action_rename_fail, Toast.LENGTH_LONG).show();
+            }
         }
 
         // chiudo l'alert

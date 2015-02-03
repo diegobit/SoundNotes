@@ -10,4 +10,5 @@
     <dimen name="rec_left_margin_small">6dp</dimen>
     <dimen name="rec_vertical_margin">4dp</dimen>
     <dimen name="rec_text">12sp</dimen>
+    <dimen name="rec_text_small">11sp</dimen>
 </resources>

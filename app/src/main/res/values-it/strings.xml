@@ -6,6 +6,8 @@
 
     <string name="empty_list_msg">"La lista è vuota.\nPremi '+' per creare una nuova nota!"</string>
 
+    <string name="list_rec_description">registrando</string>
+
     <string name="new_note_name">Untitled</string>
     <string name="new_note_alert_title">Nuova nota</string>
     <string name="new_note_alert_message">Titolo:</string>
@@ -18,7 +20,8 @@
     <string name="action_new">Nuova nota</string>
     <string name="action_hide_note_list">Nascondi lista delle note</string>
     <string name="action_rec">Registra</string>
-    <string name="action_search">Cerc</string>
+    <string name="action_play">Riproduci</string>
+    <string name="action_search">Cerca</string>
     <string name="action_share_full">Condividi testo e audio</string>
     <string name="action_share_full_chooser">Condividi testo e audio a&#8230;</string>
     <string name="action_share_text">Condividi testo</string>
@@ -34,12 +37,27 @@
 
     <!--<string name="rec_prepare_error">Errore durante l\'inizializzazione del registratore. Per favore inviami una segnalazione.</string>-->
     <string name="action_rec_startfail">C\'è stato un errore con il registratore. Riavvia il telefono e riprova.</string>
+    <string name="action_rec_stopfail">Non sono riuscito a fermare la registrazione.</string>
 
-    <string name="notif_title">Registrazione in corso</string>
-    <!--<string name="notif_text">Sto registrando…</string>-->
-    <string name="notif_stop">Ferma registrazione</string>
+    <string name="notif_rec_title">Registrazione in corso</string>
+    <string name="notif_play_title">Riproduzione in corso</string>
+    <!--<string name="notif_text_prefix">Nome nota: \'</string>-->
+    <!--<string name="notif_text_suffix">\'</string>-->
+    <string name="notif_rec_stop">Ferma registrazione</string>
+    <string name="notif_play_stop">Ferma riproduzione</string>
 
     <string name="time_preposition">alle</string>
+
+    <string name="rec_forbidden_backspace">Non puoi cancellare lì. Il testo nella linea precedente non è della registrazione in cui sei.</string>
+    <string name="rec_forbidden_backspace_rec_before">Non puoi cancellare lì. La linea precedente è di un\'altra registrazione</string>
+    <string name="rec_forbidden_del_middle_rec">Puoi cancellare del testo da una registrazione alla volta.</string>
+    <string name="rec_forbidden_cut_middle_rec">Puoi tagliare del testo da una registrazione alla volta.</string>
+    <string name="rec_forbidden_position">Non posso. C\'è già una registrazione qui.</string>
+    <string name="rec_forbidden_start">Non posso. Sto già registrando.</string>
+    <string name="rec_forbidden_stop">Puoi fermare una registrazione solo dalla nota in cui è stata avviata.</string>
+    <string name="rec_forbidden_play">Non posso riprodurre mentre sto registrando.</string>
+    <string name="rec_forbidden_play_empty">Non c\'è nessuna registrazione da riprodurre qui.</string>
+    <string name="rec_forbidden_rec_playing">Non posso registrare mentre sto riproducendo.</string>
 
     <string name="setting_hide_note_text">Nascondi titolo della nota nella notifica</string>
 

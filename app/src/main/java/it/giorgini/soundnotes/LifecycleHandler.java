@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-/**
- * Created by diego on 18/01/15.
- */
 public class LifecycleHandler implements Application.ActivityLifecycleCallbacks {
     // I use four separate variables here. You can, of course, just use two and
     // increment/decrement them instead of using four and incrementing them all.
@@ -29,7 +26,7 @@ public class LifecycleHandler implements Application.ActivityLifecycleCallbacks 
     @Override
     public void onActivityPaused(Activity activity) {
         ++paused;
-        android.util.Log.i("SN", "application is in foreground: " + (resumed > paused));
+//        android.util.Log.i("SN", "application is in foreground: " + (resumed > paused));
     }
 
     @Override
@@ -43,7 +40,7 @@ public class LifecycleHandler implements Application.ActivityLifecycleCallbacks 
     @Override
     public void onActivityStopped(Activity activity) {
         ++stopped;
-        android.util.Log.i("SN", "application is visible: " + (started > stopped));
+//        android.util.Log.i("SN", "application is visible: " + (started > stopped));
     }
 
 

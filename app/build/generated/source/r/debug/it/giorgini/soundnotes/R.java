@@ -1270,7 +1270,8 @@ containing a value of this type.
         public static final int rec_left_margin=0x7f08002f;
         public static final int rec_left_margin_small=0x7f080030;
         public static final int rec_text=0x7f080031;
-        public static final int rec_vertical_margin=0x7f080032;
+        public static final int rec_text_small=0x7f080032;
+        public static final int rec_vertical_margin=0x7f080033;
     }
     public static final class drawable {
         public static final int abc_ab_share_pack_holo_dark=0x7f020000;
@@ -1339,12 +1340,15 @@ containing a value of this type.
         public static final int ic_action_mic_9=0x7f02003f;
         public static final int ic_action_mic_active=0x7f020040;
         public static final int ic_action_new=0x7f020041;
-        public static final int ic_action_return_from_full_screen=0x7f020042;
-        public static final int ic_action_search=0x7f020043;
-        public static final int ic_action_stop=0x7f020044;
-        public static final int ic_stat_notify=0x7f020045;
-        public static final int ripple=0x7f020046;
-        public static final int touch_selector=0x7f020047;
+        public static final int ic_action_pause=0x7f020042;
+        public static final int ic_action_play=0x7f020043;
+        public static final int ic_action_return_from_full_screen=0x7f020044;
+        public static final int ic_action_search=0x7f020045;
+        public static final int ic_action_stop=0x7f020046;
+        public static final int ic_stat_notify=0x7f020047;
+        public static final int note_list_rec=0x7f020048;
+        public static final int ripple=0x7f020049;
+        public static final int touch_selector=0x7f02004a;
     }
     public static final class id {
         public static final int action_bar=0x7f090031;
@@ -1355,18 +1359,19 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f09001f;
         public static final int action_bar_title=0x7f09001e;
         public static final int action_context_bar=0x7f090032;
-        public static final int action_delete=0x7f09004f;
+        public static final int action_delete=0x7f090055;
         public static final int action_menu_divider=0x7f090002;
         public static final int action_menu_presenter=0x7f090003;
         public static final int action_mode_bar=0x7f09002e;
         public static final int action_mode_bar_stub=0x7f09002d;
         public static final int action_mode_close_button=0x7f090020;
-        public static final int action_rec=0x7f090049;
-        public static final int action_rename=0x7f09004e;
-        public static final int action_search=0x7f09004c;
-        public static final int action_settings=0x7f09004d;
-        public static final int action_share_full=0x7f09004b;
-        public static final int action_share_text=0x7f09004a;
+        public static final int action_play=0x7f09004e;
+        public static final int action_rec=0x7f09004f;
+        public static final int action_rename=0x7f090054;
+        public static final int action_search=0x7f090052;
+        public static final int action_settings=0x7f090053;
+        public static final int action_share_full=0x7f090051;
+        public static final int action_share_text=0x7f090050;
         public static final int activity_chooser_view_content=0x7f090021;
         public static final int always=0x7f090016;
         public static final int beginning=0x7f090013;
@@ -1392,6 +1397,7 @@ containing a value of this type.
         public static final int listMode=0x7f090009;
         public static final int list_item=0x7f090025;
         public static final int middle=0x7f090015;
+        public static final int name=0x7f09004c;
         public static final int never=0x7f090019;
         public static final int none=0x7f09000e;
         public static final int normal=0x7f09000a;
@@ -1404,6 +1410,9 @@ containing a value of this type.
         public static final int radio=0x7f09002b;
         public static final int rec_view=0x7f090041;
         public static final int rec_view_container=0x7f09003f;
+        public static final int recording=0x7f090049;
+        public static final int row=0x7f09004a;
+        public static final int row_inside=0x7f09004b;
         public static final int search_badge=0x7f090035;
         public static final int search_bar=0x7f090034;
         public static final int search_button=0x7f090036;
@@ -1421,6 +1430,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f090007;
         public static final int submit_area=0x7f09003c;
         public static final int tabMode=0x7f09000b;
+        public static final int text=0x7f09004d;
         public static final int textView=0x7f090046;
         public static final int title=0x7f090027;
         public static final int up=0x7f090008;
@@ -1430,6 +1440,7 @@ containing a value of this type.
     }
     public static final class integer {
         public static final int abc_max_action_buttons=0x7f0a0000;
+        public static final int screenOrientation=0x7f0a0001;
     }
     public static final class layout {
         public static final int abc_action_bar_title_item=0x7f040000;
@@ -1461,7 +1472,9 @@ containing a value of this type.
         public static final int empty_note_list=0x7f04001a;
         public static final int fab=0x7f04001b;
         public static final int fragment_note_detail=0x7f04001c;
-        public static final int support_simple_spinner_dropdown_item=0x7f04001d;
+        public static final int note_list_rec_image=0x7f04001d;
+        public static final int note_list_row=0x7f04001e;
+        public static final int support_simple_spinner_dropdown_item=0x7f04001f;
     }
     public static final class menu {
         public static final int note_actions=0x7f0d0000;
@@ -1492,31 +1505,46 @@ containing a value of this type.
         public static final int action_delete_fail=0x7f0b0011;
         public static final int action_hide_note_list=0x7f0b0012;
         public static final int action_new=0x7f0b0013;
-        public static final int action_rec=0x7f0b0014;
-        public static final int action_rec_startfail=0x7f0b0015;
-        public static final int action_rename=0x7f0b0016;
-        public static final int action_rename_fail=0x7f0b0017;
-        public static final int action_search=0x7f0b0018;
-        public static final int action_settings=0x7f0b0019;
-        public static final int action_share_full=0x7f0b001a;
-        public static final int action_share_full_chooser=0x7f0b001b;
-        public static final int action_share_text=0x7f0b001c;
-        public static final int action_share_text_chooser=0x7f0b001d;
-        public static final int alert_key_cancel=0x7f0b001e;
-        public static final int alert_key_ok=0x7f0b001f;
-        public static final int app_name=0x7f0b0020;
-        public static final int empty_list_msg=0x7f0b0021;
-        public static final int fab_new=0x7f0b0022;
-        public static final int new_note_alert_message=0x7f0b0023;
-        public static final int new_note_alert_title=0x7f0b0024;
-        public static final int new_note_name=0x7f0b0025;
-        public static final int notif_stop=0x7f0b0026;
-        public static final int notif_title=0x7f0b0027;
-        public static final int renaming_message=0x7f0b0028;
-        public static final int renaming_title=0x7f0b0029;
-        public static final int setting_hide_note_text=0x7f0b002a;
-        public static final int time_preposition=0x7f0b002b;
-        public static final int title_note_detail=0x7f0b002c;
+        public static final int action_play=0x7f0b0014;
+        public static final int action_rec=0x7f0b0015;
+        public static final int action_rec_startfail=0x7f0b0016;
+        public static final int action_rec_stopfail=0x7f0b0017;
+        public static final int action_rename=0x7f0b0018;
+        public static final int action_rename_fail=0x7f0b0019;
+        public static final int action_search=0x7f0b001a;
+        public static final int action_settings=0x7f0b001b;
+        public static final int action_share_full=0x7f0b001c;
+        public static final int action_share_full_chooser=0x7f0b001d;
+        public static final int action_share_text=0x7f0b001e;
+        public static final int action_share_text_chooser=0x7f0b001f;
+        public static final int alert_key_cancel=0x7f0b0020;
+        public static final int alert_key_ok=0x7f0b0021;
+        public static final int app_name=0x7f0b0022;
+        public static final int empty_list_msg=0x7f0b0023;
+        public static final int fab_new=0x7f0b0024;
+        public static final int list_rec_description=0x7f0b0025;
+        public static final int new_note_alert_message=0x7f0b0026;
+        public static final int new_note_alert_title=0x7f0b0027;
+        public static final int new_note_name=0x7f0b0028;
+        public static final int notif_play_stop=0x7f0b0029;
+        public static final int notif_play_title=0x7f0b002a;
+        public static final int notif_rec_stop=0x7f0b002b;
+        public static final int notif_rec_title=0x7f0b002c;
+        public static final int rec_forbidden_backspace=0x7f0b002d;
+        public static final int rec_forbidden_backspace_rec_before=0x7f0b002e;
+        public static final int rec_forbidden_cut_middle_rec=0x7f0b002f;
+        public static final int rec_forbidden_del_middle_rec=0x7f0b0030;
+        public static final int rec_forbidden_play=0x7f0b0031;
+        public static final int rec_forbidden_play_empty=0x7f0b0032;
+        public static final int rec_forbidden_position=0x7f0b0033;
+        public static final int rec_forbidden_rec_playing=0x7f0b0034;
+        public static final int rec_forbidden_start=0x7f0b0035;
+        public static final int rec_forbidden_stop=0x7f0b0036;
+        public static final int renaming_message=0x7f0b0037;
+        public static final int renaming_title=0x7f0b0038;
+        public static final int setting_hide_note_text=0x7f0b0039;
+        public static final int time_preposition=0x7f0b003a;
+        public static final int title_note_detail=0x7f0b003b;
     }
     public static final class style {
         /** <item name="android:colorBackground">#0000FF</item>

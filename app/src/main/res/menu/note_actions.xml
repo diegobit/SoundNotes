@@ -2,7 +2,14 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:soundnotes="http://schemas.android.com/apk/res-auto">
-    
+
+    <!--Tasto play-->
+    <item android:id="@+id/action_play"
+        android:icon="@drawable/ic_action_play"
+        android:title="@string/action_play"
+        android:orderInCategory="2"
+        soundnotes:showAsAction="ifRoom" />
+
     <!-- Tasto registrazione audio -->
     <item android:id="@+id/action_rec"
           android:icon="@drawable/ic_action_mic"

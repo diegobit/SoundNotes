@@ -9,11 +9,25 @@
         <dex dex="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-bd4bbaf5458d3bfd064c3d3cc650956f7d9aa659.jar" />
     </item>
     <item
+        jar="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/pre-dexed/debug/classes-d615fd14fdc13bc1a4bbc340236f045b2fcfc054.jar" />
+    </item>
+    <item
         jar="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.1"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
         <dex dex="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/pre-dexed/debug/classes-9969d0bad9c3e9ad554f52e74fe6f2908b1b64c0.jar" />
+    </item>
+    <item
+        jar="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-32ba2db7b8fe932ee8ccef1ac6c68093e8809814.jar" />
     </item>
     <item
         jar="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
@@ -28,6 +42,20 @@
         revision="21.1.1"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
         <dex dex="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-32ba2db7b8fe932ee8ccef1ac6c68093e8809814.jar" />
+    </item>
+    <item
+        jar="/Users/diego/.android_sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-bd4bbaf5458d3bfd064c3d3cc650956f7d9aa659.jar" />
+    </item>
+    <item
+        jar="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/diego/Documents/MieiProgetti/SoundNotes/app/build/intermediates/pre-dexed/debug/classes-9969d0bad9c3e9ad554f52e74fe6f2908b1b64c0.jar" />
     </item>
 
 </items>
