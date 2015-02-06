@@ -6,6 +6,8 @@
     <dimen name="button_elevation">3dp</dimen>
     <dimen name="button_press_elevation">6dp</dimen>
 
+    <dimen name="richedittext_leftmargin">48dp</dimen>
+
     <dimen name="rec_left_margin">44dp</dimen>
     <dimen name="rec_left_margin_small">6dp</dimen>
     <dimen name="rec_vertical_margin">4dp</dimen>

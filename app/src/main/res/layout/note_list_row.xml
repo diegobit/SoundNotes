@@ -2,11 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/row"
     android:layout_width="match_parent"
-    android:layout_height="56dip">
+    android:background="@drawable/row_background"
+    android:layout_height="56dip" >
 
     <LinearLayout
         android:id="@+id/row_inside"
         android:orientation="vertical"
+        android:smoothScrollbar="true"
         android:paddingRight="2dip"
         android:paddingLeft="24dip"
         android:layout_gravity="center_vertical"

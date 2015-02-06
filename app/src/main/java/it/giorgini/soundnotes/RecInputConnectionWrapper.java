@@ -1,6 +1,5 @@
 package it.giorgini.soundnotes;
 
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
@@ -24,8 +23,6 @@ public class RecInputConnectionWrapper extends InputConnectionWrapper {
     // solo alla fine della parola ma mi serve controllare carattere per carattere
     @Override
     public boolean commitText(CharSequence text, int newCursorPosition) {
-//        Log.i("SN $$$", "RecInputConnectionWrapper commitText: " + text);
-//        recView.get().onCharAdded(text);
         if (text.equals("\n")) {
             recView.get().insertNewline();
         }
@@ -43,7 +40,6 @@ public class RecInputConnectionWrapper extends InputConnectionWrapper {
                     if (startSel == endSel) {
                         if (startSel == 0)
                             return true;
-//                        String deletedChar = editText.getText().toString().substring(startSel - 1, startSel);
                         char deletedChar = editText.get().getText().charAt(startSel - 1);
                         if (deletedChar == '\n') {
                             if (recView.get().removeNewlineBeforeCurrPos()) {
@@ -76,12 +72,6 @@ public class RecInputConnectionWrapper extends InputConnectionWrapper {
         }
         return super.sendKeyEvent(event);
     }
-
-//    @Override
-//    public boolean setComposingText(CharSequence text, int newCursorPosition) {
-//        Log.d("SN $$$", "RecInputConnectionWrapper setComposingText: " + text);
-//        return super.setComposingText(text, newCursorPosition);
-//    }
 
 //    @Override
 //    public boolean performContextMenuAction(int id) {
@@ -133,7 +123,6 @@ public class RecInputConnectionWrapper extends InputConnectionWrapper {
                 return super.deleteSurroundingText(beforeLength, afterLength);
 
             // ho premuto semplicemente backspace
-//            String deletedChar = editText.getText().toString().substring(startSel - 1, startSel);
             char deletedChar = editText.get().getText().charAt(endSel - 1);
             if (deletedChar == '\n') {
                 // se non posso cancellare...

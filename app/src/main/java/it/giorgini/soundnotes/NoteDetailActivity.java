@@ -1,20 +1,33 @@
 package it.giorgini.soundnotes;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 //import android.support.v4.app.NavUtils;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 
 /**
@@ -26,22 +39,16 @@ import java.lang.ref.WeakReference;
  * a {@link NoteDetailFragment}.
  */
 public class NoteDetailActivity extends ActionBarActivity implements NoteDetailFragment.Callbacks {
-//    public boolean mTwoPane;
+    public boolean mTwoPane;
     private WeakReference<NoteDetailFragment> detailFragment;
     private WeakReference<RichEditText> editText;
-//    RichEditText noteDetailView;
     private RecordingsView recordingsView;
     private WeakReference<MenuItem> playIcon;
-    //Your activity will respond to this action String
-    public static final String REC_START_REQUEST = "it.giorgini.soundnotes.recstartrequest";
-    public static final String REC_STOPPED = "it.giorgini.soundnotes.recstopped";
-    public static final String PLAYER_STARTED = "it.giorgini.soundnotes.playerstarted";
-    public static final String PLAYER_STOPPED = "it.giorgini.soundnotes.playerstopped";
 
     private BroadcastReceiver bReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(REC_START_REQUEST)) {
+            if (intent.getAction().equals(RecorderService.REC_START_REQUEST)) {
                 Log.d("SN @@@", "broadRec - onNewIntent rec started");
                 if (recordingsView != null) {
                     Log.d("SN @@@", "recView != null -1-, ok, niente asynctask");
@@ -61,14 +68,14 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
                     Log.d("SN @@@", "recView == null -2- , vado di asynctask");
                     new newRecordingSafe().execute("");
                 }
-            } else if (intent.getAction().equals((REC_STOPPED))) {
+            } else if (intent.getAction().equals((RecorderService.REC_STOPPED))) {
                 long recTime = intent.getLongExtra(RecorderService.EXTRA_REC_TIME, 0);
                 Log.d("SN @@@", "broadRec - onNewIntent rec stopped - " + recTime);
                 recordingsView.stoppedRecording(recTime);
             // In questi due devo solo cambiare l'icona dell'action bar
-            } else if (intent.getAction().equals(PLAYER_STARTED)) {
+            } else if (intent.getAction().equals(RecorderService.PLAYER_STARTED)) {
                 setPlayerIcon(true, null);
-            } else if (intent.getAction().equals(PLAYER_STOPPED)) {
+            } else if (intent.getAction().equals(RecorderService.PLAYER_STOPPED)) {
                 setPlayerIcon(false, null);
             }
         }
@@ -113,9 +120,13 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // ombra dell'actionbar
-        getSupportActionBar().setElevation(4);
+        getSupportActionBar().setElevation(5);
 
-//        mTwoPane = getIntent().getExtras().getBoolean("mTwoPane");
+        // voglio sapere se sono un tablet
+        mTwoPane = getIntent().getExtras().getBoolean("mTwoPane");
+//        // Setto l'orientamento di questa activity
+//        if (!mTwoPane)
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		// savedInstanceState is non-null when there is fragment state saved from previous configurations of this activity
 		// (e.g. when rotating the screen from portrait to landscape). In this case, the fragment will automatically be re-added
@@ -142,10 +153,10 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         // Mi registro agli intent del service
         LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(REC_START_REQUEST);
-        intentFilter.addAction(REC_STOPPED);
-        intentFilter.addAction(PLAYER_STARTED);
-        intentFilter.addAction(PLAYER_STOPPED);
+        intentFilter.addAction(RecorderService.REC_START_REQUEST);
+        intentFilter.addAction(RecorderService.REC_STOPPED);
+        intentFilter.addAction(RecorderService.PLAYER_STARTED);
+        intentFilter.addAction(RecorderService.PLAYER_STOPPED);
         bManager.registerReceiver(bReceiver, intentFilter);
     }
 
@@ -155,8 +166,8 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
         // Il service forse potrebbe non essere più attivo (solo tablet)
         Intent i = new Intent(this, RecorderService.class);
-//        i.putExtra("mTwoPane", mTwoPane);
-//        i.putExtra(RecorderService.EXTRA_MAIN_PATH, getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
+        i.putExtra("mTwoPane", mTwoPane);
+        i.putExtra("mainPath", getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
         startService(i);
     }
 
@@ -223,17 +234,17 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         super.onDestroy();
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.i("SN ###", "Service: rotated in landscape");
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Log.i("SN ###", "Service: rotated in portrait");
-        }
-    }
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//
+//        // Checks the orientation of the screen
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            Log.i("SN ###", "Service: rotated in landscape");
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+//            Log.i("SN ###", "Service: rotated in portrait");
+//        }
+//    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -285,7 +296,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
     @Override
     public void initConnections(RichEditText editText) {
-//        noteDetailView = editText;
+        Log.i("SN ###", "NoteDetailActivity initConnections");
         recordingsView = (RecordingsView) findViewById(R.id.rec_view);
         if (recordingsView != null) {
             Log.d("SN @@@", "recView != null -0- inizial da initCOnnections");
@@ -297,13 +308,10 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         // I also set the RichEditText's reference to this context and recView's edittextlinecount
         editText.setContext(this);
         editText.initRecViewDevLineCount();
-
-        // Imposterei le note alla recordingsView ma lo faccio nella initReclist (ora i layout non sono definiti)
-//        recView.setCurrRecList();
     }
 
     public void initRecList() {
-//        recordingsView.setCurrRecList();
+        recordingsView.setCurrRecList();
     }
 
     public void onPlayRequest(MenuItem item) {
@@ -337,6 +345,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
         setPlayerIcon(false, item);
     }
 
+    // Attenzione: metodo duplicato: FIXARE
     public void setPlayerIcon(boolean playing, MenuItem playerNewItem) {
         // Aggiorno l'icona per le prossime volte
         if (playerNewItem != null)
@@ -348,8 +357,75 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
                 playIcon.get().setIcon(R.drawable.ic_action_pause);
             else
                 playIcon.get().setIcon(R.drawable.ic_action_play);
-        } else
-            Log.w("SN @@@", "NoteDetAct richiesto cambio di icona play ma playicon = null");
+        }
+    }
+
+    @Override
+    public void onDeleteRecRequest() {
+        int line = editText.get().getCurrLine();
+        final int recLine = recordingsView.lineBelongsToRecording(line);
+
+        if (recLine != -1) {
+            final RecordingsView.Recording rec = StorageManager.getCurrNote().recList.get(recLine);
+            String recLineText = editText.get().getLineText(recLine);
+            // ALERT: chiedo se vuole eliminare
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle(R.string.delete_rec_title)
+                    .setMessage(rec.lenghtFormatted + " - " + recLineText);
+
+            // Imposto le azioni dell'alert
+            builder.setPositiveButton(R.string.alert_key_delete, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    recordingsView.removeRecAt(rec, recLine);
+                }
+            });
+
+            builder.setNegativeButton(R.string.alert_key_cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // nulla da fare
+                }
+            });
+
+            // mostro l'alert
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            Toast.makeText(this, R.string.rec_forbidden_del_rec, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @SuppressLint("InlinedApi")
+    @SuppressWarnings("deprecation")
+    public void onShareCurrRec() {
+        final int line = editText.get().getCurrLine();
+        final int recLine = recordingsView.lineBelongsToRecording(line);
+
+        if (recLine != -1) {
+            final StorageManager.SoundNote currNote = StorageManager.getCurrNote();
+            final RecordingsView.Recording rec = currNote.recList.get(recLine);
+            final File file = new File(new File(this.getFilesDir(),
+                    StorageManager.currID),
+                    rec.position + "-" + rec.lenghtMillis + ".aac");
+            // l'uri ottenuta da un file provider affinché l'app che apre il file condiviso abbia i permessi per farlo
+            final Uri uri = FileProvider.getUriForFile(this, "it.giorgini.soundnotes.FileProvider", file);
+
+            final Intent intent = ShareCompat.IntentBuilder.from(this)
+                    .setType("audio/aac")
+                    .setSubject(currNote.name)
+                    .setStream(uri)
+                    .setChooserTitle(R.string.action_share_curr_rec_chooser)
+                    .createChooserIntent()
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            if (NoteListActivity.deviceApiIsAtLeast(Build.VERSION_CODES.LOLLIPOP))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+            else
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, R.string.rec_forbidden_share_curr_rec, Toast.LENGTH_LONG).show();
+        }
     }
 
     //	// Nasconde la ListView in modalità tablet

@@ -10,7 +10,6 @@
     android:layout_marginLeft="0dp"
     android:layout_marginRight="0dp"
     android:baselineAligned="false"
-    android:divider="@drawable/divider"
     android:orientation="horizontal"
     android:showDividers="middle"
     android:clipToPadding="false"
@@ -53,6 +52,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@color/grey_background"
+        android:elevation="8dp"
         android:layout_weight="5">
 
         <FrameLayout

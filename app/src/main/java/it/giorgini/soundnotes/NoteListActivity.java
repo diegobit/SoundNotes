@@ -1,23 +1,31 @@
 package it.giorgini.soundnotes;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.support.v7.app.ActionBarActivity;
 
@@ -43,11 +52,14 @@ import android.support.v7.app.ActionBarActivity;
  * This activity also implements the required {@link NoteListFragment.Callbacks}
  * interface to listen for item selections.
  */
-public class NoteListActivity extends ActionBarActivity implements View.OnClickListener, NoteListFragment.Callbacks {
-    public static String PACKAGE_NAME;
+public class NoteListActivity extends ActionBarActivity implements View.OnClickListener, NoteListFragment.Callbacks, NoteDetailFragment.Callbacks {
+//    public static String PACKAGE_NAME;
     private static boolean mTwoPane = false; // Modalità doppia per tablet
-    private WeakReference<NoteDetailFragment> detailFragment; // Solo se mTwoPane è definito // FIXME: e se lo mettessi in un WeakReference?
+    private WeakReference<NoteDetailFragment> detailFragment; // Solo se mTwoPane è definito
     private WeakReference<NoteListFragment> listFragment; // fragment per visualizzare una lista di elementi
+    private RecordingsView recordingsView;
+    private WeakReference<RichEditText> editText;
+    private WeakReference<MenuItem> playIcon;
 
 //    private Menu menu; // L'oggetto menu dell'action bar che contiene tutti i bottoni.
 
@@ -55,7 +67,7 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     // mi serve questa variabile perchè il fragment chiama un metodo di NoteListActivity che deve comportarsi in modi differenti.
 
     public static final String DATA_PREFS = "DataPreferences";
-    public static final String APP_PREFS = "MyPreferences";
+//    public static final String APP_PREFS = "MyPreferences";
 	
 //	private NotesStorage ns = new NotesStorage(new WeakReference<NoteListActivity>(this));
 		
@@ -66,13 +78,13 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note_list);
 
-        SharedPreferences app_prefs = getSharedPreferences (APP_PREFS, Context.MODE_PRIVATE);
+//        SharedPreferences app_prefs = getSharedPreferences (APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences data_prefs = getSharedPreferences (DATA_PREFS, Context.MODE_PRIVATE);
 
         listFragment = new WeakReference<>((NoteListFragment) getFragmentManager().findFragmentById(R.id.note_list));
 
         if (findViewById(R.id.note_detail_container) != null) {
-			// The detail container view will be present only in the large-screen layouts (res/values-large and
+			// The detail container view will be present only in the large-screen layouts (res/values-xlarge and
 			// res/values-sw600dp). If this view is present, then the activity should be in two-pane mode.
 			mTwoPane = true;
 
@@ -80,7 +92,12 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             listFragment.get().setActivateOnItemClick(true);
 		}
 
+        // Aggiorno mtwopane per listFragment
         listFragment.get().setTwoPane(mTwoPane);
+
+//        // Setto l'orientamento di questa activity
+//        if (!mTwoPane)
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Associo la pressione del fab alla creazione di una nuova nota
         ImageButton button = (ImageButton)findViewById(R.id.fab);
@@ -94,11 +111,28 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
         swapVisibleFragment(!loadedSomething);
 
         // Cambio il colore dell'header nella schermata della app recenti perché altrimenti android scrive di nero su arancione :(
+        //FIXME: colore testo app recenti da cambiare (colore testo app recenti)
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 //            this.setTaskDescription(new ActivityManager.TaskDescription(null, null, R.color.primaryDark));
 //        }
 	}
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Mi registro agli intent del service
+        if (mTwoPane) {
+            LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(RecorderService.REC_START_REQUEST);
+            intentFilter.addAction(RecorderService.REC_STOPPED);
+            intentFilter.addAction(RecorderService.PLAYER_STARTED);
+            intentFilter.addAction(RecorderService.PLAYER_STOPPED);
+            bManager.registerReceiver(bReceiver, intentFilter);
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -110,34 +144,88 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             Intent i = new Intent(this, RecorderService.class);
             i.putExtra("mTwoPane", mTwoPane);
             i.putExtra("mainPath", getFilesDir().getAbsolutePath()); // il percorso principale dove ci sono i miei dati
-            // TODO: devo ancora aggiornare l'id della nota... (?)
             startService(i);
         }
 
-//        // Controllo se sono stato avviato da una notifica per andare ad una nota precisa in quel caso
-//        // apro quella nota. Lo faccio nella onResume per assicurarmi di aver fatto tutto
-//        Intent i = getIntent();
-//        int pos = i.getIntExtra("openedNotePosition", -1);
-//        if (pos != -1) {
-//            // chiamo onItemSelected come se avessi selezionato davvero quella nota nella lista... mah
-//            //TODO: cambiare modo di accedere alla nota dalla notifica
-//            onItemSelected(null, pos);
-//        }
-
-//        if (RecorderService.isRecording()) {
+        // aggiorno l'icona del registratore nella lista delle note. Per cellulare
         StorageManager.toggleRecState();
-//        }
+    }
+
+    private BroadcastReceiver bReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(RecorderService.REC_START_REQUEST)) {
+                Log.d("SN @@@", "broadRec - onNewIntent rec started");
+                if (recordingsView != null) {
+                    Log.d("SN @@@", "recView != null -1-, ok, niente asynctask");
+                    boolean canRecord = recordingsView.newRecording();
+                    if (canRecord) {
+                        // lo dico al service con un intent
+                        Intent i = new Intent(context, RecorderService.class);
+                        i.setAction(RecorderService.ACTION_START_ACCEPTED);
+                        startService(i);
+                        StorageManager.toggleRecState();
+                    } else {
+                        // cambio l'icona del registratore nell'action bar
+                        detailFragment.get().setRecordingIcon(false);
+                    }
+                } else {
+                    // in questo asynctask aspetto che recordingsView venga inizializzato, poi chiamo
+                    // recordingsView.get(). newRecording();
+                    Log.d("SN @@@", "recView == null -2- , vado di asynctask");
+                    new newRecordingSafe().execute("");
+                }
+            } else if (intent.getAction().equals((RecorderService.REC_STOPPED))) {
+                long recTime = intent.getLongExtra(RecorderService.EXTRA_REC_TIME, 0);
+                Log.d("SN @@@", "broadRec - onNewIntent rec stopped - " + recTime);
+                recordingsView.stoppedRecording(recTime);
+                // In questi due devo solo cambiare l'icona dell'action bar
+            } else if (intent.getAction().equals(RecorderService.PLAYER_STARTED)) {
+                setPlayerIcon(true, null);
+            } else if (intent.getAction().equals(RecorderService.PLAYER_STOPPED)) {
+                setPlayerIcon(false, null);
+            }
+        }
+    };
+
+    private class newRecordingSafe extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                while (recordingsView == null) {
+                    Log.d("SN @@@", "recView != null -2.5-, ancora null, richiamo wait");
+                    Thread.sleep(500);
+                }
+                Log.d("SN @@@", "recView != null -3- finalmente!, eseguo newRecording");
+                boolean canRecord = recordingsView.newRecording();
+                if (canRecord) {
+                    // lo dico al service con un intent
+                    Intent i = new Intent(getApplicationContext(), RecorderService.class);
+                    i.setAction(RecorderService.ACTION_START_ACCEPTED);
+                    startService(i);
+                } else {
+                    // cambio l'icona del registratore nell'action bar
+                    detailFragment.get().setRecordingIcon(false);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
     }
 
     // Metodi per gestione dell'action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
         // ombra della actionbar
-        getSupportActionBar().setElevation(4);
-        // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.notelist_actions, menu);
-//        this.menu = menu; // aggiorno la variabile menu per poter disabilitare alcuni tasti
+        getSupportActionBar().setElevation(5);
+//        // Inflate the menu items for use in the action bar
+//	    MenuInflater inflater = getMenuInflater();
+//	    inflater.inflate(R.menu.notelist_actions, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
 
@@ -145,36 +233,27 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Devo gestire la pressione dei tasti principali dell'action bar. Altri saranno gestiti dal fragment
         switch (item.getItemId()) {
-            case R.id.action_search:
-                openSearch();
-                return true;
-            case R.id.action_settings:
-                openSettings();
-                return true;
+//            case R.id.action_search:
+//                openSearch();
+//                return true;
+//            case R.id.action_settings:
+//                openSettings();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 	}
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//    }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//    }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//    }
-
     @Override
     protected void onStop() {
         Log.i("SN ###", "NoteListActivity onStop");
         super.onStop();
+
+        // Tolgo la registrazione al broacast receiver
+        if (mTwoPane) {
+            LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
+            bManager.unregisterReceiver(bReceiver);
+        }
 
         // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra):
         // - se sono su tablet e ho una nota da salvare lo faccio
@@ -193,41 +272,54 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         Log.d("SN ###", "NoteListActivity onDestroy");
-        StorageManager.clear();
+        StorageManager.clearNotesList();
         super.onDestroy();
-    }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.i("SN ###", "Service: rotated in landscape");
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Log.i("SN ###", "Service: rotated in portrait");
+        // Vengo chiamato per esempio quando chiudo l'app dalla lista delle recenti.
+        // Devo terminare il service
+        if (!LifecycleHandler.isApplicationVisible()) {
+            Log.d("SN ###", "stopService called from NoteDetailActivity onDestroy");
+            stopService(new Intent(this, RecorderService.class));
         }
+
+        if (recordingsView != null)
+            recordingsView.clear();
     }
 
 //    @Override
-//    protected void onNewIntent(Intent intent) {
-//        Log.i("SN ###", "onNewIntent");
-//        super.onNewIntent(intent);
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
 //
-//        // Controllo se sono stato avviato da una notifica per andare ad una nota precisa in quel caso
-//        // apro quella nota. Lo faccio nella onResume per assicurarmi di aver fatto tutto
-//        int pos = intent.getIntExtra("openedNotePosition", -1);
-//        if (pos != -1) {
-//            // chiamo onItemSelected come se avessi selezionato davvero quella nota nella lista... mah
-//            //TODO: cambiare modo di accedere alla nota dalla notifica
-//            onItemSelected(null, pos);
+//        // Checks the orientation of the screen
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            Log.i("SN ###", "Service: rotated in landscape");
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+//            Log.i("SN ###", "Service: rotated in portrait");
 //        }
 //    }
 
-    //    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        Log.i("SN ###", "NoteListActivity onWindowFocusChanged");
+        super.onWindowFocusChanged(hasFocus);
+
+        // controllo se ha il focus, allora aggiorno certi elementi dell'interfaccia (solo tablet, non tablet lo faccio nelle notedetailactivity)
+        if (mTwoPane && hasFocus) {
+            if (RecorderService.isRecording()) {
+                if (detailFragment != null)
+                    detailFragment.get().setRecordingIcon(true);
+            } else {
+                if (detailFragment != null)
+                    detailFragment.get().setRecordingIcon(false);
+            }
+
+            if (RecorderService.isPlaying())
+                setPlayerIcon(true, null);
+            else
+                setPlayerIcon(false, null);
+        }
+    }
 
     // salva la nota corrente.
     // NB: codice uguale alla metodo saveCurrentNote di NoteDetailActivity
@@ -242,18 +334,23 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
         }
     }
 
-    /** Questo metodo cambia il fragment visibile: lista di note / schermata vuota
-     */
+    /** Questo metodo cambia il fragment visibile: lista di note / schermata vuota */
     public void swapVisibleFragment(boolean emptyList) {
         if (emptyList) {
             // sostituisco il fragment con la lista delle note con quello vuoto speciale
-            if (mTwoPane)
-                findViewById(R.id.note_detail_container).setVisibility(View.GONE);
+            if (mTwoPane) {
+//                findViewById(R.id.note_detail_container).setVisibility(View.GONE);
+                RelativeLayout recViewContainer = (RelativeLayout) findViewById(R.id.rec_view_container);
+                recViewContainer.setVisibility(View.GONE);
+            }
             findViewById(R.id.note_list).setVisibility(View.GONE);
             findViewById(R.id.empty_list).setVisibility(View.VISIBLE);
         } else {
-            if (mTwoPane)
-                findViewById(R.id.note_detail_container).setVisibility(View.VISIBLE);
+            if (mTwoPane) {
+//                findViewById(R.id.note_detail_container).setVisibility(View.VISIBLE);
+                RelativeLayout recViewContainer = (RelativeLayout) findViewById(R.id.rec_view_container);
+                recViewContainer.setVisibility(View.VISIBLE);
+            }
             findViewById(R.id.empty_list).setVisibility(View.GONE);
             findViewById(R.id.note_list).setVisibility(View.VISIBLE);
         }
@@ -278,17 +375,6 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
     }
 
     public void newNote() {
-
-//        Display display = getWindowManager().getDefaultDisplay();
-//        DisplayMetrics outMetrics = new DisplayMetrics();
-//        display.getMetrics(outMetrics);
-//
-//        float density  = getResources().getDisplayMetrics().density;
-//        float dpHeight = outMetrics.heightPixels / density;
-//        float dpWidth  = outMetrics.widthPixels / density;
-//
-//        Log.d("DEBUG","••••• dens:" + density + " - dpH:" + dpHeight + " - dpW:" + dpWidth);
-
 		// ALERT: chiedo titolo nuova nota
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -363,7 +449,8 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
             StorageManager.add(getResources().getString(R.string.new_note_name), "", System.nanoTime());
 
         // aggiorno la lista delle note
-        //                       updateListAdapter(); // non dovrebbe più servire
+        // updateListAdapter(); // non dovrebbe più servire
+
         // Se ora c'è una sola nota devo ripristinare il fragment che visualizza la lista
         // e aggiungo di nuovo i tasti nella action bar se è la prima nota nella lista
         if (StorageManager.ITEMS.size() == 1) {
@@ -382,18 +469,17 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
         lv.performItemClick(la.getView(0, null, null), 0, la.getItemId(0));
     }
 
-	public void openSearch() {
-		//TODO: implementare (ricerca)
-		Toast toast = Toast.makeText(this, "tasto search", Toast.LENGTH_SHORT);
-		toast.show();
-	}
-	
-	public void openSettings() {
-		//TODO: implementare (impostazioni)
-		Toast.makeText(this, "tasto settings", Toast.LENGTH_SHORT).show();
-
-//        Object aa = PreferenceScreen.createPreferenceScreen(this);
-	}
+//	public void openSearch() {
+//		//TODO: implementare ricerca
+//		Toast toast = Toast.makeText(this, "tasto search", Toast.LENGTH_SHORT);
+//		toast.show();
+//	}
+//
+//	public void openSettings() {
+//		//TODO: implementare impostazioni
+//		Toast.makeText(this, "tasto settings", Toast.LENGTH_SHORT).show();
+////        Object aa = PreferenceScreen.createPreferenceScreen(this);
+//	}
 	
 	/**
      * Callback method from {@link NoteListFragment.Callbacks} indicating that
@@ -409,14 +495,17 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
                 StorageManager.updateCurrItem(position);
                 detailFragment = new WeakReference<>(new NoteDetailFragment());
                 detailFragment.get().setTwoPane(true);
+                // lo piazzo
                 getFragmentManager().beginTransaction().replace(R.id.note_detail_container, detailFragment.get()).commit();
             } else {
-                Log.d("SN ###", "currFragment != null - testoCorrente: '" + ((RichEditText) this.findViewById(R.id.note_detail)).getText().toString() + "'");
                 // ho premuto su un'altra nota, salvo quella corrente e carico la successiva
+//                if (!deletingState && StorageManager.getCurrNote() != null)
                 if (!deletingState && StorageManager.getCurrNote() != null)
                     save();
                 StorageManager.updateCurrItem(position);
                 updateDetailFragmentContent();
+                // Aggiorno la recView
+                recordingsView.updateCurrItem(position);
             }
 
 		} else {
@@ -464,6 +553,158 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
         } else {
             Log.i("SN", "Application: device minimum must be upgraded for the newer build");
             return true;
+        }
+    }
+
+    @Override
+    public void returnToList() {
+
+    }
+
+    @Override
+    public void initConnections(RichEditText ret) {
+        if (mTwoPane) {
+            recordingsView = (RecordingsView) findViewById(R.id.rec_view);
+            this.editText = new WeakReference<>(ret);
+            ret.setRecView(recordingsView);
+            recordingsView.setAssociatedEditText(ret);
+
+            // I also set the RichEditText's reference to this context and recView's edittextlinecount
+            ret.setContext(this);
+            ret.initRecViewDevLineCount();
+        }
+    }
+
+    public void initRecList() {
+        recordingsView.setCurrRecList();
+    }
+
+    @Override
+    public void onPlayRequest(MenuItem item) {
+        Log.i("SN ###", "NoteListActivity onPlayRequest");
+        if (mTwoPane) {
+            int line = editText.get().getCurrLine();
+            int recLine = recordingsView.lineBelongsToRecording(line);
+            if (recLine != -1) {
+                Intent i = new Intent(this, RecorderService.class);
+                i.setAction(RecorderService.ACTION_PLAYER_START);
+                // calcolo il path della registrazione da riprodurre e la linea della rec (prima di spostarla... forse voglio
+                // andare in pausa, potrei aver inserito/cancellato linee, devo sapere quella prima di queste azioni
+                RecordingsView.Recording rec = StorageManager.getCurrNote().recList.get(recLine);
+                String path = rec.position + "-" + rec.lenghtMillis + ".aac";
+                i.putExtra("line", rec.position);
+                i.putExtra("path", path);
+                startService(i);
+
+                // cambio l'icona nella action bar nel tasto della pausa
+                setPlayerIcon(true, item);
+            } else {
+                Toast.makeText(this, R.string.rec_forbidden_play_empty, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onPauseRequest(MenuItem item) {
+        Log.i("SN ###", "NoteListActivity onPauseRequest");
+        if (mTwoPane) {
+            Intent i = new Intent(this, RecorderService.class);
+            i.setAction(RecorderService.ACTION_PLAYER_PAUSE);
+            i.putExtra("stop", false);
+            startService(i);
+
+            // cambio l'icona nella action bar nel tasto play
+            setPlayerIcon(false, item);
+        }
+    }
+
+    // Attenzione: metodo duplicato: FIXARE
+    public void setPlayerIcon(boolean playing, MenuItem playerNewItem) {
+        // Aggiorno l'icona per le prossime volte
+        if (playerNewItem != null)
+            playIcon = new WeakReference<>(playerNewItem);
+
+        // cambio l'icona nella action bar nel tasto play o pausa
+        if (playIcon != null) {
+            if (playing)
+                playIcon.get().setIcon(R.drawable.ic_action_pause);
+            else
+                playIcon.get().setIcon(R.drawable.ic_action_play);
+        }
+    }
+
+    @Override
+    public void onDeleteRecRequest() {
+        Log.i("SN ###", "NoteListActivity onDeleteRequest");
+        if (mTwoPane) {
+            int line = editText.get().getCurrLine();
+            final int recLine = recordingsView.lineBelongsToRecording(line);
+
+            if (recLine != -1) {
+                final RecordingsView.Recording rec = StorageManager.getCurrNote().recList.get(recLine);
+                String recLineText = editText.get().getLineText(recLine);
+                // ALERT: chiedo se vuole eliminare
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setTitle(R.string.delete_rec_title)
+                        .setMessage(rec.lenghtFormatted + " - " + recLineText);
+
+                // Imposto le azioni dell'alert
+                builder.setPositiveButton(R.string.alert_key_delete, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        recordingsView.removeRecAt(rec, recLine);
+                    }
+                });
+
+                builder.setNegativeButton(R.string.alert_key_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // nulla da fare
+                    }
+                });
+
+                // mostro l'alert
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else {
+                Toast.makeText(this, R.string.rec_forbidden_del_rec, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @SuppressLint("InlinedApi")
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onShareCurrRec() {
+        Log.i("SN ###", "NoteListActivity onShareCurrRec");
+        if (mTwoPane) {
+            final int line = editText.get().getCurrLine();
+            final int recLine = recordingsView.lineBelongsToRecording(line);
+
+            if (recLine != -1) {
+                final StorageManager.SoundNote currNote = StorageManager.getCurrNote();
+                final RecordingsView.Recording rec = currNote.recList.get(recLine);
+                final File file = new File(new File(this.getFilesDir(),
+                        StorageManager.currID),
+                        rec.position + "-" + rec.lenghtMillis + ".aac");
+                // l'uri ottenuta da un file provider affinché l'app che apre il file condiviso abbia i permessi per farlo
+                final Uri uri = FileProvider.getUriForFile(this, "it.giorgini.soundnotes.FileProvider", file);
+
+                final Intent intent = ShareCompat.IntentBuilder.from(this)
+                        .setType("audio/aac")
+                        .setSubject(currNote.name)
+                        .setStream(uri)
+                        .setChooserTitle(R.string.action_share_curr_rec_chooser)
+                        .createChooserIntent()
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if (NoteListActivity.deviceApiIsAtLeast(Build.VERSION_CODES.LOLLIPOP))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                else
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, R.string.rec_forbidden_share_curr_rec, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

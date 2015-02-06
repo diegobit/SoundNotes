@@ -16,6 +16,13 @@
           android:title="@string/action_rec"
           android:orderInCategory="5"
           soundnotes:showAsAction="ifRoom" />
+
+    <!-- Tasto registrazione audio -->
+    <item android:id="@+id/action_del"
+        android:icon="@drawable/ic_action_cancel"
+        android:title="@string/action_del"
+        android:orderInCategory="8"
+        soundnotes:showAsAction="ifRoom" />
     
     <!-- Search -->
     <!--<item android:id="@+id/action_search"-->
@@ -23,15 +30,21 @@
           <!--android:title="@string/action_search"-->
           <!--android:showAsAction="never" />-->
 
-<!-- Share file as text-->
+    <!-- Share file as text-->
     <item android:id="@+id/action_share_text"
           android:title="@string/action_share_text"
           android:orderInCategory="15"
           soundnotes:showAsAction="never" />
-    
+
+    <!-- Share selected recording -->
+    <item android:id="@+id/action_share_curr_rec"
+        android:title="@string/action_share_curr_rec"
+        android:orderInCategory="18"
+        soundnotes:showAsAction="never" />
+
     <!-- Share entire file -->
     <item android:id="@+id/action_share_full"
           android:title="@string/action_share_full"
-          android:orderInCategory="16"
+          android:orderInCategory="20"
           soundnotes:showAsAction="never" />
 </menu>

@@ -55,7 +55,7 @@ public class StorageManager {
         dataPrefs = dataPreferences;
     }
 
-    public static void clear() {
+    public static void clearNotesList() {
         ITEMS.clear();
         ITEM_MAP.clear();
         ITEMS_ADAPTER.notifyDataSetChanged();
@@ -155,16 +155,6 @@ public class StorageManager {
         throw new WrongFileNameException("The extension given is wrong/unsupported");
     }
 
-
-
-//    public static boolean isInteger(String s) {
-//        try {
-//            Integer.parseInt(s);
-//            return true;
-//        } catch(NumberFormatException e) {
-//            return false;
-//        }
-//    }
     public static boolean isInteger(String str) {
         if (str == null) {
             return false;
@@ -215,7 +205,6 @@ public class StorageManager {
                     @Override
                     public int compare(SoundNote n1, SoundNote n2) {
                         return (Long.valueOf(n1.date)).compareTo(n2.date);
-                        // NOTA SE CERCHERAI DEI BUG: se non ordina bene rimettere n2.date dentro un Long
                     }
                 };
                 break;
@@ -259,7 +248,7 @@ public class StorageManager {
 
         if (SORTOPTION == SortMode.CREATIONTIME_DESCENDING) {
             ITEMS.add(0, n);
-            // TODO: altri casi
+            // TODO: altri ordinamenti lista note
             ITEM_MAP.put(id, n);
         }
 
@@ -275,55 +264,57 @@ public class StorageManager {
     public static boolean saveAllRecordings() {
         ArrayList<Integer> recLeftToRename = new ArrayList<>();
         ArrayList<RecordingsView.Recording> recList = StorageManager.getCurrNote().recList;
-        File recDir = new File(activity.get().getFilesDir(), "/" + currID);
-        recDir.mkdir();
-//        File recDir = activity.get().getDir(currID, Context.MODE_PRIVATE);
+        if (recList != null) {
+            File recDir = new File(activity.get().getFilesDir(), File.separator + currID);
+            //noinspection ResultOfMethodCallIgnored
+            recDir.mkdir();
 
-        // ciclo su ogni riga della nota
-        for (int i = 0; i < recList.size(); i++) {
-            RecordingsView.Recording rec = recList.get(i);
-            // rec != null -> nella riga c'è una registrazione
-            if (rec != null) {
-                // ho modificato la nota e devo rinominare il file in memoria
-                if (i != rec.position) {
-                    if (!renameRecording(recDir, rec, i)) {
-                        // non sono riuscito a rinominare. Aggiungo alla lista delle rec non spostate e riprovo dopo
-                        recLeftToRename.add(i);
-                        Log.i("SN ###", "StorMan saveAll: non rinominata da pos" + rec.position + "a " + i);
+            // ciclo su ogni riga della nota
+            for (int i = 0; i < recList.size(); i++) {
+                RecordingsView.Recording rec = recList.get(i);
+                // rec != null -> nella riga c'è una registrazione
+                if (rec != null) {
+                    // ho modificato la nota e devo rinominare il file in memoria
+                    if (i != rec.position) {
+                        if (!renameRecording(recDir, rec, i)) {
+                            // non sono riuscito a rinominare. Aggiungo alla lista delle rec non spostate e riprovo dopo
+                            recLeftToRename.add(i);
+                            Log.i("SN ###", "StorMan saveAll: non rinominata da pos" + rec.position + "a " + i);
+                        } else
+                            Log.i("SN ###", "StorMan saveAll: rinominata! da pos" + rec.position + "a " + i + " (giusto che siano uguali");
                     }
-                    else
-                        Log.i("SN ###", "StorMan saveAll: rinominata! da pos" + rec.position + "a " + i + " (giusto che siano uguali");
                 }
             }
-        }
 
-        int timeout = 0;
-        int renamed = 0;
-        int len = recLeftToRename.size();
-        // ciclo sulle rec non ancora rinominate. Questo while serve per tenere conto di altre possibili collisioni
-        while (renamed < len && timeout < 50) {
-            // il ciclo delle note da rinominare
-            for (int j = len - 1; j >= 0; j--) {
-                int newPos = recLeftToRename.get(j);
-                if (renameRecording(recDir, recList.get(newPos), newPos)) {
-                    recLeftToRename.remove(j);
-                    renamed++;
-                    Log.i("SN ###", "StorMan saveAll: rinominata dopo collisione! da pos" + recList.get(newPos).position + "a " + newPos + " (giusto che siano uguali");
-                    j--; // rimuovo, devo tenere lo stesso indice;
+            int timeout = 0;
+            int renamed = 0;
+            int len = recLeftToRename.size();
+            // ciclo sulle rec non ancora rinominate. Questo while serve per tenere conto di altre possibili collisioni
+            while (renamed < len && timeout < 50) {
+                // il ciclo delle note da rinominare
+                for (int j = len - 1; j >= 0; j--) {
+                    int newPos = recLeftToRename.get(j);
+                    if (renameRecording(recDir, recList.get(newPos), newPos)) {
+                        recLeftToRename.remove(j);
+                        renamed++;
+                        Log.i("SN ###", "StorMan saveAll: rinominata dopo collisione! da pos" + recList.get(newPos).position + "a " + newPos + " (giusto che siano uguali");
+                        j--; // rimuovo un elemento, devo tenere lo stesso indice;
+                    }
                 }
+                timeout++;
             }
-            timeout++;
-        }
-        Log.i("SN ###", "StorMan saveAll: non rinom dopo collisione! da pos");
+            Log.i("SN ###", "StorMan saveAll: non rinom dopo collisione! da pos");
 
-        return renamed == len;
+            return renamed == len;
+        } else {
+            Log.i("SN ###", "StorMan saveAllRecs - recList = null. Forse non è un problema perchè chiamo il metodo quando nessuna nota è attiva (tablet)");
+            return false;
+        }
     }
 
     private static boolean renameRecording(File recDir, RecordingsView.Recording rec, int newPos) {
         File oldName = new File(recDir, rec.position + "-" + rec.lenghtMillis + ".aac");
-//        oldName.setReadable(true, false);
         File newName = new File(recDir, newPos + "-" + rec.lenghtMillis + ".aac");
-        //        newName.setReadable(true, false);
         return oldName.renameTo(newName);
     }
 
@@ -333,35 +324,30 @@ public class StorageManager {
      * @return true se ho caricato almeno un elemento
      *         false altrimenti
      */
-
-    public static boolean load() { //TODO: farlo in backgroud
+    public static boolean load() { //TODO: caricare in background le note all'avvio?
+        int counter = 0;
         ITEMS_ADAPTER = new NoteListAdapter(activity.get(), ITEMS);
-
         String[] files = activity.get().fileList();
 
         // Carico le note solo se ci sono dei file nella memoria interna
         if (files.length != 0) {
-            int counter = 0;
             long date = 0;
             File filesDir = activity.get().getFilesDir();
             String[] id_name_ext;
             StringBuilder text = new StringBuilder();
-            ArrayList<File> dirToDo = new ArrayList<>();
+//            ArrayList<File> dirToDo = new ArrayList<>();
 
             // Itero: per ogni file creo una nuova nota
             for (String path : files) {
                 try {
                     Log.w("SN ###", "storman load inizio for sui file - " + path);
                     // popolo l'array di cartelle. Le scorro tutte insieme dopo quando ho già creato le note
-//                    //TODO: performance: creare nota con quello che trovo per primo (anche se rec)
-                    File d = (new File(path));
-                    // perchè nelle cartelle ci sono le registrazioni
-                    if (!d.isDirectory()) {
-//                        dirToDo.add(d);
-//                    else {
+                    File f = (new File(filesDir, path));
+                    // perchè ci sono delle cartelle in cui ci sono le registrazioni. Distinguo: qui solo file
+                    if (!f.isDirectory()) {
+                        Log.i("SN ###", "StorMan load file normale: " + path);
                         // Isolo il nome della nota dal nome del file (e ignoro il file se non è uno corretto)
                         id_name_ext = getTokensFromFilename(path);
-                        Log.i("SN ###", "StorMan load inizio: " + path);
 
                         // Devo leggere il file. Può essere la parte testuale o una audio
                         if (textExtensions.contains(id_name_ext[2])) {
@@ -373,7 +359,7 @@ public class StorageManager {
                                 // prima linea del file: se date == 0 allora sto controllando la prima linea
                                 if (date == 0)
                                     date = Long.parseLong(line);
-                                    // Aggiorno il contenuto della nota
+                                // Aggiorno il contenuto della nota
                                 else
                                     text.append(line).append("\n");
 
@@ -389,28 +375,27 @@ public class StorageManager {
                             date = 0;
                         }
                     } else {
-                        Log.w("SN ###", "StorMan load trovata cartella: " + d.getAbsolutePath());
-                    }
-//                    else {
-//                        //
-//                        //TODO: TOGLIERE
-//                        //
-//                        // Parte audio: // Ho trovato un file audio non vuoto. Ho già suddiviso le parti. Aggiungo.
-//                        File f = ew File(filesDir, path);
-//                        if (f.length() == 0 || f.getName().equals("temp.aac")) {
-//                            if (f.delete())
-//                                Log.i("SN ###", "StorMan Load: cancellato file audio: " + path);
-//                            else
-//                                Log.i("SN ###", "StorMan Load: NON cancellato file audio: " + path);
+                        Log.i("SN ###", "StorMan load trovata cartella: " + f.getAbsolutePath());
+
+                        // so che f è una directory, se length è 0 allora è vuota
+                        File[] flist = f.listFiles();
+                        if (flist.length == 0) {
+                            boolean deleted = f.delete();
+                            Log.i("SN ###", "StorMan load cartella vuota. Cancellata? " + deleted);
 //                        } else {
-//                            Log.i("SN ###", "StorMan Load: trovato file audio: " + path + ", size: " + f.length() + "B");
-//                        }
-//                    }
-//                    }
+//                            Log.i("SN ###", "StorMan load cartella non vuota, la tengo. el: " + flist.length);
+//                            for (int i = 0; i < flist.length; i++) {
+//                                Log.i("SN ###", "StorMan load cartella non vuota, file " + i + ". " + flist[i].getAbsolutePath());
+//                            }
+                        }
+                    }
 
                 } catch (WrongFileNameException e) {
                     // un file col nome diverso... strano
-                    Log.i("SN ###", "StorMan load file formato diverso: " + path);
+                    File f = new File(filesDir, path);
+                    Log.w("SN ###", "StorMan load file formato diverso (STRANO), length: " + f.length() + " f è dir? " + f.isDirectory() + " path: " + f.getAbsolutePath());
+                    boolean deleted = f.delete();
+                    Log.i("SN ###", "StorMan load file formato diverso, cancellato? " + deleted);
                 } catch (OutOfMemoryError e) {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {
@@ -435,8 +420,8 @@ public class StorageManager {
                     Log.w("SN ###", "Load entrato nel for di una cartella per i file audio");
                     SoundNote sn = ITEMS.get(i);
                     String id = sn.id;
-//                    File dir = activity.get().getDir(id, Context.MODE_PRIVATE);
                     File dir = new File(activity.get().getFilesDir(), File.separator + id);
+                    //noinspection ResultOfMethodCallIgnored
                     dir.mkdir();
                     File[] fileList = dir.listFiles();
                     // per ogni cartella devi ciclare sui file all'interno. Ogni file è una registrazione da aggiungere
@@ -445,24 +430,29 @@ public class StorageManager {
                         try {
                             String[] pos_len_ext = getTokensFromFilename(rec.getName());
                             if (audioExtensions.contains(pos_len_ext[2])) {
-                                addRecToNote(id, pos_len_ext[0], pos_len_ext[1]);
-                                Log.w("SN ###", "Load file audio fatto: id " + id + ", pos "
-                                        + pos_len_ext[0] + ", len " + pos_len_ext[1] + "pathdir: " + dir.getPath());
-                            } else {
-                                // È una registrazione non rinominata correttamente. //TODO: fornire modo per recuperarle e piazzarle
-                                // La cancello
-                                Log.i("SN ###", "StorMan load file formato diverso: " + rec.getName());
-                                File f = new File(rec.getName());
+                                // temp rimasto da una precedente iterazione
                                 if (rec.getName().equals("temp.aac")) {
-                                    if (f.delete())
+                                    if (rec.delete())
                                         Log.i("SN ###", "StorMan Load: cancellato file audio: " + rec.getName());
                                     else
                                         Log.i("SN ###", "StorMan Load: NON cancellato file audio: " + rec.getName());
+                                // aggiungo la nota. È una registrazione buona
+                                } else {
+                                    addRecToNote(id, pos_len_ext[0], pos_len_ext[1]);
+                                    Log.w("SN ###", "Load file audio fatto: id " + id + ", pos "
+                                            + pos_len_ext[0] + ", len " + pos_len_ext[1] + "pathdir: " + dir.getPath());
                                 }
+                            } else {
+                                // È una registrazione non rinominata correttamente.
+                                // La cancello
+                                if (rec.delete())
+                                    Log.i("SN ###", "StorMan Load: cancellato file audio: " + rec.getName());
+                                else
+                                    Log.i("SN ###", "StorMan Load: NON cancellato file audio: " + rec.getName());
                             }
                         } catch (WrongFileNameException e) {
                             // Non faccio niente, non mi interessa questo file
-                            Log.w("SN ###", "Load file ignorato catched wrongfilenamexception");
+                            Log.w("SN ###", "Load file ignorato catched wrongfilenamexception. absPath: " + rec.getAbsolutePath());
                         }
                     }
                 }
@@ -470,12 +460,11 @@ public class StorageManager {
                 // metto in ordine la lista delle note.
                 sortList(SORTOPTION);
             }
-
-            return true;
         }
 
-        // nessun file caricato
-        return false;
+        Log.i("SN ###", "StorMan load return false");
+        // nessun file caricato se counter < 0
+        return counter > 0;
     }
 
 	public static boolean save(Context ctx, String newText) {
@@ -545,17 +534,61 @@ public class StorageManager {
     }
 
 	public static boolean delete(Context ctx, int position) {
-        String id = getNoteFromPosition(position).id;
-        File file = new File(ctx.getFilesDir(), getFilenameFromID(id));
-        boolean deleted = file.delete();
+        SoundNote sn = getNoteFromPosition(position);
 
-        if (deleted) {
-            ITEM_MAP.remove(id);
-            ITEMS.remove(position);
-            ITEMS_ADAPTER.notifyDataSetChanged();
+        // cancello le registrazioni
+        boolean deletedRec = deleteAllRec(sn.recList, sn.id);
+        Log.d("SN @@@", "StorMan deletedRec: " + deletedRec);
+        sn.recList = null;
+
+        // cancello il file di testo
+        File file = new File(ctx.getFilesDir(), getFilenameFromID(sn.id));
+        boolean deletedText = file.delete();
+        Log.d("SN @@@", "StorMan deletedText: " + deletedText);
+
+        // tolgo la nota dall'interfaccia
+//        if (deletedText) {
+        ITEM_MAP.remove(sn.id);
+        ITEMS.remove(position);
+        ITEMS_ADAPTER.notifyDataSetChanged();
+//        }
+
+        return deletedRec && deletedText;
+    }
+
+    public static boolean deleteRec(RecordingsView.Recording rec, String id) {
+        // il file eda cancellare
+        if (rec != null) {
+            File filesDir = activity.get().getFilesDir();
+            File recDir = new File(filesDir, id);
+            File f = new File(recDir,
+                              rec.position + "-" + rec.lenghtMillis + ".aac");
+            return f.delete();
+        } else {
+            Log.w("SN @@@", "StorMan deleteRec non cancello, rec = null ");
+            return false;
+        }
+    }
+
+    public static boolean deleteAllRec(ArrayList<RecordingsView.Recording> recList, String id) {
+        boolean everythingDeleted = true;
+        if (recList != null) {
+            for (int i = 0; i < recList.size(); i++) {
+                final RecordingsView.Recording rec = recList.get(i);
+                if (rec != null) {
+                    Log.d("SN @@@", "StorMan deleteAllRec for i: " + i + " rec.pos" + rec.position);
+                    // Cancello la registrazione
+                    // se c'è almeno una deleteRec che ritorna false allora everythingDeleted diventa false
+                    everythingDeleted = deleteRec(rec, id) && everythingDeleted;
+                    Log.d("SN @@@", "StorMan deleteAllRec for i: " + i + " everythingDel: " + everythingDeleted);
+                }
+            }
+        } else {
+            Log.e("SN @@@", "StorMan recList parametro == null");
+            everythingDeleted = false;
         }
 
-        return deleted;
+        return everythingDeleted;
     }
 
     public static void toggleRecState() {
@@ -615,7 +648,7 @@ public class StorageManager {
                 int pos = Integer.parseInt(position);
                 int len = Integer.parseInt(length);
 
-                int diff = 0;
+                int diff;
                 if (recList == null)
                     recList = new ArrayList<>();
                 diff = pos - recList.size();
@@ -634,7 +667,7 @@ public class StorageManager {
 
 		@Override
 		public String toString() {
-			return id + "|||" + name + "|||" + text + "|||" + preview + "|||" + recList.toString() + "|||" + date;
+			return "[" + id + "|||" + name + "|||" + text + "|||" + preview + "|||" + recList.toString() + "|||" + date + "]";
 		}
 	}
 }

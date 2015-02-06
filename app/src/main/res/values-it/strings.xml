@@ -13,25 +13,31 @@
     <string name="new_note_alert_message">Titolo:</string>
     <string name="renaming_title">Rinomina nota</string>
     <string name="renaming_message">Nuovo titolo:</string>
+    <string name="delete_rec_title">Sei sicuro di voler eliminare questa registrazione?</string>
+    <string name="delete_rec_fail">Non riesco a eliminare la registrazione. Riavvia l\'app e riprova.</string>
 
     <string name="alert_key_ok">OK</string>
     <string name="alert_key_cancel">Annulla</string>
+    <string name="alert_key_delete">ELIMINA</string>
 
     <string name="action_new">Nuova nota</string>
     <string name="action_hide_note_list">Nascondi lista delle note</string>
     <string name="action_rec">Registra</string>
+    <string name="action_del">Elimina registrazione</string>
     <string name="action_play">Riproduci</string>
     <string name="action_search">Cerca</string>
     <string name="action_share_full">Condividi testo e audio</string>
     <string name="action_share_full_chooser">Condividi testo e audio a&#8230;</string>
     <string name="action_share_text">Condividi testo</string>
     <string name="action_share_text_chooser">Condividi testo a&#8230;</string>
+    <string name="action_share_curr_rec">Condividi registrazione selezionata</string>
+    <string name="action_share_curr_rec_chooser">Share registrazione a&#8230;</string>
     <string name="action_settings">Impostazioni</string>
 
     <string name="action_rename">Rinomina</string>
     <string name="action_delete">Cancella</string>
-    <string name="action_rename_fail">Non riesco a rinominare la nota. Per favore riprova.</string>
-    <string name="action_delete_fail">Non riesco a cancellare la nota. Per favore riprova.</string>
+    <string name="action_rename_fail">Non riesco a rinominare la nota. Riavvia l\'app e riprova.</string>
+    <string name="action_delete_fail">Non riesco a cancellare la nota. Riavvia l\'app e riprova.</string>
 
     <string name="fab_new">Bottone nuova nota</string>
 
@@ -43,8 +49,8 @@
     <string name="notif_play_title">Riproduzione in corso</string>
     <!--<string name="notif_text_prefix">Nome nota: \'</string>-->
     <!--<string name="notif_text_suffix">\'</string>-->
-    <string name="notif_rec_stop">Ferma registrazione</string>
-    <string name="notif_play_stop">Ferma riproduzione</string>
+    <string name="notif_rec_stop">Stop</string>
+    <string name="notif_play_stop">Stop</string>
 
     <string name="time_preposition">alle</string>
 
@@ -58,6 +64,8 @@
     <string name="rec_forbidden_play">Non posso riprodurre mentre sto registrando.</string>
     <string name="rec_forbidden_play_empty">Non c\'è nessuna registrazione da riprodurre qui.</string>
     <string name="rec_forbidden_rec_playing">Non posso registrare mentre sto riproducendo.</string>
+    <string name="rec_forbidden_del_rec">Non c\'è nessuna registrazione da eliminare qui.</string>
+    <string name="rec_forbidden_share_curr_rec">Non c\'è nessuna registrazione da condividere qui.</string>
 
     <string name="setting_hide_note_text">Nascondi titolo della nota nella notifica</string>
 

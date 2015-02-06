@@ -3,11 +3,9 @@ package it.giorgini.soundnotes;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,19 +22,15 @@ public class RecordingsView extends View {
     final float leftMargin = getResources().getDimension(R.dimen.rec_left_margin);
     final float smallLeftMargin = getResources().getDimension(R.dimen.rec_left_margin_small);
     final float vertMargin = getResources().getDimension(R.dimen.rec_vertical_margin);
-    final float centerWidth = dp2px(23);
+    final float centerWidth = getResources().getDimension(R.dimen.richedittext_leftmargin) / 2 - dp2px(1);
     final float rightMargin = dp2px(1);
 
     private ArrayList<Recording> recList;
     private CoordinatesArray coordinates;
 
-//    boolean isRecording;
     int currRecLine = 0;
     int currRecDevLine = 0;
     int editTextDevLineCount = 0;
-//    int editTextLastPosition = 0;
-//    int interlinea;
-//    int baseline;
 
     public RecordingsView(Context context) {
         super(context);
@@ -59,8 +53,6 @@ public class RecordingsView extends View {
 //    }
 
     private void init() {
-//        editText = (RichEditText) findViewById(R.id.note_detail);
-//        setBackgroundResource(Color.TRANSPARENT);
         lgrey.setColor(getResources().getColor(R.color.line_lgrey));
         orangeText.setColor(getResources().getColor(R.color.primary));
         orangeText.setAntiAlias(true);
@@ -89,21 +81,38 @@ public class RecordingsView extends View {
     }
 
     public void setCurrRecList() {
-        if (StorageManager.getCurrNote().recList == null) {
-            StorageManager.getCurrNote().recList = new ArrayList<>();
+        final StorageManager.SoundNote sn = StorageManager.getCurrNote();
+        if (sn.recList == null) {
+            sn.recList = new ArrayList<>();
         }
-        recList = StorageManager.getCurrNote().recList;
+        recList = sn.recList;
         allocateRecList();
-        Log.i("SN @@@", "RecView recList + " + this.recList + " currNote: " + StorageManager.getCurrNote().id);
 
         // Devo anche inizializzare coordinatesArray!
         for (int i = 0; i < recList.size(); i++) {
             if (recList.get(i) != null) {
-                int devLine = editText.getDeviceLineFromLine(StorageManager.getCurrNote().text, i);
+                int devLine = editText.getDeviceLineFromLine(sn.text, i);
                 fillCoordinatesArrayAt(devLine);
             }
         }
         invalidate();
+    }
+
+    public void updateCurrItem(int position) {
+        // aggiorno la lista delle rec
+        recList = StorageManager.getCurrNote().recList;
+
+        // aggiorno l'array delle coordinate
+        if (recList != null) {
+            allocateRecList();
+            for (int i = 0; i < recList.size(); i++) {
+                if (recList.get(i) != null)
+                    fillCoordinatesArrayAt(editText.getDeviceLineFromLine(null, i));
+            }
+        }
+
+        // sistemo le info sulla rec corrente
+        clear();
     }
 
     @Override
@@ -155,11 +164,9 @@ public class RecordingsView extends View {
             return false;
         }
 
-//        Log.i("SN @@@", "RecordingsView newRec - prima currRecLine: " + currRecLine);
         currRecLine = editText.getCurrLine();
         RecorderService.setCurrRecNoteLine(currRecLine);
         currRecDevLine = editText.getDeviceLineFromLine(null, currRecLine);
-//        Log.i("SN @@@", "RecordingsView newRec - dopo currRecLine: " + currRecLine);
 
         // alloco e riempio gli array fino a currRecLine
         allocateRecList();
@@ -173,8 +180,6 @@ public class RecordingsView extends View {
                 invalidate();
                 return true;
             } else {
-//                recList.set(currRecLine, rec);
-//                invalidate();
                 Toast.makeText(getContext(), R.string.rec_forbidden_position, Toast.LENGTH_LONG).show();
                 return false;
             }
@@ -183,13 +188,25 @@ public class RecordingsView extends View {
             return false;
         }
 
-        //TODO: implementare (anche notelistactivity)
+        //TODO: implementare (anche notelistactivity)?
+    }
+
+    public void removeRecAt(Recording rec, int recLine) {
+        // elimino la registrazione dalla memoria
+        boolean deleted = StorageManager.deleteRec(rec, StorageManager.currID);
+
+        if (deleted) {
+            // elimino la registrazione qui. Setto quell'elemento a null e basta
+            // per non sballare la posizione delle registrazioni sotto.
+            recList.set(recLine, null);
+            invalidate();
+        } else {
+            Toast.makeText(getContext(), R.string.delete_rec_fail, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void stoppedRecording(long recTime) {
         recList.get(currRecLine).setLenght(recTime);
-//        rec.setLenght(recTime);
-//        recList.set(currRecLine, rec);
         if (RecorderService.isInTheSameNoteAsRecording()) {
             invalidate();
         }
@@ -198,38 +215,21 @@ public class RecordingsView extends View {
     public void fillCoordinatesArrayAt(int devLine) {
         if (!coordinates.hasValues(devLine)) {
             // calcolo le coordinate della dev-linea corrente per poter disegnarci intorno
-            int baseline = editText.getLayout().getLineBaseline(devLine);
-            int interlinea;
-            if (devLine > 0) {
-                int baselinePrev = editText.getLayout().getLineBaseline(devLine - 1);
-                int descentPrev = editText.getLayout().getLineDescent(devLine - 1);
-                interlinea = baselinePrev + descentPrev + Math.round(dp2px(1));
-            } else {
-                interlinea = Math.round(dp2px(2));
+            Layout layout = editText.getLayout();
+            if (layout != null) {
+                int baseline = layout.getLineBaseline(devLine);
+                int interlinea;
+                if (devLine > 0) {
+                    int baselinePrev = layout.getLineBaseline(devLine - 1);
+                    int descentPrev = layout.getLineDescent(devLine - 1);
+                    interlinea = baselinePrev + descentPrev + Math.round(dp2px(1));
+                } else {
+                    interlinea = Math.round(dp2px(2));
+                }
+                coordinates.set(devLine, baseline, interlinea, true);
             }
-            coordinates.set(devLine, baseline, interlinea, true);
         }
     }
-
-//    public void onCharAdded(CharSequence addedText) {
-//        if (addedText.equals("\n")) {
-//            insertNewline();
-//        } else {
-//            int newDevLineCount = editText.get().getLineCount();
-//            int diff = newDevLineCount - editTextDevLineCount;
-//            editTextDevLineCount = newDevLineCount;
-//            if (diff > 0) {
-//                int currDevLine = editText.get().getCurrDevLine();
-//                for (int i =  currDevLine + 1; i < newDevLineCount; i++) {
-//                    fillCoordinatesArrayAt(i);
-//                }
-//                if (RecorderService.getState() == MRState.RECORDING && currRecDevLine > currDevLine)
-//                    currRecDevLine += diff;
-//
-//                invalidate();
-//            }
-//        }
-//    }
 
     public void onCharAdded(int lastDevLineCount, int lastDevLine) {
         if (RecorderService.isInTheSameNoteAsRecording()) {
@@ -334,9 +334,9 @@ public class RecordingsView extends View {
             // - oppure una registrazione
             int line = editText.getCurrLine();
             allocateRecList();
-            if (recList.get(line) != null &&                                    // devo essere proprio alla testa della rec. Dopo permetto sempre
+            if (recList.get(line) != null &&                                       // devo essere proprio alla testa della rec. Dopo permetto sempre
                     (editText.getLineText(line - 1).trim().length() > 0)/* ||      // tolgo gli spazi
-                (lineBelongsToRecording(line - 1)))*/) {
+                (lineBelongsToRecording(line - 1)))*/ ) {
 
                 if (lineBelongsToRecording(line - 1) != -1) {
                     // oltre al testo c'è anche una registrazione. Lo comunico all'utente
@@ -369,7 +369,6 @@ public class RecordingsView extends View {
             }
 
             //  non invalido perché lo devo fare dopo. Lo faccio da RecInputConnectionWrapper
-            Log.d("SN %%%", "1.5 true - currRedDevLine(hoTolro1): " + currRecDevLine + " currRecLine(hoTolto1): " + currRecLine);
             return true;
         } else
             return true;
@@ -379,8 +378,6 @@ public class RecordingsView extends View {
     // true se faccio proseguire con l'azione, false altrimenti
     public boolean removeComplexNewline(int startSel, int endSel) {
         if (RecorderService.isInTheSameNoteAsRecording()) {
-//            int startLine = editText.getLineForOffset(startSel);
-//            int endLine = editText.getLineForOffset(endSel);
             allocateRecList();
             String selectedText = editText.getText().toString().substring(startSel, endSel);
 
@@ -388,14 +385,8 @@ public class RecordingsView extends View {
             int startLine = editText.getLineForOffset(startSel);
             int endLine = editText.getLineForOffset(endSel);
             if (startLine == endLine) {
-                Log.d("SN %%%", "2.0 true - startL=endL - startLine: " + startLine + " endLine: " + endLine);
                 return true;
             } else {
-                // (controllo per debug) //TODO: togliere se non ci sono problemi
-                if (!selectedText.contains("\n")) {
-                    Log.w("SN $$$", "RecInputConnectionWrapper NON DOVREBBE ESSERCI \\n !!!! invece c'è. Sbagliato come conto le linee prima");
-                    return true;
-                }
                 // Linee adiacenti. Dintinguo 2 casi:
                 // - non ci sono registrazioni oppure ce n'è una nella riga sopra -> lascio cancellare
                 // - ci sono due rec oppure ce n'è una sotto -> blocco la cancellazione
@@ -404,7 +395,6 @@ public class RecordingsView extends View {
                     if (recList.get(endLine) != null) {
                         // - rec nella seconda(non mi interessa la prima) , blocco
                         Toast.makeText(getContext(), R.string.rec_forbidden_del_middle_rec, Toast.LENGTH_LONG).show();
-                        Log.d("SN %%%", "2.5 false - endL-startL = 1 - currRecDevLine: " + currRecDevLine + " currRecLine: " + currRecLine);
                         return false;
                     } else {
                         // - rec nella prima e non nella seconda, permetto e shifto (togliendo la endline)
@@ -422,7 +412,6 @@ public class RecordingsView extends View {
                             if (currRecDevLine > editText.getCurrDevLine())
                                 currRecDevLine--;
                         }
-                        Log.d("SN %%%", "2.8 true - endL-startL = 1 - currRecDevLine(hoTolto1): " + currRecDevLine + " currRecLine(hoTolto1): " + currRecLine);
                         return true;
                     }
 
@@ -462,7 +451,6 @@ public class RecordingsView extends View {
                                 currRecDevLine = editText.getDeviceLineFromLine(null, currRecLine);
                             }
                         }
-                        Log.d("SN %%%", "3.8 true - recPrima o nientePrimaESeconda - currRecDevLine(tolto1): " + currRecDevLine + " currRecLine(tolto1): " + currRecLine);
                         return true;
                     }
                 }
@@ -496,75 +484,15 @@ public class RecordingsView extends View {
         return -1;
     }
 
-//    // ero nella linea line e ho premuto backspace e sto per cancellare newline.
-//    // Ritorno false se non posso farlo, altrimenti true e sposto le rec
-//    public boolean removeNewlineBefore(int line) {
-//        // non permetto di cancellare se nella stessa linea c'è una registrazione e:
-//        // - in quella prima c'è del testo
-//        // - oppure una registrazione
-//        allocateRecList();
-////        Log.d("SN $$$", "line:'" + editText.getLineText(line).trim() + "'" + );
-//        if (recList.get(line) != null &&
-//                (editText.getLineText(line - 1).trim().length() > 0 ||      // tolgo gli spazi
-//                        (recList.get(line - 1) != null))) {
-//            Toast.makeText(getContext(), R.string.rec_forbidden_backspace, Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//
-//        if (recList.get(line) == null)
-//            recList.remove(line);
-//        else
-//            recList.remove(line - 1);
-//
-//        // controllo che ci siano coordinate per le linee successive a line
-//        for (int i = line; i < recList.size(); i++) {
-//            if (recList.get(i) != null)
-//                fillCoordinatesArrayAt(i);
-//        }
-//
-//        if (currRecLine >= line)
-//            currRecLine--;
-//
-//        // non invalido perché lo devo fare dopo. Lo faccio da RecInputConnectionWrapper
-//        return true;
-//    }
-
-    // Rimuovo una linea dalle registrazioni dopo la cancellazione premendo backspace di un \n
-//    public void removeNewlineBefore(int line) {
-//        // non c'è nulla di importante nella linea prima, proseguo
-//        if (recList.get(line) == null)
-//            recList.remove(line);
-//        else
-//            recList.remove(line - 1);
-//
-//        if (currRecLine >= line)
-//            currRecLine--;
-//
-//        invalidate();
-//        }
-
-//        allocateRecList();
-//        recList.add(line + 1, null);
-//        // controllo che ci siano coordinate per le linee successive a line
-//        for (int i = line; i < recList.size(); i++) {
-//            if (recList.get(i) != null)
-//                fillCoordinatesArrayAt(i);
-//        }
-//        // aggiorno currRecLine
-//        if (currRecLine > line)
-//            currRecLine++;
-//
-//        invalidate();
-
     public float dp2px(int dp) {
         float scale = getContext().getResources().getDisplayMetrics().density;
         return dp * scale + 0.5f;
     }
 
-    public float px2dp(int px) {
-        float scale = getContext().getResources().getDisplayMetrics().density;
-        return (px - 0.5f) / scale;
-    }
+//    public float px2dp(int px) {
+//        float scale = getContext().getResources().getDisplayMetrics().density;
+//        return (px - 0.5f) / scale;
+//    }
 
 //    public Paint computeStringCoord(String s, int topLeftX, int topLeftY, int width, int height, Integer resultX, Integer resultY) {
 //        Paint p = new Paint();
@@ -585,10 +513,9 @@ public class RecordingsView extends View {
         if (!RecorderService.isRecording()) {
             currRecLine = 0;
             currRecDevLine = 0;
+            editTextDevLineCount = 0;
         }
     }
-
-
 
 
 
@@ -603,18 +530,15 @@ public class RecordingsView extends View {
      * Questa classe rappresenta una singola nota
      */
     public static class Recording {
-//        private int id;
         public int position;
         public long lenghtMillis;
         public String lenghtFormatted = null;
 
         public Recording(int position) {
-//            this.id = id;
             this.position = position;
         }
 
         public Recording(int position, long lenghtMillis) {
-//            this.id = id;
             this.position = position;
             this.lenghtMillis = lenghtMillis;
             this.lenghtFormatted = formattedStringFromMilliseconds(lenghtMillis);
@@ -626,12 +550,6 @@ public class RecordingsView extends View {
             this.lenghtMillis = lenghtMillis;
             this.lenghtFormatted = formattedStringFromMilliseconds(lenghtMillis);
         }
-
-//        public String getDuration() {
-//            return this.lenghtFormatted;
-//        }
-
-
 
         public boolean hasDuration() {
             return lenghtFormatted != null;
@@ -649,8 +567,6 @@ public class RecordingsView extends View {
             else
                 return position + ", " + lenghtMillis;
         }
-
-
 
         private String formattedStringFromMilliseconds(long millis) {
             long hours = TimeUnit.MILLISECONDS.toHours(millis);

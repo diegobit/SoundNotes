@@ -1,26 +1,18 @@
 package it.giorgini.soundnotes;
 
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import android.os.Handler;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.media.session.MediaController;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
@@ -49,9 +41,14 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     public static final String ACTION_PREPARE = "it.giorgini.soundnotes.recordermanager.PREPARE";
     public static final String ACTION_PLAYER_START = "it.giorgini.soundnotes.recordermanager.PLAYER.START";
     public static final String ACTION_PLAYER_PAUSE = "it.giorgini.soundnotes.recordermanager.PLAYER.PAUSE";
-//    public static final String ACTION_SERVICE_NAME = "it.giorgini.soundnotes.recordermanager";
 
-    public static final String EXTRA_MAIN_PATH = "extra_mainPath";
+    // stringhe per il broadcast receiver che riceverà le richieste del recorder
+    public static final String REC_START_REQUEST = "it.giorgini.soundnotes.recstartrequest";
+    public static final String REC_STOPPED = "it.giorgini.soundnotes.recstopped";
+    public static final String PLAYER_STARTED = "it.giorgini.soundnotes.playerstarted";
+    public static final String PLAYER_STOPPED = "it.giorgini.soundnotes.playerstopped";
+
+//    public static final String EXTRA_MAIN_PATH = "extra_mainPath";
     public static final String EXTRA_TWO_PANE = "extra_mTwoPane";
     public static final String EXTRA_NOTEID = "extra_noteID";
     public static final String EXTRA_REC_TIME = "extra_recTime";
@@ -62,7 +59,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
                                   MediaRecorder.OutputFormat.AAC_ADTS,
                                   MediaRecorder.AudioEncoder.AAC};
     private boolean hasToStop = false;
-//    private boolean mTwoPane;
     private static MRState state;
     private static String recNoteID;
     private static String recNoteName;
@@ -74,7 +70,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     private long currRecLength;
     private static boolean playing = false;
     private static int currPlayingLine = -1;
-//    private Handler handler;
 
     private long startTime; // Per sapere la lunghezza della registrazione
     private long endTime;
@@ -82,19 +77,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     // Unique Identification Number for the Notification. We use it on Notification start, and to cancel it.
     private int notifID = 1;
 
-//    private Callbacks callbacks_DetailFragment = defaultCallbacks_DetailFragment;
-
-//    public interface Callbacks {
-//        public void setRecordingIcon(boolean isRecording);
-//    }
-
-    /**
-     * Chiamati solo se non trova i metodi del fragment
-     */
-//    private static Callbacks defaultCallbacks_DetailFragment = new Callbacks() {
-//        @Override
-//        public void setRecordingIcon(boolean isRecording) { }
-//    };
 
     /**
      * Class for clients to access.  Because we know this service always runs in the same process as
@@ -106,8 +88,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 //        }
 //    }
 
-//    private WeakReference<Handler> handlerUI;
-
     public RecorderService() {}
 
     @Override
@@ -118,11 +98,8 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         currPlayingLine = -1;
         prefs = defaultPrefs;
         filesDir = getApplicationContext().getFilesDir().getAbsolutePath();
-//        if (getState() != MRState.RECORDING)
         mr = new MediaRecorder();
         state = MRState.INITIAL;
-//        else if (mr != null)
-//            mr.reset();
     }
 
     @Override
@@ -240,17 +217,11 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     // Per cambiare le impostazioni della registrazione
     public void setRecPath(String id) {
 //        currRecDir = getDir(id, Context.MODE_PRIVATE).getPath();
-        File dir = new File(getFilesDir(), "/" + id);
+        File dir = new File(getFilesDir(), File.separator + id);
         dir.mkdir();
         currRecDir = dir.getPath();
-        currRecRelPath = "temp.aac"; // -temp lo rinomino a fine registrazione nel tempo della registrazione. Per
-                                                              // ora mi va bene così
-//        File file = new File(currRecDir, currRecRelPath);
-//        if (!file.exists()) {
-//            if (!file.mkdirs()) {
-//                Log.e("SN ###", "Problem creating folder");
-//            }
-//        }
+        currRecRelPath = "temp.aac";  // -temp lo rinomino a fine registrazione nel tempo della registrazione. Per
+                                      // ora mi va bene così
         Log.d("SN ###", "RecMan filesDir: " + filesDir + "; currRecDir: " + currRecDir + "; relpath: " + currRecRelPath);
     }
 
@@ -266,7 +237,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             mr.setAudioSource(AudioSource);
             mr.setOutputFormat(OutputSource);
             mr.setAudioEncoder(AudioEncoder);
-            mr.setOutputFile(currRecDir + "/" + currRecRelPath);
+            mr.setOutputFile(currRecDir + File.separator + currRecRelPath);
             state = MRState.DATASOURCECONFIGURED;
         }
 	}
@@ -274,9 +245,9 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 	public void prepare() {
         Log.d("SN @@@", "RecServ prepare middle");
         if (state == MRState.DATASOURCECONFIGURED) {
-//            AsyncTask<Integer, Float, Boolean> pbg = new PrepareBG();
-//            pbg.execute(0);
             try {
+//                AsyncTask<Integer, Float, Boolean> prepAsync = new PrepareAsync();
+//                prepAsync.execute(0);     //TODO: usare questo. Crasha a volte perché viene chiamato start prima della fine della prepare.
                 mr.prepare();
                 state = MRState.PREPARED;
             } catch (IllegalStateException e) {
@@ -288,6 +259,27 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             throw new IllegalStateException("MediaRecorder is in an incorrect state (" + state + "), should be MRState.DATASOURCECONFIGURED");
         }
 	}
+
+//    private class PrepareAsync extends AsyncTask<Integer, Float, Boolean> {
+//
+//        public PrepareAsync() { }
+//
+//        @Override
+//        protected Boolean doInBackground(Integer... params) {
+//            try {
+//                mr.prepare();
+//                state = MRState.PREPARED;
+//                Log.d("SN @@@", "RecServ prepareBG - PREPARED!");
+//            } catch (IllegalStateException e) {
+//                throw new IllegalStateException ("MediaRecorder is in an incorrect state (" + state + "), should be MRState.DATASOURCECONFIGURED");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                return false;
+//            }
+//
+//            return true;
+//        }
+//    }
 
     public void start() {
         Log.d("SN @@@", "RecServ start1 - state: " + state);
@@ -303,13 +295,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 
     private void startAccepted() {
         try {
-//            if (state != MRState.PREPARED) {
-//                Log.i("SN @@@", "recServ startAcc - rec non era ancora pronto");
-//                if (state == MRState.INITIAL)
-//                    setParameters(prefs[0], prefs[1], prefs[2]);
-//                if (state == MRState.DATASOURCECONFIGURED)
-//                    prepare();
-//            }
             // rilascio il player se serve
             if (mp != null) {
                 mp.release();
@@ -329,9 +314,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             Toast.makeText(getApplicationContext(), R.string.action_rec_startfail, Toast.LENGTH_LONG).show();
             e.printStackTrace();
             mr.reset();
-//            state = MRState.INITIAL;
-//            setParameters(prefs[0], prefs[0], prefs[1], currRecRelPath);
-//            prepare();
         }
     }
 
@@ -365,23 +347,12 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             mr.reset();
         }
 
-//        // rimuovo la notifica
-//        removeNotification();
-
         // resetto il mediarecorder
         recNoteName = "I'm not recording";
         state = MRState.INITIAL;
 
         // rimuovo l'iconcina della registrazione dalla lista
         StorageManager.toggleRecState();
-
-        // se l'app è visibile allora reinizializzo il recorder. Potrei ricliccare su REC fra poco.
-        // Altrimenti no perchè sono stato stoppato dalla notifica (e app non visibile) o ho chiuso
-        // l'app dalla lista delle recenti: devo rilasciare il recorder
-//        if (LifecycleHandler.isApplicationVisible()) {
-//            setParameters(prefs[0], prefs[1], prefs[2], currRecRelPath);
-//            prepare();
-//        }
     }
 
 
@@ -400,7 +371,8 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         } catch (RuntimeException e) {
             File file = new File(currRecDir, currRecRelPath);
             boolean deleted = file.delete();
-            if (!deleted) (Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG)).show(); //TODO serve toast?
+            if (!deleted)
+                Log.i("SN @@@", "recServ stop rec non riuscito e temp non eliminato... temp verrà però sovrascritto se registro ancora nella stessa nota");
         }
         Log.i("SN ###", "Service release ok");
         if (hasToStop) {
@@ -430,7 +402,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 
                 mp.setLooping(false);
                 mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//                mp.setOnCompletionListener(this);
             } else {
                 Log.i("SN @@@", "recServ startPlaying start mp da resettare: ");
                 if (isPlaying())
@@ -440,13 +411,8 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 
             try {
                 File f = new File(new File(getFilesDir(), StorageManager.getCurrNote().id), path);
-//                Log.i("SN @@@", "recServ startPlaying start setDataSource: len: " + f.length() + "canread: " + f.canRead() + "file: " + f.isFile()
-//                        + " f path: " + f.getPath() + " f name: " + f.getName());
                 ArrayList<RecordingsView.Recording> recList = StorageManager.getCurrNote().recList;
-//                FileInputStream fis = new FileInputStream(f);
-//                mp.setDataSource(fis.getFD(), 0, f.length());
-//                fis.close();
-                mp.setDataSource(f.getAbsolutePath());
+                mp.setDataSource((new FileInputStream(f)).getFD());
                 mp.prepareAsync();
                 currPlayingLine = line;
             } catch (IOException e) {
@@ -477,9 +443,9 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     public void sendPlayPauseStatusToActivity() {
         Intent i;
         if (isPlaying())
-            i = new Intent(NoteDetailActivity.PLAYER_STARTED);
+            i = new Intent(PLAYER_STARTED);
         else
-            i = new Intent(NoteDetailActivity.PLAYER_STOPPED);
+            i = new Intent(PLAYER_STOPPED);
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
@@ -641,76 +607,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 //        startPlayingDummy(rec);
     }
 
-//    public void startPlayingDummy(String path) {
-//        mr.release();
-//        mr = null;
-//        mp = new MediaPlayer();
-//        File ff = new File(path);
-//        Log.d("SN ###", "file path: " + ff.getPath() + "file lung: " + ff.length());
-//        ff = null;
-//        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//        mp.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-//            @Override
-//            public boolean onError(MediaPlayer mp, int what, int extra) {
-//                Log.w("SN @@@", "RecServ startplaydummy onerror: w " + what + ", ex " + extra);
-//                return false;
-//            }
-//        });
-//        mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-//            @Override
-//            public boolean onInfo(MediaPlayer mp, int what, int extra) {
-//                Log.w("SN @@@", "RecServ startplaydummy onerror: w " + what + ", ex " + extra);
-//                return false;
-//            }
-//        });
-//        try {
-//            FileInputStream fis = new FileInputStream(new File(path));
-//            mp.setDataSource(fis.getFD());
-//            mp.prepare();
-//            mp.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
-
-
-
-//        mp = new MediaPlayer();
-//        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//        mp.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-//            @Override
-//            public boolean onError(MediaPlayer mp, int what, int extra) {
-//                Log.w("SN @@@", "RecServ startplaydummy onerror: w " + what + ", ex " + extra);
-//                return false;
-//            }
-//        });
-//        mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-//            @Override
-//            public boolean onInfo(MediaPlayer mp, int what, int extra) {
-//                Log.w("SN @@@", "RecServ startplaydummy onerror: w " + what + ", ex " + extra);
-//                return false;
-//            }
-//        });
-//        try {
-//            mp.setDataSource(path);
-//            mp.prepare();
-//            mp.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
-//        Uri uri = Uri.parse(path);
-//        mp = MediaPlayer.create(this, uri);
-//        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//        try {
-//            mp.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
     public void onDestroy() {
         Log.d("SN ###", "Service onDestroy forst");
@@ -730,18 +626,15 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     }
 
     public void createRecOnText() {
-        Intent i = new Intent(NoteDetailActivity.REC_START_REQUEST);
-//        i.putExtra("recordingStarted",
-////                new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault()).format(Calendar.getInstance().getTime()));
-//                   "rec");
-
+        // lo dico alla detailactivity così crea la nota nella RecordingsView
+        Intent i = new Intent(REC_START_REQUEST);
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
     }
 
     public void setRecLenghtOnText() {
         Log.d("SN @@@", "RecMan setRecLenghtOnText");
         currRecLength = endTime - startTime;
-        Intent i = new Intent(NoteDetailActivity.REC_STOPPED);
+        Intent i = new Intent(REC_STOPPED);
         i.putExtra(EXTRA_REC_TIME, currRecLength);
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
@@ -797,54 +690,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
                     .setVisibility(Notification.VISIBILITY_PRIVATE);
         }
 
-
-
-//        nBuilder.setContentIntent(pendingIntent);
-//        NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // INVIO la notifica
-//        nManager.notify(notifID, nBuilder.build());
-
         return nBuilder.build();
-    }
-
-//    public void removeNotification() {
-//        NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        nManager.cancel(notifID);
-//    }
-
-    private class PrepareBG extends AsyncTask<Integer, Float, Boolean> {
-//        private WeakReference<Context> ctx;
-
-//        public PrepareBG(WeakReference<Context> ctx) {
-//            this.ctx = ctx;
-//        }
-        public PrepareBG() { }
-
-        @Override
-        protected Boolean doInBackground(Integer... params) {
-            try {
-                mr.prepare();
-                state = MRState.PREPARED;
-                Log.d("SN @@@", "RecServ prepareBG - PREPARED!");
-            } catch (IllegalStateException e) {
-                throw new IllegalStateException ("MediaRecorder is in an incorrect state (" + state + "), should be MRState.DATASOURCECONFIGURED");
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-
-            return true;
-        }
-
-//        @Override
-//        protected void onPostExecute(Boolean result) {
-//            if (!result)
-//                (Toast.makeText(ctx.get(), R.string.rec_prepare_error, Toast.LENGTH_LONG)).show();
-//            else {
-//                (Toast.makeText(ctx.get(), "prepare terminata", Toast.LENGTH_LONG)).show();
-//            }
-//            super.onPostExecute(result);
-//        }
     }
 }

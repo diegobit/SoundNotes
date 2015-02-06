@@ -4,6 +4,7 @@
     <item name="primary" type="color">#FFFB8C00</item>
     <item name="primaryDark" type="color">#FFEF6C00</item>
     <item name="accent" type="color">#FFEF6C00</item>
+    <item name="grey_background" type="color">#EAEAEA</item>
 
     <!-- The selected FAB button for API < 21 -->
     <item name="accentSelected" type="color">#FFd25f00</item>
@@ -17,10 +18,18 @@
     <color name="cyan">#FF1BA1E2</color>
     <color name="grey">#ffcccccc</color>
     <color name="light_blue">#ff64c2f4</color>
+    <!--row colors-->
+    <color name="selector_orange">#66FB8C00</color>
+    <color name="selector_orange_old">#88FB8C00</color>
 
     <!--lines color for the DetailNote views-->
     <color name="line_lgrey">#FFBEBEBE</color>
     <color name="line_orange">#64FB8C00</color>
     <color name="line_shadow">#3cFB8C00</color>
+
+    <!--divider's color-->
+    <color name="startColor">#30000000</color>
+    <color name="middleColor">#12000000</color>
+    <color name="endColor">#00000000</color>
 
 </resources>

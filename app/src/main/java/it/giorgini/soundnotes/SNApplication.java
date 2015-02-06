@@ -1,7 +1,6 @@
 package it.giorgini.soundnotes;
 
 import android.app.Application;
-import android.util.Log;
 
 public class SNApplication extends Application {
     @Override

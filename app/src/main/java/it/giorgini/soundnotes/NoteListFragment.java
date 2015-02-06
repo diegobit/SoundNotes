@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -110,6 +110,14 @@ public class NoteListFragment extends ListFragment {
     // onCreate
     // onCreateView
 
+
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        FrameLayout v = (FrameLayout) super.onCreateView(inflater, container, savedInstanceState);
+//        ((LinearLayout) v.getChildAt(0)).setDrawSelectorOnTop(true);
+//        return v;
+//    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -184,8 +192,11 @@ public class NoteListFragment extends ListFragment {
     private void setActivatedPosition(int position) {
         if (position == ListView.INVALID_POSITION) {
             getListView().setItemChecked(mActivatedPosition, false);
+//            ((NoteListAdapter) getListAdapter()).setSelectedItem(mActivatedPosition);
+
         } else {
             getListView().setItemChecked(position, true);
+//            ((NoteListAdapter) getListAdapter()).setSelectedItem(position);
         }
 
         mActivatedPosition = position;
@@ -201,7 +212,6 @@ public class NoteListFragment extends ListFragment {
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
         callbacks_ListActivity.onItemSelected(StorageManager.getNoteFromPosition(position).id, position);
-
     }
 
     // Creazione menu contestuale long press su nota in lista
@@ -322,7 +332,8 @@ public class NoteListFragment extends ListFragment {
 
         // Non è riuscito a cancellarlo, notifico l'utente
         if (!deleted) {
-            (Toast.makeText(getActivity(), R.string.action_delete_fail, Toast.LENGTH_LONG)).show();
+//            (Toast.makeText(getActivity(), R.string.action_delete_fail, Toast.LENGTH_LONG)).show();
+            Log.e("SN @@@", "NoteListFrag nota non eliminata del tutto...");
         } else if (StorageManager.ITEMS.isEmpty()) {
             // se ho cancellato e la lista è vuota
             mActivatedPosition = ListView.INVALID_POSITION;
@@ -333,7 +344,6 @@ public class NoteListFragment extends ListFragment {
                 callbacks_ListActivity.updateDetailFragmentContent();
                 // Devo rimuovere dall'action bar i bottoni relativi alla nota aperta.
                 callbacks_ListActivity.setDetailNoteMenuItems(false);
-//                MenuItem detailNoteMenus = MenuItem.findItem(R.id.note_actions); refreshItem.setVisible(false);
             }
             //  sostituisco il fragment della nota aperta con quello vuoto
             callbacks_ListActivity.swapVisibleFragment(true);
@@ -346,8 +356,9 @@ public class NoteListFragment extends ListFragment {
                 StorageManager.updateCurrItem(pos);
                 // su tablet faccio un click sull'elemento sopra a quello eliminato
                 if (mTwoPane) {
-                    ListAdapter la = getListView().getAdapter();
+                    NoteListAdapter la = (NoteListAdapter) getListView().getAdapter();
                     getListView().performItemClick(la.getView(pos, null, null), pos, la.getItemId(pos));
+//                    highlightItem(pos);
                 }
                 callbacks_ListActivity.setDeletingState(false);
             }

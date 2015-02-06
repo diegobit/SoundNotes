@@ -4,11 +4,11 @@
     xmlns:soundnotes="http://schemas.android.com/apk/res-auto">
     
     <!-- Search -->
-    <item android:id="@+id/action_search"
-          android:icon="@drawable/ic_action_search"
-          android:title="@string/action_search"
-        android:orderInCategory="10"
-          soundnotes:showAsAction="ifRoom" />
+    <!--<item android:id="@+id/action_search"-->
+          <!--android:icon="@drawable/ic_action_search"-->
+          <!--android:title="@string/action_search"-->
+        <!--android:orderInCategory="10"-->
+          <!--soundnotes:showAsAction="ifRoom" />-->
     
     <!-- Settings -->
     <item android:id="@+id/action_settings"
