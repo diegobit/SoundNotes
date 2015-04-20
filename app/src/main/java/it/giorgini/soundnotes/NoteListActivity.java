@@ -78,6 +78,8 @@ public class NoteListActivity extends ActionBarActivity implements View.OnClickL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note_list);
 
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
 //        SharedPreferences app_prefs = getSharedPreferences (APP_PREFS, Context.MODE_PRIVATE);
         SharedPreferences data_prefs = getSharedPreferences (DATA_PREFS, Context.MODE_PRIVATE);
 

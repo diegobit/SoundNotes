@@ -120,7 +120,7 @@ public class RecordingsView extends View {
         super.onDraw(canvas);
 
         // Separatore Registrazioni|EditText
-        canvas.drawLine(leftMargin, vertMargin, leftMargin, getHeight(), lgrey);
+        canvas.drawLine(leftMargin, vertMargin, leftMargin, getHeight(), lgrey); //FIXME getheight di questo? sotto disegna?
 
         // scorro la lista delle registrazioni della nota e le disegno:
         if (recList != null) {

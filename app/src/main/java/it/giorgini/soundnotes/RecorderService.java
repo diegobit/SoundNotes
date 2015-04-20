@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -61,7 +60,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     private boolean hasToStop = false;
     private static MRState state;
     private static String recNoteID;
-    private static String recNoteName;
+//    private static String recNoteName;
     private static int recNoteLine;
     private int[] prefs;
     private String filesDir;
@@ -74,8 +73,6 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     private long startTime; // Per sapere la lunghezza della registrazione
     private long endTime;
 
-    // Unique Identification Number for the Notification. We use it on Notification start, and to cancel it.
-    private int notifID = 1;
 
 
     /**
@@ -110,7 +107,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         String action;
 
         // intent == null significa che il service è stato riavviato dal sistema.
-        if (intent == null) {
+        if (intent == null) { // TODO: controllare flags, non così!
             Log.w("SN ###", "Service intent == null PROBLEMA, non dovrebbe succedere");
         }
         // Action == null significa che ho appena avviato una activity. Il service forse sta già registrando.
@@ -190,13 +187,13 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         return recNoteID;
     }
 
-    public static String getCurrRecNoteName() {
-        return recNoteName;
-    }
+//    public static String getCurrRecNoteName() {
+//        return recNoteName;
+//    }
 
-    public static void setCurrRecNoteName(String newName) {
-        recNoteName = newName;
-    }
+//    public static void setCurrRecNoteName(String newName) {
+//        recNoteName = newName;
+//    }
 
     public static int getCurrRecNoteLine() {
         return recNoteLine;
@@ -218,6 +215,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     public void setRecPath(String id) {
 //        currRecDir = getDir(id, Context.MODE_PRIVATE).getPath();
         File dir = new File(getFilesDir(), File.separator + id);
+        //noinspection ResultOfMethodCallIgnored
         dir.mkdir();
         currRecDir = dir.getPath();
         currRecRelPath = "temp.aac";  // -temp lo rinomino a fine registrazione nel tempo della registrazione. Per
@@ -247,7 +245,8 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         if (state == MRState.DATASOURCECONFIGURED) {
             try {
 //                AsyncTask<Integer, Float, Boolean> prepAsync = new PrepareAsync();
-//                prepAsync.execute(0);     //TODO: usare questo. Crasha a volte perché viene chiamato start prima della fine della prepare.
+//                prepAsync.execute(0);
+                // TODO: usare prepAsync. Crasha a volte perché viene chiamato start prima della fine della prepare.
                 mr.prepare();
                 state = MRState.PREPARED;
             } catch (IllegalStateException e) {
@@ -304,7 +303,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             mr.start();
             startTime = System.currentTimeMillis();
             recNoteID = StorageManager.currID;
-            recNoteName = StorageManager.currName;
+//            recNoteName = StorageManager.currName;
             state = MRState.RECORDING;
             // Diventa un service foreground e crea la notifica
             startForeground(1, createNotification());
@@ -348,7 +347,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         }
 
         // resetto il mediarecorder
-        recNoteName = "I'm not recording";
+//        recNoteName = "I'm not recording";
         state = MRState.INITIAL;
 
         // rimuovo l'iconcina della registrazione dalla lista
@@ -411,8 +410,8 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 
             try {
                 File f = new File(new File(getFilesDir(), StorageManager.getCurrNote().id), path);
-                ArrayList<RecordingsView.Recording> recList = StorageManager.getCurrNote().recList;
-                mp.setDataSource((new FileInputStream(f)).getFD());
+//                ArrayList<RecordingsView.Recording> recList = StorageManager.getCurrNote().recList;
+                mp.setDataSource(f.getAbsolutePath());
                 mp.prepareAsync();
                 currPlayingLine = line;
             } catch (IOException e) {
@@ -465,12 +464,12 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         }
     }
 
-    Runnable stopPlayerTask = new Runnable(){
-        @Override
-        public void run() {
-            Log.i("SN @@@", "recServ player playback stopped with runnable");
-            releasePlayer();
-        }};
+//    Runnable stopPlayerTask = new Runnable(){
+//        @Override
+//        public void run() {
+//            Log.i("SN @@@", "recServ player playback stopped with runnable");
+//            releasePlayer();
+//        }};
 
 //    @Override
 //    public void onCompletion(MediaPlayer mp) {
@@ -542,6 +541,9 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
                 case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
                     Log.i("SN @@@", "recServ startPlaying error: extra MEDIA_ERROR_TIMED_OUT");
                     break;
+                default:
+                    Log.i("SN @@@", "recServ startPlaying error: " + extra);
+                    break;
             }
         }
 
@@ -549,7 +551,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         releasePlayer();
         sendPlayPauseStatusToActivity();
 
-        return false;
+        return true;
     }
 
     public void pausePlaying() {

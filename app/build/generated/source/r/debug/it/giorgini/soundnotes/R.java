@@ -11,17 +11,19 @@ public final class R {
     public static final class anim {
         public static final int abc_fade_in=0x7f050000;
         public static final int abc_fade_out=0x7f050001;
-        public static final int abc_slide_in_bottom=0x7f050002;
-        public static final int abc_slide_in_top=0x7f050003;
-        public static final int abc_slide_out_bottom=0x7f050004;
-        public static final int abc_slide_out_top=0x7f050005;
-        public static final int del_fade_out_stayright=0x7f050006;
-        public static final int del_push_in_from_left=0x7f050007;
-        public static final int fab=0x7f050008;
-        public static final int fade_in_stayleft=0x7f050009;
-        public static final int fade_out_stayleft=0x7f05000a;
-        public static final int push_in_from_right=0x7f05000b;
-        public static final int push_out_to_right=0x7f05000c;
+        public static final int abc_grow_fade_in_from_bottom=0x7f050002;
+        public static final int abc_shrink_fade_out_from_bottom=0x7f050003;
+        public static final int abc_slide_in_bottom=0x7f050004;
+        public static final int abc_slide_in_top=0x7f050005;
+        public static final int abc_slide_out_bottom=0x7f050006;
+        public static final int abc_slide_out_top=0x7f050007;
+        public static final int del_fade_out_stayright=0x7f050008;
+        public static final int del_push_in_from_left=0x7f050009;
+        public static final int fab=0x7f05000a;
+        public static final int fade_in_stayleft=0x7f05000b;
+        public static final int fade_out_stayleft=0x7f05000c;
+        public static final int push_in_from_right=0x7f05000d;
+        public static final int push_out_to_right=0x7f05000e;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -1237,128 +1239,137 @@ containing a value of this type.
         public static final int abc_action_button_min_height_material=0x7f090008;
         public static final int abc_action_button_min_width_material=0x7f090009;
         public static final int abc_action_button_min_width_overflow_material=0x7f09000a;
-        public static final int abc_config_prefDialogWidth=0x7f09000b;
-        public static final int abc_control_inset_material=0x7f09000c;
-        public static final int abc_control_padding_material=0x7f09000d;
-        public static final int abc_dropdownitem_icon_width=0x7f09000e;
-        public static final int abc_dropdownitem_text_padding_left=0x7f09000f;
-        public static final int abc_dropdownitem_text_padding_right=0x7f090010;
-        public static final int abc_panel_menu_list_width=0x7f090011;
-        public static final int abc_search_view_preferred_width=0x7f090012;
-        public static final int abc_search_view_text_min_width=0x7f090013;
-        public static final int abc_text_size_body_1_material=0x7f090014;
-        public static final int abc_text_size_body_2_material=0x7f090015;
-        public static final int abc_text_size_button_material=0x7f090016;
-        public static final int abc_text_size_caption_material=0x7f090017;
-        public static final int abc_text_size_display_1_material=0x7f090018;
-        public static final int abc_text_size_display_2_material=0x7f090019;
-        public static final int abc_text_size_display_3_material=0x7f09001a;
-        public static final int abc_text_size_display_4_material=0x7f09001b;
-        public static final int abc_text_size_headline_material=0x7f09001c;
-        public static final int abc_text_size_large_material=0x7f09001d;
-        public static final int abc_text_size_medium_material=0x7f09001e;
-        public static final int abc_text_size_menu_material=0x7f09001f;
-        public static final int abc_text_size_small_material=0x7f090020;
-        public static final int abc_text_size_subhead_material=0x7f090021;
-        public static final int abc_text_size_subtitle_material_toolbar=0x7f090022;
-        public static final int abc_text_size_title_material=0x7f090023;
-        public static final int abc_text_size_title_material_toolbar=0x7f090024;
-        public static final int button_elevation=0x7f090025;
-        public static final int button_press_elevation=0x7f090026;
-        public static final int dialog_fixed_height_major=0x7f090027;
-        public static final int dialog_fixed_height_minor=0x7f090028;
-        public static final int dialog_fixed_width_major=0x7f090029;
-        public static final int dialog_fixed_width_minor=0x7f09002a;
-        public static final int disabled_alpha_material_dark=0x7f09002b;
-        public static final int disabled_alpha_material_light=0x7f09002c;
-        public static final int fab_height_compat=0x7f09002d;
-        public static final int fab_size=0x7f09002e;
-        public static final int rec_left_margin=0x7f09002f;
-        public static final int rec_left_margin_small=0x7f090030;
-        public static final int rec_text=0x7f090031;
-        public static final int rec_text_small=0x7f090032;
-        public static final int rec_vertical_margin=0x7f090033;
-        public static final int richedittext_leftmargin=0x7f090034;
+        public static final int abc_button_inset_horizontal_material=0x7f09000b;
+        public static final int abc_button_inset_vertical_material=0x7f09000c;
+        public static final int abc_button_padding_horizontal_material=0x7f09000d;
+        public static final int abc_button_padding_vertical_material=0x7f09000e;
+        public static final int abc_config_prefDialogWidth=0x7f09000f;
+        public static final int abc_control_corner_material=0x7f090010;
+        public static final int abc_control_inset_material=0x7f090011;
+        public static final int abc_control_padding_material=0x7f090012;
+        public static final int abc_dropdownitem_icon_width=0x7f090013;
+        public static final int abc_dropdownitem_text_padding_left=0x7f090014;
+        public static final int abc_dropdownitem_text_padding_right=0x7f090015;
+        public static final int abc_panel_menu_list_width=0x7f090016;
+        public static final int abc_search_view_preferred_width=0x7f090017;
+        public static final int abc_search_view_text_min_width=0x7f090018;
+        public static final int abc_text_size_body_1_material=0x7f090019;
+        public static final int abc_text_size_body_2_material=0x7f09001a;
+        public static final int abc_text_size_button_material=0x7f09001b;
+        public static final int abc_text_size_caption_material=0x7f09001c;
+        public static final int abc_text_size_display_1_material=0x7f09001d;
+        public static final int abc_text_size_display_2_material=0x7f09001e;
+        public static final int abc_text_size_display_3_material=0x7f09001f;
+        public static final int abc_text_size_display_4_material=0x7f090020;
+        public static final int abc_text_size_headline_material=0x7f090021;
+        public static final int abc_text_size_large_material=0x7f090022;
+        public static final int abc_text_size_medium_material=0x7f090023;
+        public static final int abc_text_size_menu_material=0x7f090024;
+        public static final int abc_text_size_small_material=0x7f090025;
+        public static final int abc_text_size_subhead_material=0x7f090026;
+        public static final int abc_text_size_subtitle_material_toolbar=0x7f090027;
+        public static final int abc_text_size_title_material=0x7f090028;
+        public static final int abc_text_size_title_material_toolbar=0x7f090029;
+        public static final int button_elevation=0x7f09002a;
+        public static final int button_press_elevation=0x7f09002b;
+        public static final int dialog_fixed_height_major=0x7f09002c;
+        public static final int dialog_fixed_height_minor=0x7f09002d;
+        public static final int dialog_fixed_width_major=0x7f09002e;
+        public static final int dialog_fixed_width_minor=0x7f09002f;
+        public static final int disabled_alpha_material_dark=0x7f090030;
+        public static final int disabled_alpha_material_light=0x7f090031;
+        public static final int fab_height_compat=0x7f090032;
+        public static final int fab_size=0x7f090033;
+        public static final int rec_left_margin=0x7f090034;
+        public static final int rec_left_margin_small=0x7f090035;
+        public static final int rec_text=0x7f090036;
+        public static final int rec_text_small=0x7f090037;
+        public static final int rec_vertical_margin=0x7f090038;
+        public static final int richedittext_leftmargin=0x7f090039;
     }
     public static final class drawable {
-        public static final int abc_ab_share_pack_holo_dark=0x7f020000;
-        public static final int abc_ab_share_pack_holo_light=0x7f020001;
-        public static final int abc_btn_check_material=0x7f020002;
-        public static final int abc_btn_check_to_on_mtrl_000=0x7f020003;
-        public static final int abc_btn_check_to_on_mtrl_015=0x7f020004;
+        public static final int abc_ab_share_pack_mtrl_alpha=0x7f020000;
+        public static final int abc_btn_check_material=0x7f020001;
+        public static final int abc_btn_check_to_on_mtrl_000=0x7f020002;
+        public static final int abc_btn_check_to_on_mtrl_015=0x7f020003;
+        public static final int abc_btn_default_mtrl_shape=0x7f020004;
         public static final int abc_btn_radio_material=0x7f020005;
         public static final int abc_btn_radio_to_on_mtrl_000=0x7f020006;
         public static final int abc_btn_radio_to_on_mtrl_015=0x7f020007;
-        public static final int abc_btn_switch_to_on_mtrl_00001=0x7f020008;
-        public static final int abc_btn_switch_to_on_mtrl_00012=0x7f020009;
-        public static final int abc_cab_background_internal_bg=0x7f02000a;
-        public static final int abc_cab_background_top_material=0x7f02000b;
-        public static final int abc_cab_background_top_mtrl_alpha=0x7f02000c;
-        public static final int abc_edit_text_material=0x7f02000d;
-        public static final int abc_ic_ab_back_mtrl_am_alpha=0x7f02000e;
-        public static final int abc_ic_clear_mtrl_alpha=0x7f02000f;
-        public static final int abc_ic_commit_search_api_mtrl_alpha=0x7f020010;
-        public static final int abc_ic_go_search_api_mtrl_alpha=0x7f020011;
-        public static final int abc_ic_menu_copy_mtrl_am_alpha=0x7f020012;
-        public static final int abc_ic_menu_cut_mtrl_alpha=0x7f020013;
-        public static final int abc_ic_menu_moreoverflow_mtrl_alpha=0x7f020014;
-        public static final int abc_ic_menu_paste_mtrl_am_alpha=0x7f020015;
-        public static final int abc_ic_menu_selectall_mtrl_alpha=0x7f020016;
-        public static final int abc_ic_menu_share_mtrl_alpha=0x7f020017;
-        public static final int abc_ic_search_api_mtrl_alpha=0x7f020018;
-        public static final int abc_ic_voice_search_api_mtrl_alpha=0x7f020019;
-        public static final int abc_item_background_holo_dark=0x7f02001a;
-        public static final int abc_item_background_holo_light=0x7f02001b;
-        public static final int abc_list_divider_mtrl_alpha=0x7f02001c;
-        public static final int abc_list_focused_holo=0x7f02001d;
-        public static final int abc_list_longpressed_holo=0x7f02001e;
-        public static final int abc_list_pressed_holo_dark=0x7f02001f;
-        public static final int abc_list_pressed_holo_light=0x7f020020;
-        public static final int abc_list_selector_background_transition_holo_dark=0x7f020021;
-        public static final int abc_list_selector_background_transition_holo_light=0x7f020022;
-        public static final int abc_list_selector_disabled_holo_dark=0x7f020023;
-        public static final int abc_list_selector_disabled_holo_light=0x7f020024;
-        public static final int abc_list_selector_holo_dark=0x7f020025;
-        public static final int abc_list_selector_holo_light=0x7f020026;
-        public static final int abc_menu_hardkey_panel_mtrl_mult=0x7f020027;
-        public static final int abc_popup_background_mtrl_mult=0x7f020028;
-        public static final int abc_spinner_mtrl_am_alpha=0x7f020029;
-        public static final int abc_switch_thumb_material=0x7f02002a;
-        public static final int abc_switch_track_mtrl_alpha=0x7f02002b;
-        public static final int abc_tab_indicator_material=0x7f02002c;
-        public static final int abc_tab_indicator_mtrl_alpha=0x7f02002d;
-        public static final int abc_textfield_activated_mtrl_alpha=0x7f02002e;
-        public static final int abc_textfield_default_mtrl_alpha=0x7f02002f;
-        public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020030;
-        public static final int abc_textfield_search_default_mtrl_alpha=0x7f020031;
-        public static final int abc_textfield_search_material=0x7f020032;
-        public static final int divider=0x7f020033;
-        public static final int empty_list_wallpaper=0x7f020034;
-        public static final int ic_action_cancel=0x7f020035;
-        public static final int ic_action_full_screen=0x7f020036;
-        public static final int ic_action_mic=0x7f020037;
-        public static final int ic_action_mic_0=0x7f020038;
-        public static final int ic_action_mic_1=0x7f020039;
-        public static final int ic_action_mic_2=0x7f02003a;
-        public static final int ic_action_mic_3=0x7f02003b;
-        public static final int ic_action_mic_4=0x7f02003c;
-        public static final int ic_action_mic_5=0x7f02003d;
-        public static final int ic_action_mic_6=0x7f02003e;
-        public static final int ic_action_mic_7=0x7f02003f;
-        public static final int ic_action_mic_8=0x7f020040;
-        public static final int ic_action_mic_9=0x7f020041;
-        public static final int ic_action_mic_active=0x7f020042;
-        public static final int ic_action_new=0x7f020043;
-        public static final int ic_action_pause=0x7f020044;
-        public static final int ic_action_play=0x7f020045;
-        public static final int ic_action_return_from_full_screen=0x7f020046;
-        public static final int ic_action_search=0x7f020047;
-        public static final int ic_action_stop=0x7f020048;
-        public static final int ic_stat_notify=0x7f020049;
-        public static final int note_list_rec=0x7f02004a;
-        public static final int ripple=0x7f02004b;
-        public static final int row_background=0x7f02004c;
-        public static final int touch_selector=0x7f02004d;
+        public static final int abc_btn_rating_star_off_mtrl_alpha=0x7f020008;
+        public static final int abc_btn_rating_star_on_mtrl_alpha=0x7f020009;
+        public static final int abc_btn_switch_to_on_mtrl_00001=0x7f02000a;
+        public static final int abc_btn_switch_to_on_mtrl_00012=0x7f02000b;
+        public static final int abc_cab_background_internal_bg=0x7f02000c;
+        public static final int abc_cab_background_top_material=0x7f02000d;
+        public static final int abc_cab_background_top_mtrl_alpha=0x7f02000e;
+        public static final int abc_edit_text_material=0x7f02000f;
+        public static final int abc_ic_ab_back_mtrl_am_alpha=0x7f020010;
+        public static final int abc_ic_clear_mtrl_alpha=0x7f020011;
+        public static final int abc_ic_commit_search_api_mtrl_alpha=0x7f020012;
+        public static final int abc_ic_go_search_api_mtrl_alpha=0x7f020013;
+        public static final int abc_ic_menu_copy_mtrl_am_alpha=0x7f020014;
+        public static final int abc_ic_menu_cut_mtrl_alpha=0x7f020015;
+        public static final int abc_ic_menu_moreoverflow_mtrl_alpha=0x7f020016;
+        public static final int abc_ic_menu_paste_mtrl_am_alpha=0x7f020017;
+        public static final int abc_ic_menu_selectall_mtrl_alpha=0x7f020018;
+        public static final int abc_ic_menu_share_mtrl_alpha=0x7f020019;
+        public static final int abc_ic_search_api_mtrl_alpha=0x7f02001a;
+        public static final int abc_ic_voice_search_api_mtrl_alpha=0x7f02001b;
+        public static final int abc_item_background_holo_dark=0x7f02001c;
+        public static final int abc_item_background_holo_light=0x7f02001d;
+        public static final int abc_list_divider_mtrl_alpha=0x7f02001e;
+        public static final int abc_list_focused_holo=0x7f02001f;
+        public static final int abc_list_longpressed_holo=0x7f020020;
+        public static final int abc_list_pressed_holo_dark=0x7f020021;
+        public static final int abc_list_pressed_holo_light=0x7f020022;
+        public static final int abc_list_selector_background_transition_holo_dark=0x7f020023;
+        public static final int abc_list_selector_background_transition_holo_light=0x7f020024;
+        public static final int abc_list_selector_disabled_holo_dark=0x7f020025;
+        public static final int abc_list_selector_disabled_holo_light=0x7f020026;
+        public static final int abc_list_selector_holo_dark=0x7f020027;
+        public static final int abc_list_selector_holo_light=0x7f020028;
+        public static final int abc_menu_hardkey_panel_mtrl_mult=0x7f020029;
+        public static final int abc_popup_background_mtrl_mult=0x7f02002a;
+        public static final int abc_ratingbar_full_material=0x7f02002b;
+        public static final int abc_spinner_mtrl_am_alpha=0x7f02002c;
+        public static final int abc_spinner_textfield_background_material=0x7f02002d;
+        public static final int abc_switch_thumb_material=0x7f02002e;
+        public static final int abc_switch_track_mtrl_alpha=0x7f02002f;
+        public static final int abc_tab_indicator_material=0x7f020030;
+        public static final int abc_tab_indicator_mtrl_alpha=0x7f020031;
+        public static final int abc_textfield_activated_mtrl_alpha=0x7f020032;
+        public static final int abc_textfield_default_mtrl_alpha=0x7f020033;
+        public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020034;
+        public static final int abc_textfield_search_default_mtrl_alpha=0x7f020035;
+        public static final int abc_textfield_search_material=0x7f020036;
+        public static final int divider=0x7f020037;
+        public static final int empty_list_wallpaper=0x7f020038;
+        public static final int ic_action_cancel=0x7f020039;
+        public static final int ic_action_full_screen=0x7f02003a;
+        public static final int ic_action_mic=0x7f02003b;
+        public static final int ic_action_mic_0=0x7f02003c;
+        public static final int ic_action_mic_1=0x7f02003d;
+        public static final int ic_action_mic_2=0x7f02003e;
+        public static final int ic_action_mic_3=0x7f02003f;
+        public static final int ic_action_mic_4=0x7f020040;
+        public static final int ic_action_mic_5=0x7f020041;
+        public static final int ic_action_mic_6=0x7f020042;
+        public static final int ic_action_mic_7=0x7f020043;
+        public static final int ic_action_mic_8=0x7f020044;
+        public static final int ic_action_mic_9=0x7f020045;
+        public static final int ic_action_mic_active=0x7f020046;
+        public static final int ic_action_new=0x7f020047;
+        public static final int ic_action_pause=0x7f020048;
+        public static final int ic_action_play=0x7f020049;
+        public static final int ic_action_return_from_full_screen=0x7f02004a;
+        public static final int ic_action_search=0x7f02004b;
+        public static final int ic_action_stop=0x7f02004c;
+        public static final int ic_stat_notify=0x7f02004d;
+        public static final int note_list_rec=0x7f02004e;
+        public static final int ripple=0x7f02004f;
+        public static final int row_background=0x7f020050;
+        public static final int touch_selector=0x7f020051;
     }
     public static final class id {
         public static final int action_bar=0x7f0a0031;
@@ -1450,8 +1461,10 @@ containing a value of this type.
         public static final int wrap_content=0x7f0a001d;
     }
     public static final class integer {
-        public static final int abc_max_action_buttons=0x7f0b0000;
-        public static final int screenOrientation=0x7f0b0001;
+        public static final int abc_config_activityDefaultDur=0x7f0b0000;
+        public static final int abc_config_activityShortDur=0x7f0b0001;
+        public static final int abc_max_action_buttons=0x7f0b0002;
+        public static final int screenOrientation=0x7f0b0003;
     }
     public static final class layout {
         public static final int abc_action_bar_title_item=0x7f040000;
@@ -1462,30 +1475,29 @@ containing a value of this type.
         public static final int abc_action_mode_bar=0x7f040005;
         public static final int abc_action_mode_close_item_material=0x7f040006;
         public static final int abc_activity_chooser_view=0x7f040007;
-        public static final int abc_activity_chooser_view_include=0x7f040008;
-        public static final int abc_activity_chooser_view_list_item=0x7f040009;
-        public static final int abc_expanded_menu_layout=0x7f04000a;
-        public static final int abc_list_menu_item_checkbox=0x7f04000b;
-        public static final int abc_list_menu_item_icon=0x7f04000c;
-        public static final int abc_list_menu_item_layout=0x7f04000d;
-        public static final int abc_list_menu_item_radio=0x7f04000e;
-        public static final int abc_popup_menu_item_layout=0x7f04000f;
-        public static final int abc_screen_content_include=0x7f040010;
-        public static final int abc_screen_simple=0x7f040011;
-        public static final int abc_screen_simple_overlay_action_mode=0x7f040012;
-        public static final int abc_screen_toolbar=0x7f040013;
-        public static final int abc_search_dropdown_item_icons_2line=0x7f040014;
-        public static final int abc_search_view=0x7f040015;
-        public static final int abc_simple_dropdown_hint=0x7f040016;
-        public static final int activity_note_detail=0x7f040017;
-        public static final int activity_note_list=0x7f040018;
-        public static final int activity_note_twopane=0x7f040019;
-        public static final int empty_note_list=0x7f04001a;
-        public static final int fab=0x7f04001b;
-        public static final int fragment_note_detail=0x7f04001c;
-        public static final int note_list_rec_image=0x7f04001d;
-        public static final int note_list_row=0x7f04001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f04001f;
+        public static final int abc_activity_chooser_view_list_item=0x7f040008;
+        public static final int abc_expanded_menu_layout=0x7f040009;
+        public static final int abc_list_menu_item_checkbox=0x7f04000a;
+        public static final int abc_list_menu_item_icon=0x7f04000b;
+        public static final int abc_list_menu_item_layout=0x7f04000c;
+        public static final int abc_list_menu_item_radio=0x7f04000d;
+        public static final int abc_popup_menu_item_layout=0x7f04000e;
+        public static final int abc_screen_content_include=0x7f04000f;
+        public static final int abc_screen_simple=0x7f040010;
+        public static final int abc_screen_simple_overlay_action_mode=0x7f040011;
+        public static final int abc_screen_toolbar=0x7f040012;
+        public static final int abc_search_dropdown_item_icons_2line=0x7f040013;
+        public static final int abc_search_view=0x7f040014;
+        public static final int abc_simple_dropdown_hint=0x7f040015;
+        public static final int activity_note_detail=0x7f040016;
+        public static final int activity_note_list=0x7f040017;
+        public static final int activity_note_twopane=0x7f040018;
+        public static final int empty_note_list=0x7f040019;
+        public static final int fab=0x7f04001a;
+        public static final int fragment_note_detail=0x7f04001b;
+        public static final int note_list_rec_image=0x7f04001c;
+        public static final int note_list_row=0x7f04001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f04001e;
     }
     public static final class menu {
         public static final int note_actions=0x7f0e0000;
@@ -1566,245 +1578,258 @@ containing a value of this type.
         public static final int title_note_detail=0x7f0c0043;
     }
     public static final class style {
-        public static final int AppTheme=0x7f0d0000;
+        public static final int Animation_AppCompat_DropDownUp=0x7f0d0000;
+        public static final int AppTheme=0x7f0d0001;
         /** <item name="windowActionBar">false</item>
          */
-        public static final int AppTheme_Base=0x7f0d0001;
-        public static final int Base_TextAppearance_AppCompat=0x7f0d0002;
-        public static final int Base_TextAppearance_AppCompat_Body1=0x7f0d0003;
-        public static final int Base_TextAppearance_AppCompat_Body2=0x7f0d0004;
-        public static final int Base_TextAppearance_AppCompat_Button=0x7f0d0005;
-        public static final int Base_TextAppearance_AppCompat_Caption=0x7f0d0006;
-        public static final int Base_TextAppearance_AppCompat_Display1=0x7f0d0007;
-        public static final int Base_TextAppearance_AppCompat_Display2=0x7f0d0008;
-        public static final int Base_TextAppearance_AppCompat_Display3=0x7f0d0009;
-        public static final int Base_TextAppearance_AppCompat_Display4=0x7f0d000a;
-        public static final int Base_TextAppearance_AppCompat_Headline=0x7f0d000b;
-        public static final int Base_TextAppearance_AppCompat_Inverse=0x7f0d000c;
-        public static final int Base_TextAppearance_AppCompat_Large=0x7f0d000d;
-        public static final int Base_TextAppearance_AppCompat_Large_Inverse=0x7f0d000e;
-        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0d000f;
-        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0d0010;
-        public static final int Base_TextAppearance_AppCompat_Medium=0x7f0d0011;
-        public static final int Base_TextAppearance_AppCompat_Medium_Inverse=0x7f0d0012;
-        public static final int Base_TextAppearance_AppCompat_Menu=0x7f0d0013;
-        public static final int Base_TextAppearance_AppCompat_SearchResult=0x7f0d0014;
-        public static final int Base_TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0d0015;
-        public static final int Base_TextAppearance_AppCompat_SearchResult_Title=0x7f0d0016;
-        public static final int Base_TextAppearance_AppCompat_Small=0x7f0d0017;
-        public static final int Base_TextAppearance_AppCompat_Small_Inverse=0x7f0d0018;
-        public static final int Base_TextAppearance_AppCompat_Subhead=0x7f0d0019;
-        public static final int Base_TextAppearance_AppCompat_Subhead_Inverse=0x7f0d001a;
-        public static final int Base_TextAppearance_AppCompat_Title=0x7f0d001b;
-        public static final int Base_TextAppearance_AppCompat_Title_Inverse=0x7f0d001c;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0d001d;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0d001e;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0d001f;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0d0020;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0d0021;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0d0022;
-        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0d0023;
-        public static final int Base_TextAppearance_AppCompat_Widget_DropDownItem=0x7f0d0024;
-        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0d0025;
-        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0d0026;
-        public static final int Base_TextAppearance_AppCompat_Widget_Switch=0x7f0d0027;
-        public static final int Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0d0028;
-        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0d0029;
-        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0d002a;
-        public static final int Base_Theme_AppCompat=0x7f0d002b;
-        public static final int Base_Theme_AppCompat_CompactMenu=0x7f0d002c;
-        public static final int Base_Theme_AppCompat_Dialog=0x7f0d002d;
-        public static final int Base_Theme_AppCompat_Dialog_FixedSize=0x7f0d002e;
-        public static final int Base_Theme_AppCompat_DialogWhenLarge=0x7f0d002f;
-        public static final int Base_Theme_AppCompat_Light=0x7f0d0030;
-        public static final int Base_Theme_AppCompat_Light_DarkActionBar=0x7f0d0031;
-        public static final int Base_Theme_AppCompat_Light_Dialog=0x7f0d0032;
-        public static final int Base_Theme_AppCompat_Light_Dialog_FixedSize=0x7f0d0033;
-        public static final int Base_Theme_AppCompat_Light_DialogWhenLarge=0x7f0d0034;
-        public static final int Base_ThemeOverlay_AppCompat=0x7f0d0035;
-        public static final int Base_ThemeOverlay_AppCompat_ActionBar=0x7f0d0036;
-        public static final int Base_ThemeOverlay_AppCompat_Dark=0x7f0d0037;
-        public static final int Base_ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0d0038;
-        public static final int Base_ThemeOverlay_AppCompat_Light=0x7f0d0039;
-        public static final int Base_V11_Theme_AppCompat=0x7f0d00e1;
-        public static final int Base_V11_Theme_AppCompat_Dialog=0x7f0d00e2;
-        public static final int Base_V11_Theme_AppCompat_Light=0x7f0d00e3;
-        public static final int Base_V11_Theme_AppCompat_Light_Dialog=0x7f0d00e4;
-        public static final int Base_V14_Theme_AppCompat=0x7f0d00e5;
-        public static final int Base_V14_Theme_AppCompat_Dialog=0x7f0d00e6;
-        public static final int Base_V14_Theme_AppCompat_Light=0x7f0d00e7;
-        public static final int Base_V14_Theme_AppCompat_Light_Dialog=0x7f0d00e8;
-        public static final int Base_V21_Theme_AppCompat=0x7f0d00e9;
-        public static final int Base_V21_Theme_AppCompat_Dialog=0x7f0d00ea;
-        public static final int Base_V21_Theme_AppCompat_Light=0x7f0d00eb;
-        public static final int Base_V21_Theme_AppCompat_Light_Dialog=0x7f0d00ec;
-        public static final int Base_V7_Theme_AppCompat=0x7f0d003a;
-        public static final int Base_V7_Theme_AppCompat_Dialog=0x7f0d003b;
-        public static final int Base_V7_Theme_AppCompat_Light=0x7f0d003c;
-        public static final int Base_Widget_AppCompat_ActionBar=0x7f0d003d;
-        public static final int Base_Widget_AppCompat_ActionBar_Solid=0x7f0d003e;
-        public static final int Base_Widget_AppCompat_ActionBar_TabBar=0x7f0d003f;
-        public static final int Base_Widget_AppCompat_ActionBar_TabText=0x7f0d0040;
-        public static final int Base_Widget_AppCompat_ActionBar_TabView=0x7f0d0041;
-        public static final int Base_Widget_AppCompat_ActionButton=0x7f0d0042;
-        public static final int Base_Widget_AppCompat_ActionButton_CloseMode=0x7f0d0043;
-        public static final int Base_Widget_AppCompat_ActionButton_Overflow=0x7f0d0044;
-        public static final int Base_Widget_AppCompat_ActionMode=0x7f0d0045;
-        public static final int Base_Widget_AppCompat_ActivityChooserView=0x7f0d0046;
-        public static final int Base_Widget_AppCompat_AutoCompleteTextView=0x7f0d0047;
-        public static final int Base_Widget_AppCompat_CompoundButton_Switch=0x7f0d0048;
-        public static final int Base_Widget_AppCompat_DrawerArrowToggle=0x7f0d0049;
-        public static final int Base_Widget_AppCompat_DropDownItem_Spinner=0x7f0d004a;
-        public static final int Base_Widget_AppCompat_EditText=0x7f0d004b;
-        public static final int Base_Widget_AppCompat_Light_ActionBar=0x7f0d004c;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_Solid=0x7f0d004d;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabBar=0x7f0d004e;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText=0x7f0d004f;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0d0050;
-        public static final int Base_Widget_AppCompat_Light_ActionBar_TabView=0x7f0d0051;
-        public static final int Base_Widget_AppCompat_Light_ActivityChooserView=0x7f0d0052;
-        public static final int Base_Widget_AppCompat_Light_AutoCompleteTextView=0x7f0d0053;
-        public static final int Base_Widget_AppCompat_Light_PopupMenu=0x7f0d0054;
-        public static final int Base_Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0d0055;
-        public static final int Base_Widget_AppCompat_ListPopupWindow=0x7f0d0056;
-        public static final int Base_Widget_AppCompat_ListView_DropDown=0x7f0d0057;
-        public static final int Base_Widget_AppCompat_ListView_Menu=0x7f0d0058;
-        public static final int Base_Widget_AppCompat_PopupMenu=0x7f0d0059;
-        public static final int Base_Widget_AppCompat_PopupMenu_Overflow=0x7f0d005a;
-        public static final int Base_Widget_AppCompat_PopupWindow=0x7f0d005b;
-        public static final int Base_Widget_AppCompat_ProgressBar=0x7f0d005c;
-        public static final int Base_Widget_AppCompat_ProgressBar_Horizontal=0x7f0d005d;
-        public static final int Base_Widget_AppCompat_SearchView=0x7f0d005e;
-        public static final int Base_Widget_AppCompat_Spinner=0x7f0d005f;
-        public static final int Base_Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0d0060;
-        public static final int Base_Widget_AppCompat_Toolbar=0x7f0d0061;
-        public static final int Base_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d0062;
-        public static final int Platform_AppCompat=0x7f0d0063;
-        public static final int Platform_AppCompat_Dialog=0x7f0d0064;
-        public static final int Platform_AppCompat_Light=0x7f0d0065;
-        public static final int Platform_AppCompat_Light_Dialog=0x7f0d0066;
-        public static final int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem=0x7f0d0067;
-        public static final int RtlOverlay_Widget_AppCompat_ActionButton_CloseMode=0x7f0d0068;
-        public static final int RtlOverlay_Widget_AppCompat_ActionButton_Overflow=0x7f0d0069;
-        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem=0x7f0d006a;
-        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup=0x7f0d006b;
-        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_Text=0x7f0d006c;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown=0x7f0d006d;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1=0x7f0d006e;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2=0x7f0d006f;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Query=0x7f0d0070;
-        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Text=0x7f0d0071;
-        public static final int RtlOverlay_Widget_AppCompat_SearchView_MagIcon=0x7f0d0072;
-        public static final int TextAppearance_AppCompat=0x7f0d0073;
-        public static final int TextAppearance_AppCompat_Body1=0x7f0d0074;
-        public static final int TextAppearance_AppCompat_Body2=0x7f0d0075;
-        public static final int TextAppearance_AppCompat_Button=0x7f0d0076;
-        public static final int TextAppearance_AppCompat_Caption=0x7f0d0077;
-        public static final int TextAppearance_AppCompat_Display1=0x7f0d0078;
-        public static final int TextAppearance_AppCompat_Display2=0x7f0d0079;
-        public static final int TextAppearance_AppCompat_Display3=0x7f0d007a;
-        public static final int TextAppearance_AppCompat_Display4=0x7f0d007b;
-        public static final int TextAppearance_AppCompat_Headline=0x7f0d007c;
-        public static final int TextAppearance_AppCompat_Inverse=0x7f0d007d;
-        public static final int TextAppearance_AppCompat_Large=0x7f0d007e;
-        public static final int TextAppearance_AppCompat_Large_Inverse=0x7f0d007f;
-        public static final int TextAppearance_AppCompat_Light_SearchResult_Subtitle=0x7f0d0080;
-        public static final int TextAppearance_AppCompat_Light_SearchResult_Title=0x7f0d0081;
-        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0d0082;
-        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0d0083;
-        public static final int TextAppearance_AppCompat_Medium=0x7f0d0084;
-        public static final int TextAppearance_AppCompat_Medium_Inverse=0x7f0d0085;
-        public static final int TextAppearance_AppCompat_Menu=0x7f0d0086;
-        public static final int TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0d0087;
-        public static final int TextAppearance_AppCompat_SearchResult_Title=0x7f0d0088;
-        public static final int TextAppearance_AppCompat_Small=0x7f0d0089;
-        public static final int TextAppearance_AppCompat_Small_Inverse=0x7f0d008a;
-        public static final int TextAppearance_AppCompat_Subhead=0x7f0d008b;
-        public static final int TextAppearance_AppCompat_Subhead_Inverse=0x7f0d008c;
-        public static final int TextAppearance_AppCompat_Title=0x7f0d008d;
-        public static final int TextAppearance_AppCompat_Title_Inverse=0x7f0d008e;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0d008f;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0d0090;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0d0091;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0d0092;
-        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0d0093;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0d0094;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse=0x7f0d0095;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0d0096;
-        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse=0x7f0d0097;
-        public static final int TextAppearance_AppCompat_Widget_DropDownItem=0x7f0d0098;
-        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0d0099;
-        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0d009a;
-        public static final int TextAppearance_AppCompat_Widget_Switch=0x7f0d009b;
-        public static final int TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0d009c;
-        public static final int TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0d009d;
-        public static final int TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0d009e;
-        public static final int Theme_AppCompat=0x7f0d009f;
-        public static final int Theme_AppCompat_CompactMenu=0x7f0d00a0;
-        public static final int Theme_AppCompat_Dialog=0x7f0d00a1;
-        public static final int Theme_AppCompat_DialogWhenLarge=0x7f0d00a2;
-        public static final int Theme_AppCompat_Light=0x7f0d00a3;
-        public static final int Theme_AppCompat_Light_DarkActionBar=0x7f0d00a4;
-        public static final int Theme_AppCompat_Light_Dialog=0x7f0d00a5;
-        public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f0d00a6;
-        public static final int Theme_AppCompat_Light_NoActionBar=0x7f0d00a7;
-        public static final int Theme_AppCompat_NoActionBar=0x7f0d00a8;
-        public static final int ThemeOverlay_AppCompat=0x7f0d00a9;
-        public static final int ThemeOverlay_AppCompat_ActionBar=0x7f0d00aa;
-        public static final int ThemeOverlay_AppCompat_Dark=0x7f0d00ab;
-        public static final int ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0d00ac;
-        public static final int ThemeOverlay_AppCompat_Light=0x7f0d00ad;
-        public static final int Widget_AppCompat_ActionBar=0x7f0d00ae;
-        public static final int Widget_AppCompat_ActionBar_Solid=0x7f0d00af;
-        public static final int Widget_AppCompat_ActionBar_TabBar=0x7f0d00b0;
-        public static final int Widget_AppCompat_ActionBar_TabText=0x7f0d00b1;
-        public static final int Widget_AppCompat_ActionBar_TabView=0x7f0d00b2;
-        public static final int Widget_AppCompat_ActionButton=0x7f0d00b3;
-        public static final int Widget_AppCompat_ActionButton_CloseMode=0x7f0d00b4;
-        public static final int Widget_AppCompat_ActionButton_Overflow=0x7f0d00b5;
-        public static final int Widget_AppCompat_ActionMode=0x7f0d00b6;
-        public static final int Widget_AppCompat_ActivityChooserView=0x7f0d00b7;
-        public static final int Widget_AppCompat_AutoCompleteTextView=0x7f0d00b8;
-        public static final int Widget_AppCompat_CompoundButton_Switch=0x7f0d00b9;
-        public static final int Widget_AppCompat_DrawerArrowToggle=0x7f0d00ba;
-        public static final int Widget_AppCompat_DropDownItem_Spinner=0x7f0d00bb;
-        public static final int Widget_AppCompat_EditText=0x7f0d00bc;
-        public static final int Widget_AppCompat_Light_ActionBar=0x7f0d00bd;
-        public static final int Widget_AppCompat_Light_ActionBar_Solid=0x7f0d00be;
-        public static final int Widget_AppCompat_Light_ActionBar_Solid_Inverse=0x7f0d00bf;
-        public static final int Widget_AppCompat_Light_ActionBar_TabBar=0x7f0d00c0;
-        public static final int Widget_AppCompat_Light_ActionBar_TabBar_Inverse=0x7f0d00c1;
-        public static final int Widget_AppCompat_Light_ActionBar_TabText=0x7f0d00c2;
-        public static final int Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0d00c3;
-        public static final int Widget_AppCompat_Light_ActionBar_TabView=0x7f0d00c4;
-        public static final int Widget_AppCompat_Light_ActionBar_TabView_Inverse=0x7f0d00c5;
-        public static final int Widget_AppCompat_Light_ActionButton=0x7f0d00c6;
-        public static final int Widget_AppCompat_Light_ActionButton_CloseMode=0x7f0d00c7;
-        public static final int Widget_AppCompat_Light_ActionButton_Overflow=0x7f0d00c8;
-        public static final int Widget_AppCompat_Light_ActionMode_Inverse=0x7f0d00c9;
-        public static final int Widget_AppCompat_Light_ActivityChooserView=0x7f0d00ca;
-        public static final int Widget_AppCompat_Light_AutoCompleteTextView=0x7f0d00cb;
-        public static final int Widget_AppCompat_Light_DropDownItem_Spinner=0x7f0d00cc;
-        public static final int Widget_AppCompat_Light_ListPopupWindow=0x7f0d00cd;
-        public static final int Widget_AppCompat_Light_ListView_DropDown=0x7f0d00ce;
-        public static final int Widget_AppCompat_Light_PopupMenu=0x7f0d00cf;
-        public static final int Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0d00d0;
-        public static final int Widget_AppCompat_Light_SearchView=0x7f0d00d1;
-        public static final int Widget_AppCompat_Light_Spinner_DropDown_ActionBar=0x7f0d00d2;
-        public static final int Widget_AppCompat_ListPopupWindow=0x7f0d00d3;
-        public static final int Widget_AppCompat_ListView_DropDown=0x7f0d00d4;
-        public static final int Widget_AppCompat_ListView_Menu=0x7f0d00d5;
-        public static final int Widget_AppCompat_PopupMenu=0x7f0d00d6;
-        public static final int Widget_AppCompat_PopupMenu_Overflow=0x7f0d00d7;
-        public static final int Widget_AppCompat_PopupWindow=0x7f0d00d8;
-        public static final int Widget_AppCompat_ProgressBar=0x7f0d00d9;
-        public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0d00da;
-        public static final int Widget_AppCompat_SearchView=0x7f0d00db;
-        public static final int Widget_AppCompat_Spinner=0x7f0d00dc;
-        public static final int Widget_AppCompat_Spinner_DropDown=0x7f0d00dd;
-        public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0d00de;
-        public static final int Widget_AppCompat_Toolbar=0x7f0d00df;
-        public static final int Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d00e0;
+        public static final int AppTheme_Base=0x7f0d0002;
+        public static final int Base_Animation_AppCompat_DropDownUp=0x7f0d0003;
+        public static final int Base_TextAppearance_AppCompat=0x7f0d0004;
+        public static final int Base_TextAppearance_AppCompat_Body1=0x7f0d0005;
+        public static final int Base_TextAppearance_AppCompat_Body2=0x7f0d0006;
+        public static final int Base_TextAppearance_AppCompat_Button=0x7f0d0007;
+        public static final int Base_TextAppearance_AppCompat_Caption=0x7f0d0008;
+        public static final int Base_TextAppearance_AppCompat_Display1=0x7f0d0009;
+        public static final int Base_TextAppearance_AppCompat_Display2=0x7f0d000a;
+        public static final int Base_TextAppearance_AppCompat_Display3=0x7f0d000b;
+        public static final int Base_TextAppearance_AppCompat_Display4=0x7f0d000c;
+        public static final int Base_TextAppearance_AppCompat_Headline=0x7f0d000d;
+        public static final int Base_TextAppearance_AppCompat_Inverse=0x7f0d000e;
+        public static final int Base_TextAppearance_AppCompat_Large=0x7f0d000f;
+        public static final int Base_TextAppearance_AppCompat_Large_Inverse=0x7f0d0010;
+        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0d0011;
+        public static final int Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0d0012;
+        public static final int Base_TextAppearance_AppCompat_Medium=0x7f0d0013;
+        public static final int Base_TextAppearance_AppCompat_Medium_Inverse=0x7f0d0014;
+        public static final int Base_TextAppearance_AppCompat_Menu=0x7f0d0015;
+        public static final int Base_TextAppearance_AppCompat_SearchResult=0x7f0d0016;
+        public static final int Base_TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0d0017;
+        public static final int Base_TextAppearance_AppCompat_SearchResult_Title=0x7f0d0018;
+        public static final int Base_TextAppearance_AppCompat_Small=0x7f0d0019;
+        public static final int Base_TextAppearance_AppCompat_Small_Inverse=0x7f0d001a;
+        public static final int Base_TextAppearance_AppCompat_Subhead=0x7f0d001b;
+        public static final int Base_TextAppearance_AppCompat_Subhead_Inverse=0x7f0d001c;
+        public static final int Base_TextAppearance_AppCompat_Title=0x7f0d001d;
+        public static final int Base_TextAppearance_AppCompat_Title_Inverse=0x7f0d001e;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0d001f;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0d0020;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0d0021;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0d0022;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0d0023;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0d0024;
+        public static final int Base_TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0d0025;
+        public static final int Base_TextAppearance_AppCompat_Widget_DropDownItem=0x7f0d0026;
+        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0d0027;
+        public static final int Base_TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0d0028;
+        public static final int Base_TextAppearance_AppCompat_Widget_Switch=0x7f0d0029;
+        public static final int Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem=0x7f0d002a;
+        public static final int Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0d002b;
+        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0d002c;
+        public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0d002d;
+        public static final int Base_Theme_AppCompat=0x7f0d002e;
+        public static final int Base_Theme_AppCompat_CompactMenu=0x7f0d002f;
+        public static final int Base_Theme_AppCompat_Dialog=0x7f0d0030;
+        public static final int Base_Theme_AppCompat_Dialog_FixedSize=0x7f0d0031;
+        public static final int Base_Theme_AppCompat_DialogWhenLarge=0x7f0d0032;
+        public static final int Base_Theme_AppCompat_Light=0x7f0d0033;
+        public static final int Base_Theme_AppCompat_Light_DarkActionBar=0x7f0d0034;
+        public static final int Base_Theme_AppCompat_Light_Dialog=0x7f0d0035;
+        public static final int Base_Theme_AppCompat_Light_Dialog_FixedSize=0x7f0d0036;
+        public static final int Base_Theme_AppCompat_Light_DialogWhenLarge=0x7f0d0037;
+        public static final int Base_ThemeOverlay_AppCompat=0x7f0d0038;
+        public static final int Base_ThemeOverlay_AppCompat_ActionBar=0x7f0d0039;
+        public static final int Base_ThemeOverlay_AppCompat_Dark=0x7f0d003a;
+        public static final int Base_ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0d003b;
+        public static final int Base_ThemeOverlay_AppCompat_Light=0x7f0d003c;
+        public static final int Base_V11_Theme_AppCompat=0x7f0d00ee;
+        public static final int Base_V11_Theme_AppCompat_Dialog=0x7f0d00ef;
+        public static final int Base_V11_Theme_AppCompat_Light=0x7f0d00f0;
+        public static final int Base_V11_Theme_AppCompat_Light_Dialog=0x7f0d00f1;
+        public static final int Base_V14_Theme_AppCompat=0x7f0d00f2;
+        public static final int Base_V14_Theme_AppCompat_Dialog=0x7f0d00f3;
+        public static final int Base_V14_Theme_AppCompat_Light=0x7f0d00f4;
+        public static final int Base_V14_Theme_AppCompat_Light_Dialog=0x7f0d00f5;
+        public static final int Base_V21_Theme_AppCompat=0x7f0d00f6;
+        public static final int Base_V21_Theme_AppCompat_Dialog=0x7f0d00f7;
+        public static final int Base_V21_Theme_AppCompat_Light=0x7f0d00f8;
+        public static final int Base_V21_Theme_AppCompat_Light_Dialog=0x7f0d00f9;
+        public static final int Base_V7_Theme_AppCompat=0x7f0d003d;
+        public static final int Base_V7_Theme_AppCompat_Dialog=0x7f0d003e;
+        public static final int Base_V7_Theme_AppCompat_Light=0x7f0d003f;
+        public static final int Base_Widget_AppCompat_ActionBar=0x7f0d0040;
+        public static final int Base_Widget_AppCompat_ActionBar_Solid=0x7f0d0041;
+        public static final int Base_Widget_AppCompat_ActionBar_TabBar=0x7f0d0042;
+        public static final int Base_Widget_AppCompat_ActionBar_TabText=0x7f0d0043;
+        public static final int Base_Widget_AppCompat_ActionBar_TabView=0x7f0d0044;
+        public static final int Base_Widget_AppCompat_ActionButton=0x7f0d0045;
+        public static final int Base_Widget_AppCompat_ActionButton_CloseMode=0x7f0d0046;
+        public static final int Base_Widget_AppCompat_ActionButton_Overflow=0x7f0d0047;
+        public static final int Base_Widget_AppCompat_ActionMode=0x7f0d0048;
+        public static final int Base_Widget_AppCompat_ActivityChooserView=0x7f0d0049;
+        public static final int Base_Widget_AppCompat_AutoCompleteTextView=0x7f0d004a;
+        public static final int Base_Widget_AppCompat_Button=0x7f0d004b;
+        public static final int Base_Widget_AppCompat_Button_Small=0x7f0d004c;
+        public static final int Base_Widget_AppCompat_CompoundButton_Switch=0x7f0d004d;
+        public static final int Base_Widget_AppCompat_DrawerArrowToggle=0x7f0d004e;
+        public static final int Base_Widget_AppCompat_DrawerArrowToggle_Common=0x7f0d004f;
+        public static final int Base_Widget_AppCompat_DropDownItem_Spinner=0x7f0d0050;
+        public static final int Base_Widget_AppCompat_EditText=0x7f0d0051;
+        public static final int Base_Widget_AppCompat_Light_ActionBar=0x7f0d0052;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_Solid=0x7f0d0053;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabBar=0x7f0d0054;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText=0x7f0d0055;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0d0056;
+        public static final int Base_Widget_AppCompat_Light_ActionBar_TabView=0x7f0d0057;
+        public static final int Base_Widget_AppCompat_Light_PopupMenu=0x7f0d0058;
+        public static final int Base_Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0d0059;
+        public static final int Base_Widget_AppCompat_ListPopupWindow=0x7f0d005a;
+        public static final int Base_Widget_AppCompat_ListView_DropDown=0x7f0d005b;
+        public static final int Base_Widget_AppCompat_ListView_Menu=0x7f0d005c;
+        public static final int Base_Widget_AppCompat_PopupMenu=0x7f0d005d;
+        public static final int Base_Widget_AppCompat_PopupMenu_Overflow=0x7f0d005e;
+        public static final int Base_Widget_AppCompat_PopupWindow=0x7f0d005f;
+        public static final int Base_Widget_AppCompat_ProgressBar=0x7f0d0060;
+        public static final int Base_Widget_AppCompat_ProgressBar_Horizontal=0x7f0d0061;
+        public static final int Base_Widget_AppCompat_RatingBar=0x7f0d0062;
+        public static final int Base_Widget_AppCompat_SearchView=0x7f0d0063;
+        public static final int Base_Widget_AppCompat_Spinner=0x7f0d0064;
+        public static final int Base_Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0d0065;
+        public static final int Base_Widget_AppCompat_Spinner_Underlined=0x7f0d0066;
+        public static final int Base_Widget_AppCompat_TextView_SpinnerItem=0x7f0d0067;
+        public static final int Base_Widget_AppCompat_Toolbar=0x7f0d0068;
+        public static final int Base_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d0069;
+        public static final int Platform_AppCompat=0x7f0d006a;
+        public static final int Platform_AppCompat_Dialog=0x7f0d006b;
+        public static final int Platform_AppCompat_Light=0x7f0d006c;
+        public static final int Platform_AppCompat_Light_Dialog=0x7f0d006d;
+        public static final int RtlOverlay_Widget_AppCompat_ActionBar_TitleItem=0x7f0d006e;
+        public static final int RtlOverlay_Widget_AppCompat_ActionButton_CloseMode=0x7f0d006f;
+        public static final int RtlOverlay_Widget_AppCompat_ActionButton_Overflow=0x7f0d0070;
+        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem=0x7f0d0071;
+        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup=0x7f0d0072;
+        public static final int RtlOverlay_Widget_AppCompat_PopupMenuItem_Text=0x7f0d0073;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown=0x7f0d0074;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1=0x7f0d0075;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2=0x7f0d0076;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Query=0x7f0d0077;
+        public static final int RtlOverlay_Widget_AppCompat_Search_DropDown_Text=0x7f0d0078;
+        public static final int RtlOverlay_Widget_AppCompat_SearchView_MagIcon=0x7f0d0079;
+        public static final int TextAppearance_AppCompat=0x7f0d007a;
+        public static final int TextAppearance_AppCompat_Body1=0x7f0d007b;
+        public static final int TextAppearance_AppCompat_Body2=0x7f0d007c;
+        public static final int TextAppearance_AppCompat_Button=0x7f0d007d;
+        public static final int TextAppearance_AppCompat_Caption=0x7f0d007e;
+        public static final int TextAppearance_AppCompat_Display1=0x7f0d007f;
+        public static final int TextAppearance_AppCompat_Display2=0x7f0d0080;
+        public static final int TextAppearance_AppCompat_Display3=0x7f0d0081;
+        public static final int TextAppearance_AppCompat_Display4=0x7f0d0082;
+        public static final int TextAppearance_AppCompat_Headline=0x7f0d0083;
+        public static final int TextAppearance_AppCompat_Inverse=0x7f0d0084;
+        public static final int TextAppearance_AppCompat_Large=0x7f0d0085;
+        public static final int TextAppearance_AppCompat_Large_Inverse=0x7f0d0086;
+        public static final int TextAppearance_AppCompat_Light_SearchResult_Subtitle=0x7f0d0087;
+        public static final int TextAppearance_AppCompat_Light_SearchResult_Title=0x7f0d0088;
+        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Large=0x7f0d0089;
+        public static final int TextAppearance_AppCompat_Light_Widget_PopupMenu_Small=0x7f0d008a;
+        public static final int TextAppearance_AppCompat_Medium=0x7f0d008b;
+        public static final int TextAppearance_AppCompat_Medium_Inverse=0x7f0d008c;
+        public static final int TextAppearance_AppCompat_Menu=0x7f0d008d;
+        public static final int TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0d008e;
+        public static final int TextAppearance_AppCompat_SearchResult_Title=0x7f0d008f;
+        public static final int TextAppearance_AppCompat_Small=0x7f0d0090;
+        public static final int TextAppearance_AppCompat_Small_Inverse=0x7f0d0091;
+        public static final int TextAppearance_AppCompat_Subhead=0x7f0d0092;
+        public static final int TextAppearance_AppCompat_Subhead_Inverse=0x7f0d0093;
+        public static final int TextAppearance_AppCompat_Title=0x7f0d0094;
+        public static final int TextAppearance_AppCompat_Title_Inverse=0x7f0d0095;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Menu=0x7f0d0096;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle=0x7f0d0097;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse=0x7f0d0098;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title=0x7f0d0099;
+        public static final int TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse=0x7f0d009a;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle=0x7f0d009b;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse=0x7f0d009c;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title=0x7f0d009d;
+        public static final int TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse=0x7f0d009e;
+        public static final int TextAppearance_AppCompat_Widget_DropDownItem=0x7f0d009f;
+        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Large=0x7f0d00a0;
+        public static final int TextAppearance_AppCompat_Widget_PopupMenu_Small=0x7f0d00a1;
+        public static final int TextAppearance_AppCompat_Widget_Switch=0x7f0d00a2;
+        public static final int TextAppearance_AppCompat_Widget_TextView_SpinnerItem=0x7f0d00a3;
+        public static final int TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0d00a4;
+        public static final int TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0d00a5;
+        public static final int TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0d00a6;
+        public static final int Theme_AppCompat=0x7f0d00a7;
+        public static final int Theme_AppCompat_CompactMenu=0x7f0d00a8;
+        public static final int Theme_AppCompat_Dialog=0x7f0d00a9;
+        public static final int Theme_AppCompat_DialogWhenLarge=0x7f0d00aa;
+        public static final int Theme_AppCompat_Light=0x7f0d00ab;
+        public static final int Theme_AppCompat_Light_DarkActionBar=0x7f0d00ac;
+        public static final int Theme_AppCompat_Light_Dialog=0x7f0d00ad;
+        public static final int Theme_AppCompat_Light_DialogWhenLarge=0x7f0d00ae;
+        public static final int Theme_AppCompat_Light_NoActionBar=0x7f0d00af;
+        public static final int Theme_AppCompat_NoActionBar=0x7f0d00b0;
+        public static final int ThemeOverlay_AppCompat=0x7f0d00b1;
+        public static final int ThemeOverlay_AppCompat_ActionBar=0x7f0d00b2;
+        public static final int ThemeOverlay_AppCompat_Dark=0x7f0d00b3;
+        public static final int ThemeOverlay_AppCompat_Dark_ActionBar=0x7f0d00b4;
+        public static final int ThemeOverlay_AppCompat_Light=0x7f0d00b5;
+        public static final int Widget_AppCompat_ActionBar=0x7f0d00b6;
+        public static final int Widget_AppCompat_ActionBar_Solid=0x7f0d00b7;
+        public static final int Widget_AppCompat_ActionBar_TabBar=0x7f0d00b8;
+        public static final int Widget_AppCompat_ActionBar_TabText=0x7f0d00b9;
+        public static final int Widget_AppCompat_ActionBar_TabView=0x7f0d00ba;
+        public static final int Widget_AppCompat_ActionButton=0x7f0d00bb;
+        public static final int Widget_AppCompat_ActionButton_CloseMode=0x7f0d00bc;
+        public static final int Widget_AppCompat_ActionButton_Overflow=0x7f0d00bd;
+        public static final int Widget_AppCompat_ActionMode=0x7f0d00be;
+        public static final int Widget_AppCompat_ActivityChooserView=0x7f0d00bf;
+        public static final int Widget_AppCompat_AutoCompleteTextView=0x7f0d00c0;
+        public static final int Widget_AppCompat_Button=0x7f0d00c1;
+        public static final int Widget_AppCompat_Button_Small=0x7f0d00c2;
+        public static final int Widget_AppCompat_CompoundButton_Switch=0x7f0d00c3;
+        public static final int Widget_AppCompat_DrawerArrowToggle=0x7f0d00c4;
+        public static final int Widget_AppCompat_DropDownItem_Spinner=0x7f0d00c5;
+        public static final int Widget_AppCompat_EditText=0x7f0d00c6;
+        public static final int Widget_AppCompat_Light_ActionBar=0x7f0d00c7;
+        public static final int Widget_AppCompat_Light_ActionBar_Solid=0x7f0d00c8;
+        public static final int Widget_AppCompat_Light_ActionBar_Solid_Inverse=0x7f0d00c9;
+        public static final int Widget_AppCompat_Light_ActionBar_TabBar=0x7f0d00ca;
+        public static final int Widget_AppCompat_Light_ActionBar_TabBar_Inverse=0x7f0d00cb;
+        public static final int Widget_AppCompat_Light_ActionBar_TabText=0x7f0d00cc;
+        public static final int Widget_AppCompat_Light_ActionBar_TabText_Inverse=0x7f0d00cd;
+        public static final int Widget_AppCompat_Light_ActionBar_TabView=0x7f0d00ce;
+        public static final int Widget_AppCompat_Light_ActionBar_TabView_Inverse=0x7f0d00cf;
+        public static final int Widget_AppCompat_Light_ActionButton=0x7f0d00d0;
+        public static final int Widget_AppCompat_Light_ActionButton_CloseMode=0x7f0d00d1;
+        public static final int Widget_AppCompat_Light_ActionButton_Overflow=0x7f0d00d2;
+        public static final int Widget_AppCompat_Light_ActionMode_Inverse=0x7f0d00d3;
+        public static final int Widget_AppCompat_Light_ActivityChooserView=0x7f0d00d4;
+        public static final int Widget_AppCompat_Light_AutoCompleteTextView=0x7f0d00d5;
+        public static final int Widget_AppCompat_Light_DropDownItem_Spinner=0x7f0d00d6;
+        public static final int Widget_AppCompat_Light_ListPopupWindow=0x7f0d00d7;
+        public static final int Widget_AppCompat_Light_ListView_DropDown=0x7f0d00d8;
+        public static final int Widget_AppCompat_Light_PopupMenu=0x7f0d00d9;
+        public static final int Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0d00da;
+        public static final int Widget_AppCompat_Light_SearchView=0x7f0d00db;
+        public static final int Widget_AppCompat_Light_Spinner_DropDown_ActionBar=0x7f0d00dc;
+        public static final int Widget_AppCompat_ListPopupWindow=0x7f0d00dd;
+        public static final int Widget_AppCompat_ListView_DropDown=0x7f0d00de;
+        public static final int Widget_AppCompat_ListView_Menu=0x7f0d00df;
+        public static final int Widget_AppCompat_PopupMenu=0x7f0d00e0;
+        public static final int Widget_AppCompat_PopupMenu_Overflow=0x7f0d00e1;
+        public static final int Widget_AppCompat_PopupWindow=0x7f0d00e2;
+        public static final int Widget_AppCompat_ProgressBar=0x7f0d00e3;
+        public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0d00e4;
+        public static final int Widget_AppCompat_RatingBar=0x7f0d00e5;
+        public static final int Widget_AppCompat_SearchView=0x7f0d00e6;
+        public static final int Widget_AppCompat_Spinner=0x7f0d00e7;
+        public static final int Widget_AppCompat_Spinner_DropDown=0x7f0d00e8;
+        public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0d00e9;
+        public static final int Widget_AppCompat_Spinner_Underlined=0x7f0d00ea;
+        public static final int Widget_AppCompat_TextView_SpinnerItem=0x7f0d00eb;
+        public static final int Widget_AppCompat_Toolbar=0x7f0d00ec;
+        public static final int Widget_AppCompat_Toolbar_Button_Navigation=0x7f0d00ed;
     }
     public static final class xml {
         public static final int fileprovider=0x7f060000;
@@ -3628,6 +3653,46 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name it.giorgini.soundnotes:track
         */
         public static final int SwitchCompat_track = 3;
+        /** Attributes that can be used with a SwitchCompatTextAppearance.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SwitchCompatTextAppearance_android_textColor android:textColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompatTextAppearance_android_textSize android:textSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #SwitchCompatTextAppearance_textAllCaps it.giorgini.soundnotes:textAllCaps}</code></td><td></td></tr>
+           </table>
+           @see #SwitchCompatTextAppearance_android_textColor
+           @see #SwitchCompatTextAppearance_android_textSize
+           @see #SwitchCompatTextAppearance_textAllCaps
+         */
+        public static final int[] SwitchCompatTextAppearance = {
+            0x01010095, 0x01010098, 0x7f01001f
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#textColor}
+          attribute's value can be found in the {@link #SwitchCompatTextAppearance} array.
+          @attr name android:textColor
+        */
+        public static final int SwitchCompatTextAppearance_android_textColor = 1;
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#textSize}
+          attribute's value can be found in the {@link #SwitchCompatTextAppearance} array.
+          @attr name android:textSize
+        */
+        public static final int SwitchCompatTextAppearance_android_textSize = 0;
+        /**
+          <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textAllCaps}
+          attribute's value can be found in the {@link #SwitchCompatTextAppearance} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a boolean value, either "<code>true</code>" or "<code>false</code>".
+          @attr name it.giorgini.soundnotes:textAllCaps
+        */
+        public static final int SwitchCompatTextAppearance_textAllCaps = 2;
         /** Attributes that can be used with a Theme.
            <p>Includes the following attributes:</p>
            <table>
@@ -3665,6 +3730,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <tr><td><code>{@link #Theme_actionOverflowButtonStyle it.giorgini.soundnotes:actionOverflowButtonStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #Theme_actionOverflowMenuStyle it.giorgini.soundnotes:actionOverflowMenuStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #Theme_activityChooserViewStyle it.giorgini.soundnotes:activityChooserViewStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #Theme_android_windowAnimationStyle android:windowAnimationStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #Theme_android_windowIsFloating android:windowIsFloating}</code></td><td></td></tr>
            <tr><td><code>{@link #Theme_buttonBarButtonStyle it.giorgini.soundnotes:buttonBarButtonStyle}</code></td><td></td></tr>
            <tr><td><code>{@link #Theme_buttonBarStyle it.giorgini.soundnotes:buttonBarStyle}</code></td><td></td></tr>
@@ -3749,6 +3815,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #Theme_actionOverflowButtonStyle
            @see #Theme_actionOverflowMenuStyle
            @see #Theme_activityChooserViewStyle
+           @see #Theme_android_windowAnimationStyle
            @see #Theme_android_windowIsFloating
            @see #Theme_buttonBarButtonStyle
            @see #Theme_buttonBarStyle
@@ -3803,27 +3870,27 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            @see #Theme_windowFixedWidthMinor
          */
         public static final int[] Theme = {
-            0x01010057, 0x7f010048, 0x7f010049, 0x7f01004a,
-            0x7f01004b, 0x7f01004c, 0x7f01004d, 0x7f01004e,
-            0x7f01004f, 0x7f010050, 0x7f010051, 0x7f010052,
-            0x7f010053, 0x7f010054, 0x7f010055, 0x7f010056,
-            0x7f010057, 0x7f010058, 0x7f010059, 0x7f01005a,
-            0x7f01005b, 0x7f01005c, 0x7f01005d, 0x7f01005e,
-            0x7f01005f, 0x7f010060, 0x7f010061, 0x7f010062,
-            0x7f010063, 0x7f010064, 0x7f010065, 0x7f010066,
-            0x7f010067, 0x7f010068, 0x7f010069, 0x7f01006a,
-            0x7f01006b, 0x7f01006c, 0x7f01006d, 0x7f01006e,
-            0x7f01006f, 0x7f010070, 0x7f010071, 0x7f010072,
-            0x7f010073, 0x7f010074, 0x7f010075, 0x7f010076,
-            0x7f010077, 0x7f010078, 0x7f010079, 0x7f01007a,
-            0x7f01007b, 0x7f01007c, 0x7f01007d, 0x7f01007e,
-            0x7f01007f, 0x7f010080, 0x7f010081, 0x7f010082,
-            0x7f010083, 0x7f010084, 0x7f010085, 0x7f010086,
-            0x7f010087, 0x7f010088, 0x7f010089, 0x7f01008a,
-            0x7f01008b, 0x7f01008c, 0x7f01008d, 0x7f01008e,
-            0x7f01008f, 0x7f010090, 0x7f010091, 0x7f010092,
-            0x7f010093, 0x7f010094, 0x7f010095, 0x7f010096,
-            0x7f010097, 0x7f010098, 0x7f010099
+            0x01010057, 0x010100ae, 0x7f010048, 0x7f010049,
+            0x7f01004a, 0x7f01004b, 0x7f01004c, 0x7f01004d,
+            0x7f01004e, 0x7f01004f, 0x7f010050, 0x7f010051,
+            0x7f010052, 0x7f010053, 0x7f010054, 0x7f010055,
+            0x7f010056, 0x7f010057, 0x7f010058, 0x7f010059,
+            0x7f01005a, 0x7f01005b, 0x7f01005c, 0x7f01005d,
+            0x7f01005e, 0x7f01005f, 0x7f010060, 0x7f010061,
+            0x7f010062, 0x7f010063, 0x7f010064, 0x7f010065,
+            0x7f010066, 0x7f010067, 0x7f010068, 0x7f010069,
+            0x7f01006a, 0x7f01006b, 0x7f01006c, 0x7f01006d,
+            0x7f01006e, 0x7f01006f, 0x7f010070, 0x7f010071,
+            0x7f010072, 0x7f010073, 0x7f010074, 0x7f010075,
+            0x7f010076, 0x7f010077, 0x7f010078, 0x7f010079,
+            0x7f01007a, 0x7f01007b, 0x7f01007c, 0x7f01007d,
+            0x7f01007e, 0x7f01007f, 0x7f010080, 0x7f010081,
+            0x7f010082, 0x7f010083, 0x7f010084, 0x7f010085,
+            0x7f010086, 0x7f010087, 0x7f010088, 0x7f010089,
+            0x7f01008a, 0x7f01008b, 0x7f01008c, 0x7f01008d,
+            0x7f01008e, 0x7f01008f, 0x7f010090, 0x7f010091,
+            0x7f010092, 0x7f010093, 0x7f010094, 0x7f010095,
+            0x7f010096, 0x7f010097, 0x7f010098, 0x7f010099
         };
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarDivider}
@@ -3834,7 +3901,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarDivider
         */
-        public static final int Theme_actionBarDivider = 19;
+        public static final int Theme_actionBarDivider = 20;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarItemBackground}
           attribute's value can be found in the {@link #Theme} array.
@@ -3844,7 +3911,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarItemBackground
         */
-        public static final int Theme_actionBarItemBackground = 20;
+        public static final int Theme_actionBarItemBackground = 21;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarPopupTheme}
           attribute's value can be found in the {@link #Theme} array.
@@ -3854,7 +3921,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarPopupTheme
         */
-        public static final int Theme_actionBarPopupTheme = 13;
+        public static final int Theme_actionBarPopupTheme = 14;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarSize}
           attribute's value can be found in the {@link #Theme} array.
@@ -3878,7 +3945,7 @@ containing a value of this type.
 </table>
           @attr name it.giorgini.soundnotes:actionBarSize
         */
-        public static final int Theme_actionBarSize = 18;
+        public static final int Theme_actionBarSize = 19;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarSplitStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -3888,7 +3955,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarSplitStyle
         */
-        public static final int Theme_actionBarSplitStyle = 15;
+        public static final int Theme_actionBarSplitStyle = 16;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -3898,7 +3965,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarStyle
         */
-        public static final int Theme_actionBarStyle = 14;
+        public static final int Theme_actionBarStyle = 15;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarTabBarStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -3908,7 +3975,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarTabBarStyle
         */
-        public static final int Theme_actionBarTabBarStyle = 9;
+        public static final int Theme_actionBarTabBarStyle = 10;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarTabStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -3918,7 +3985,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarTabStyle
         */
-        public static final int Theme_actionBarTabStyle = 8;
+        public static final int Theme_actionBarTabStyle = 9;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarTabTextStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -3928,7 +3995,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarTabTextStyle
         */
-        public static final int Theme_actionBarTabTextStyle = 10;
+        public static final int Theme_actionBarTabTextStyle = 11;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarTheme}
           attribute's value can be found in the {@link #Theme} array.
@@ -3938,7 +4005,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarTheme
         */
-        public static final int Theme_actionBarTheme = 16;
+        public static final int Theme_actionBarTheme = 17;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionBarWidgetTheme}
           attribute's value can be found in the {@link #Theme} array.
@@ -3948,7 +4015,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionBarWidgetTheme
         */
-        public static final int Theme_actionBarWidgetTheme = 17;
+        public static final int Theme_actionBarWidgetTheme = 18;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -3958,7 +4025,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionButtonStyle
         */
-        public static final int Theme_actionButtonStyle = 43;
+        public static final int Theme_actionButtonStyle = 44;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionDropDownStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -3968,7 +4035,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionDropDownStyle
         */
-        public static final int Theme_actionDropDownStyle = 38;
+        public static final int Theme_actionDropDownStyle = 39;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionMenuTextAppearance}
           attribute's value can be found in the {@link #Theme} array.
@@ -3978,7 +4045,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionMenuTextAppearance
         */
-        public static final int Theme_actionMenuTextAppearance = 21;
+        public static final int Theme_actionMenuTextAppearance = 22;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionMenuTextColor}
           attribute's value can be found in the {@link #Theme} array.
@@ -3990,7 +4057,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           @attr name it.giorgini.soundnotes:actionMenuTextColor
         */
-        public static final int Theme_actionMenuTextColor = 22;
+        public static final int Theme_actionMenuTextColor = 23;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeBackground}
           attribute's value can be found in the {@link #Theme} array.
@@ -4000,7 +4067,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeBackground
         */
-        public static final int Theme_actionModeBackground = 25;
+        public static final int Theme_actionModeBackground = 26;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeCloseButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4010,7 +4077,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeCloseButtonStyle
         */
-        public static final int Theme_actionModeCloseButtonStyle = 24;
+        public static final int Theme_actionModeCloseButtonStyle = 25;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeCloseDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4020,7 +4087,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeCloseDrawable
         */
-        public static final int Theme_actionModeCloseDrawable = 27;
+        public static final int Theme_actionModeCloseDrawable = 28;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeCopyDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4030,7 +4097,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeCopyDrawable
         */
-        public static final int Theme_actionModeCopyDrawable = 29;
+        public static final int Theme_actionModeCopyDrawable = 30;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeCutDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4040,7 +4107,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeCutDrawable
         */
-        public static final int Theme_actionModeCutDrawable = 28;
+        public static final int Theme_actionModeCutDrawable = 29;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeFindDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4050,7 +4117,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeFindDrawable
         */
-        public static final int Theme_actionModeFindDrawable = 33;
+        public static final int Theme_actionModeFindDrawable = 34;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModePasteDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4060,7 +4127,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModePasteDrawable
         */
-        public static final int Theme_actionModePasteDrawable = 30;
+        public static final int Theme_actionModePasteDrawable = 31;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModePopupWindowStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4070,7 +4137,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModePopupWindowStyle
         */
-        public static final int Theme_actionModePopupWindowStyle = 35;
+        public static final int Theme_actionModePopupWindowStyle = 36;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeSelectAllDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4080,7 +4147,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeSelectAllDrawable
         */
-        public static final int Theme_actionModeSelectAllDrawable = 31;
+        public static final int Theme_actionModeSelectAllDrawable = 32;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeShareDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4090,7 +4157,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeShareDrawable
         */
-        public static final int Theme_actionModeShareDrawable = 32;
+        public static final int Theme_actionModeShareDrawable = 33;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeSplitBackground}
           attribute's value can be found in the {@link #Theme} array.
@@ -4100,7 +4167,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeSplitBackground
         */
-        public static final int Theme_actionModeSplitBackground = 26;
+        public static final int Theme_actionModeSplitBackground = 27;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4110,7 +4177,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeStyle
         */
-        public static final int Theme_actionModeStyle = 23;
+        public static final int Theme_actionModeStyle = 24;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionModeWebSearchDrawable}
           attribute's value can be found in the {@link #Theme} array.
@@ -4120,7 +4187,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionModeWebSearchDrawable
         */
-        public static final int Theme_actionModeWebSearchDrawable = 34;
+        public static final int Theme_actionModeWebSearchDrawable = 35;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionOverflowButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4130,7 +4197,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionOverflowButtonStyle
         */
-        public static final int Theme_actionOverflowButtonStyle = 11;
+        public static final int Theme_actionOverflowButtonStyle = 12;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#actionOverflowMenuStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4140,7 +4207,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:actionOverflowMenuStyle
         */
-        public static final int Theme_actionOverflowMenuStyle = 12;
+        public static final int Theme_actionOverflowMenuStyle = 13;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#activityChooserViewStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4150,7 +4217,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:activityChooserViewStyle
         */
-        public static final int Theme_activityChooserViewStyle = 50;
+        public static final int Theme_activityChooserViewStyle = 51;
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#windowAnimationStyle}
+          attribute's value can be found in the {@link #Theme} array.
+          @attr name android:windowAnimationStyle
+        */
+        public static final int Theme_android_windowAnimationStyle = 1;
         /**
           <p>This symbol is the offset where the {@link android.R.attr#windowIsFloating}
           attribute's value can be found in the {@link #Theme} array.
@@ -4166,7 +4239,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:buttonBarButtonStyle
         */
-        public static final int Theme_buttonBarButtonStyle = 45;
+        public static final int Theme_buttonBarButtonStyle = 46;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#buttonBarStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4176,7 +4249,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:buttonBarStyle
         */
-        public static final int Theme_buttonBarStyle = 44;
+        public static final int Theme_buttonBarStyle = 45;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorAccent}
           attribute's value can be found in the {@link #Theme} array.
@@ -4191,7 +4264,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorAccent
         */
-        public static final int Theme_colorAccent = 77;
+        public static final int Theme_colorAccent = 78;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorButtonNormal}
           attribute's value can be found in the {@link #Theme} array.
@@ -4206,7 +4279,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorButtonNormal
         */
-        public static final int Theme_colorButtonNormal = 81;
+        public static final int Theme_colorButtonNormal = 82;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorControlActivated}
           attribute's value can be found in the {@link #Theme} array.
@@ -4221,7 +4294,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorControlActivated
         */
-        public static final int Theme_colorControlActivated = 79;
+        public static final int Theme_colorControlActivated = 80;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorControlHighlight}
           attribute's value can be found in the {@link #Theme} array.
@@ -4236,7 +4309,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorControlHighlight
         */
-        public static final int Theme_colorControlHighlight = 80;
+        public static final int Theme_colorControlHighlight = 81;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorControlNormal}
           attribute's value can be found in the {@link #Theme} array.
@@ -4251,7 +4324,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorControlNormal
         */
-        public static final int Theme_colorControlNormal = 78;
+        public static final int Theme_colorControlNormal = 79;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorPrimary}
           attribute's value can be found in the {@link #Theme} array.
@@ -4266,7 +4339,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorPrimary
         */
-        public static final int Theme_colorPrimary = 75;
+        public static final int Theme_colorPrimary = 76;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorPrimaryDark}
           attribute's value can be found in the {@link #Theme} array.
@@ -4281,7 +4354,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorPrimaryDark
         */
-        public static final int Theme_colorPrimaryDark = 76;
+        public static final int Theme_colorPrimaryDark = 77;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#colorSwitchThumbNormal}
           attribute's value can be found in the {@link #Theme} array.
@@ -4296,7 +4369,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:colorSwitchThumbNormal
         */
-        public static final int Theme_colorSwitchThumbNormal = 82;
+        public static final int Theme_colorSwitchThumbNormal = 83;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#dividerHorizontal}
           attribute's value can be found in the {@link #Theme} array.
@@ -4306,7 +4379,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:dividerHorizontal
         */
-        public static final int Theme_dividerHorizontal = 49;
+        public static final int Theme_dividerHorizontal = 50;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#dividerVertical}
           attribute's value can be found in the {@link #Theme} array.
@@ -4316,7 +4389,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:dividerVertical
         */
-        public static final int Theme_dividerVertical = 48;
+        public static final int Theme_dividerVertical = 49;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#dropDownListViewStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4326,7 +4399,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:dropDownListViewStyle
         */
-        public static final int Theme_dropDownListViewStyle = 67;
+        public static final int Theme_dropDownListViewStyle = 68;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#dropdownListPreferredItemHeight}
           attribute's value can be found in the {@link #Theme} array.
@@ -4342,7 +4415,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:dropdownListPreferredItemHeight
         */
-        public static final int Theme_dropdownListPreferredItemHeight = 39;
+        public static final int Theme_dropdownListPreferredItemHeight = 40;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#editTextBackground}
           attribute's value can be found in the {@link #Theme} array.
@@ -4352,7 +4425,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:editTextBackground
         */
-        public static final int Theme_editTextBackground = 56;
+        public static final int Theme_editTextBackground = 57;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#editTextColor}
           attribute's value can be found in the {@link #Theme} array.
@@ -4364,7 +4437,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           @attr name it.giorgini.soundnotes:editTextColor
         */
-        public static final int Theme_editTextColor = 55;
+        public static final int Theme_editTextColor = 56;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#homeAsUpIndicator}
           attribute's value can be found in the {@link #Theme} array.
@@ -4374,7 +4447,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:homeAsUpIndicator
         */
-        public static final int Theme_homeAsUpIndicator = 42;
+        public static final int Theme_homeAsUpIndicator = 43;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#listChoiceBackgroundIndicator}
           attribute's value can be found in the {@link #Theme} array.
@@ -4384,7 +4457,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:listChoiceBackgroundIndicator
         */
-        public static final int Theme_listChoiceBackgroundIndicator = 74;
+        public static final int Theme_listChoiceBackgroundIndicator = 75;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#listPopupWindowStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4394,7 +4467,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:listPopupWindowStyle
         */
-        public static final int Theme_listPopupWindowStyle = 68;
+        public static final int Theme_listPopupWindowStyle = 69;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#listPreferredItemHeight}
           attribute's value can be found in the {@link #Theme} array.
@@ -4410,7 +4483,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:listPreferredItemHeight
         */
-        public static final int Theme_listPreferredItemHeight = 62;
+        public static final int Theme_listPreferredItemHeight = 63;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#listPreferredItemHeightLarge}
           attribute's value can be found in the {@link #Theme} array.
@@ -4426,7 +4499,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:listPreferredItemHeightLarge
         */
-        public static final int Theme_listPreferredItemHeightLarge = 64;
+        public static final int Theme_listPreferredItemHeightLarge = 65;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#listPreferredItemHeightSmall}
           attribute's value can be found in the {@link #Theme} array.
@@ -4442,7 +4515,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:listPreferredItemHeightSmall
         */
-        public static final int Theme_listPreferredItemHeightSmall = 63;
+        public static final int Theme_listPreferredItemHeightSmall = 64;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#listPreferredItemPaddingLeft}
           attribute's value can be found in the {@link #Theme} array.
@@ -4458,7 +4531,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:listPreferredItemPaddingLeft
         */
-        public static final int Theme_listPreferredItemPaddingLeft = 65;
+        public static final int Theme_listPreferredItemPaddingLeft = 66;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#listPreferredItemPaddingRight}
           attribute's value can be found in the {@link #Theme} array.
@@ -4474,7 +4547,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:listPreferredItemPaddingRight
         */
-        public static final int Theme_listPreferredItemPaddingRight = 66;
+        public static final int Theme_listPreferredItemPaddingRight = 67;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#panelBackground}
           attribute's value can be found in the {@link #Theme} array.
@@ -4484,7 +4557,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:panelBackground
         */
-        public static final int Theme_panelBackground = 71;
+        public static final int Theme_panelBackground = 72;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#panelMenuListTheme}
           attribute's value can be found in the {@link #Theme} array.
@@ -4494,7 +4567,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:panelMenuListTheme
         */
-        public static final int Theme_panelMenuListTheme = 73;
+        public static final int Theme_panelMenuListTheme = 74;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#panelMenuListWidth}
           attribute's value can be found in the {@link #Theme} array.
@@ -4510,7 +4583,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:panelMenuListWidth
         */
-        public static final int Theme_panelMenuListWidth = 72;
+        public static final int Theme_panelMenuListWidth = 73;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#popupMenuStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4520,7 +4593,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:popupMenuStyle
         */
-        public static final int Theme_popupMenuStyle = 53;
+        public static final int Theme_popupMenuStyle = 54;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#popupWindowStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4530,7 +4603,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:popupWindowStyle
         */
-        public static final int Theme_popupWindowStyle = 54;
+        public static final int Theme_popupWindowStyle = 55;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#searchViewStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4540,7 +4613,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:searchViewStyle
         */
-        public static final int Theme_searchViewStyle = 61;
+        public static final int Theme_searchViewStyle = 62;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#selectableItemBackground}
           attribute's value can be found in the {@link #Theme} array.
@@ -4550,7 +4623,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:selectableItemBackground
         */
-        public static final int Theme_selectableItemBackground = 46;
+        public static final int Theme_selectableItemBackground = 47;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#selectableItemBackgroundBorderless}
           attribute's value can be found in the {@link #Theme} array.
@@ -4560,7 +4633,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:selectableItemBackgroundBorderless
         */
-        public static final int Theme_selectableItemBackgroundBorderless = 47;
+        public static final int Theme_selectableItemBackgroundBorderless = 48;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#spinnerDropDownItemStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4570,7 +4643,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:spinnerDropDownItemStyle
         */
-        public static final int Theme_spinnerDropDownItemStyle = 41;
+        public static final int Theme_spinnerDropDownItemStyle = 42;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#spinnerStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4580,7 +4653,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:spinnerStyle
         */
-        public static final int Theme_spinnerStyle = 40;
+        public static final int Theme_spinnerStyle = 41;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#switchStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4590,7 +4663,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:switchStyle
         */
-        public static final int Theme_switchStyle = 57;
+        public static final int Theme_switchStyle = 58;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textAppearanceLargePopupMenu}
           attribute's value can be found in the {@link #Theme} array.
@@ -4600,7 +4673,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:textAppearanceLargePopupMenu
         */
-        public static final int Theme_textAppearanceLargePopupMenu = 36;
+        public static final int Theme_textAppearanceLargePopupMenu = 37;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textAppearanceListItem}
           attribute's value can be found in the {@link #Theme} array.
@@ -4610,7 +4683,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:textAppearanceListItem
         */
-        public static final int Theme_textAppearanceListItem = 69;
+        public static final int Theme_textAppearanceListItem = 70;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textAppearanceListItemSmall}
           attribute's value can be found in the {@link #Theme} array.
@@ -4620,7 +4693,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:textAppearanceListItemSmall
         */
-        public static final int Theme_textAppearanceListItemSmall = 70;
+        public static final int Theme_textAppearanceListItemSmall = 71;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textAppearanceSearchResultSubtitle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4630,7 +4703,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:textAppearanceSearchResultSubtitle
         */
-        public static final int Theme_textAppearanceSearchResultSubtitle = 59;
+        public static final int Theme_textAppearanceSearchResultSubtitle = 60;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textAppearanceSearchResultTitle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4640,7 +4713,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:textAppearanceSearchResultTitle
         */
-        public static final int Theme_textAppearanceSearchResultTitle = 58;
+        public static final int Theme_textAppearanceSearchResultTitle = 59;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textAppearanceSmallPopupMenu}
           attribute's value can be found in the {@link #Theme} array.
@@ -4650,7 +4723,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:textAppearanceSmallPopupMenu
         */
-        public static final int Theme_textAppearanceSmallPopupMenu = 37;
+        public static final int Theme_textAppearanceSmallPopupMenu = 38;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#textColorSearchUrl}
           attribute's value can be found in the {@link #Theme} array.
@@ -4662,7 +4735,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           @attr name it.giorgini.soundnotes:textColorSearchUrl
         */
-        public static final int Theme_textColorSearchUrl = 60;
+        public static final int Theme_textColorSearchUrl = 61;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#toolbarNavigationButtonStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4672,7 +4745,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:toolbarNavigationButtonStyle
         */
-        public static final int Theme_toolbarNavigationButtonStyle = 52;
+        public static final int Theme_toolbarNavigationButtonStyle = 53;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#toolbarStyle}
           attribute's value can be found in the {@link #Theme} array.
@@ -4682,7 +4755,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name it.giorgini.soundnotes:toolbarStyle
         */
-        public static final int Theme_toolbarStyle = 51;
+        public static final int Theme_toolbarStyle = 52;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#windowActionBar}
           attribute's value can be found in the {@link #Theme} array.
@@ -4696,7 +4769,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:windowActionBar
         */
-        public static final int Theme_windowActionBar = 1;
+        public static final int Theme_windowActionBar = 2;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#windowActionBarOverlay}
           attribute's value can be found in the {@link #Theme} array.
@@ -4710,7 +4783,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:windowActionBarOverlay
         */
-        public static final int Theme_windowActionBarOverlay = 2;
+        public static final int Theme_windowActionBarOverlay = 3;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#windowActionModeOverlay}
           attribute's value can be found in the {@link #Theme} array.
@@ -4724,7 +4797,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:windowActionModeOverlay
         */
-        public static final int Theme_windowActionModeOverlay = 3;
+        public static final int Theme_windowActionModeOverlay = 4;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#windowFixedHeightMajor}
           attribute's value can be found in the {@link #Theme} array.
@@ -4743,7 +4816,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:windowFixedHeightMajor
         */
-        public static final int Theme_windowFixedHeightMajor = 7;
+        public static final int Theme_windowFixedHeightMajor = 8;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#windowFixedHeightMinor}
           attribute's value can be found in the {@link #Theme} array.
@@ -4762,7 +4835,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:windowFixedHeightMinor
         */
-        public static final int Theme_windowFixedHeightMinor = 5;
+        public static final int Theme_windowFixedHeightMinor = 6;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#windowFixedWidthMajor}
           attribute's value can be found in the {@link #Theme} array.
@@ -4781,7 +4854,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:windowFixedWidthMajor
         */
-        public static final int Theme_windowFixedWidthMajor = 4;
+        public static final int Theme_windowFixedWidthMajor = 5;
         /**
           <p>This symbol is the offset where the {@link it.giorgini.soundnotes.R.attr#windowFixedWidthMinor}
           attribute's value can be found in the {@link #Theme} array.
@@ -4800,7 +4873,7 @@ theme attribute (in the form
 containing a value of this type.
           @attr name it.giorgini.soundnotes:windowFixedWidthMinor
         */
-        public static final int Theme_windowFixedWidthMinor = 6;
+        public static final int Theme_windowFixedWidthMinor = 7;
         /** Attributes that can be used with a Toolbar.
            <p>Includes the following attributes:</p>
            <table>

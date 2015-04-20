@@ -26,7 +26,6 @@ public class LifecycleHandler implements Application.ActivityLifecycleCallbacks 
     @Override
     public void onActivityPaused(Activity activity) {
         ++paused;
-//        android.util.Log.i("SN", "application is in foreground: " + (resumed > paused));
     }
 
     @Override
@@ -40,7 +39,6 @@ public class LifecycleHandler implements Application.ActivityLifecycleCallbacks 
     @Override
     public void onActivityStopped(Activity activity) {
         ++stopped;
-//        android.util.Log.i("SN", "application is visible: " + (started > stopped));
     }
 
 
@@ -49,7 +47,7 @@ public class LifecycleHandler implements Application.ActivityLifecycleCallbacks 
         return started > stopped;
     }
 
-    public static boolean isApplicationInForeground() {
-        return resumed > paused;
-    }
+//    public static boolean isApplicationInForeground() {
+//        return resumed > paused;
+//    }
 }

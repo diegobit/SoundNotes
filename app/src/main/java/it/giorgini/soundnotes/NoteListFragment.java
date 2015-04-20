@@ -313,10 +313,10 @@ public class NoteListFragment extends ListFragment {
         // Se ho cambiato qualcosa allora rinomino, altrimenti non faccio nulla.
         if (!newName.equals(oldName)) {
             boolean renamed = StorageManager.rename(getActivity(), currentPressedItem, newName);
-            if (renamed) {
-                // devo anche aggiornare il nome della nota corrente nel service
-                RecorderService.setCurrRecNoteName(newName);
-            } else {
+//            if (renamed) {
+//                // devo anche aggiornare il nome della nota corrente nel service
+//                RecorderService.setCurrRecNoteName(newName);
+            if (!renamed) {
                 Toast.makeText(getActivity(), R.string.action_rename_fail, Toast.LENGTH_LONG).show();
             }
         }
