@@ -263,53 +263,58 @@ public class StorageManager {
 
     public static boolean saveAllRecordings() {
         ArrayList<Integer> recLeftToRename = new ArrayList<>();
-        ArrayList<RecordingsView.Recording> recList = StorageManager.getCurrNote().recList;
-        if (recList != null) {
-            File recDir = new File(activity.get().getFilesDir(), File.separator + currID);
-            //noinspection ResultOfMethodCallIgnored
-            recDir.mkdir();
+        SoundNote currNote = StorageManager.getCurrNote();
+        if (currNote != null) {
+            ArrayList<RecordingsView.Recording> recList = currNote.recList;
+            if (recList != null) {
+                File recDir = new File(activity.get().getFilesDir(), File.separator + currID);
+                //noinspection ResultOfMethodCallIgnored
+                recDir.mkdir();
 
-            // ciclo su ogni riga della nota
-            for (int i = 0; i < recList.size(); i++) {
-                RecordingsView.Recording rec = recList.get(i);
-                // rec != null -> nella riga c'è una registrazione
-                if (rec != null) {
-                    // ho modificato la nota e devo rinominare il file in memoria
-                    if (i != rec.position) {
-                        if (!renameRecording(recDir, rec, i)) {
-                            // non sono riuscito a rinominare. Aggiungo alla lista delle rec non spostate e riprovo dopo
-                            recLeftToRename.add(i);
-                            Log.i("SN ###", "StorMan saveAll: non rinominata da pos" + rec.position + "a " + i);
-                        } else
-                            Log.i("SN ###", "StorMan saveAll: rinominata! da pos" + rec.position + "a " + i + " (giusto che siano uguali");
+                // ciclo su ogni riga della nota
+                for (int i = 0; i < recList.size(); i++) {
+                    RecordingsView.Recording rec = recList.get(i);
+                    // rec != null -> nella riga c'è una registrazione
+                    if (rec != null) {
+                        // ho modificato la nota e devo rinominare il file in memoria
+                        if (i != rec.position) {
+                            if (!renameRecording(recDir, rec, i)) {
+                                // non sono riuscito a rinominare. Aggiungo alla lista delle rec non spostate e riprovo dopo
+                                recLeftToRename.add(i);
+                                Log.i("SN ###", "StorMan saveAll: non rinominata da pos" + rec.position + "a " + i);
+                            } else
+                                Log.i("SN ###", "StorMan saveAll: rinominata! da pos" + rec.position + "a " + i + " (giusto che siano uguali");
+                        }
                     }
                 }
-            }
 
-            int timeout = 0;
-            int renamed = 0;
-            int len = recLeftToRename.size();
-            // ciclo sulle rec non ancora rinominate. Questo while serve per tenere conto di altre possibili collisioni
-            while (renamed < len && timeout < 50) {
-                // il ciclo delle note da rinominare
-                for (int j = len - 1; j >= 0; j--) {
-                    int newPos = recLeftToRename.get(j);
-                    if (renameRecording(recDir, recList.get(newPos), newPos)) {
-                        recLeftToRename.remove(j);
-                        renamed++;
-                        Log.i("SN ###", "StorMan saveAll: rinominata dopo collisione! da pos" + recList.get(newPos).position + "a " + newPos + " (giusto che siano uguali");
-                        j--; // rimuovo un elemento, devo tenere lo stesso indice;
+                int timeout = 0;
+                int renamed = 0;
+                int len = recLeftToRename.size();
+                // ciclo sulle rec non ancora rinominate. Questo while serve per tenere conto di altre possibili collisioni
+                while (renamed < len && timeout < 50) {
+                    // il ciclo delle note da rinominare
+                    for (int j = len - 1; j >= 0; j--) {
+                        int newPos = recLeftToRename.get(j);
+                        if (renameRecording(recDir, recList.get(newPos), newPos)) {
+                            recLeftToRename.remove(j);
+                            renamed++;
+                            Log.i("SN ###", "StorMan saveAll: rinominata dopo collisione! da pos" + recList.get(newPos).position + "a " + newPos + " (giusto che siano uguali");
+                            j--; // rimuovo un elemento, devo tenere lo stesso indice;
+                        }
                     }
+                    timeout++;
                 }
-                timeout++;
-            }
-            Log.i("SN ###", "StorMan saveAll: non rinom dopo collisione! da pos");
+                Log.i("SN ###", "StorMan saveAll: non rinom dopo collisione! da pos");
 
-            return renamed == len;
-        } else {
-            Log.i("SN ###", "StorMan saveAllRecs - recList = null. Forse non è un problema perchè chiamo il metodo quando nessuna nota è attiva (tablet)");
-            return false;
+                return renamed == len;
+            } else {
+                Log.i("SN ###", "StorMan saveAllRecs - recList = null. Forse non è un problema perchè chiamo il metodo quando nessuna nota è attiva (tablet)");
+                return false;
+            }
         }
+
+        return false;
     }
 
     private static boolean renameRecording(File recDir, RecordingsView.Recording rec, int newPos) {
@@ -472,32 +477,34 @@ public class StorageManager {
         // volta che su tablet si seleziona una nuova nota nella lista
         SoundNote currNote = getCurrNote();
 
-        boolean textHasChanged = !currNote.text.equals(newText);
-        // Salvo se Il testo è stato modificato oppure se sono entrambi vuoti
-        // (voglio evitare di salvare più volte lo stesso testo se visualizzo senza modificare)
-        if (textHasChanged || newText.equals("")) {
-            FileOutputStream outStream;
+        if (currNote != null && newText != null) {
+            boolean textHasChanged = !currNote.text.equals(newText);
+            // Salvo se Il testo è stato modificato oppure se sono entrambi vuoti
+            // (voglio evitare di salvare più volte lo stesso testo se visualizzo senza modificare)
+            if (textHasChanged || newText.equals("")) {
+                FileOutputStream outStream;
 
-            try {
-                String fn = makeFilename(currID, currName, ".txt");
-                outStream = ctx.openFileOutput(fn, Context.MODE_PRIVATE);
-                outStream.write((Long.toString(currNote.date) + "\n" + newText).getBytes());
-                outStream.close();
-                ITEM_MAP.get(currID).text = newText;
-                int textLen = newText.length();
-                if (textLen != 0) {
-                    if (textLen < 100)
-                        ITEMS.get(currPosition).preview = newText.substring(0, textLen).replace('\n', ' ');
-                    else
-                        ITEMS.get(currPosition).preview = newText.substring(0, 100).replace('\n', ' ');
+                try {
+                    String fn = makeFilename(currID, currName, ".txt");
+                    outStream = ctx.openFileOutput(fn, Context.MODE_PRIVATE);
+                    outStream.write((Long.toString(currNote.date) + "\n" + newText).getBytes());
+                    outStream.close();
+                    ITEM_MAP.get(currID).text = newText;
+                    int textLen = newText.length();
+                    if (textLen != 0) {
+                        if (textLen < 100)
+                            ITEMS.get(currPosition).preview = newText.substring(0, textLen).replace('\n', ' ');
+                        else
+                            ITEMS.get(currPosition).preview = newText.substring(0, 100).replace('\n', ' ');
+                    }
+                    ITEMS.get(currPosition).text = newText;
+                    ITEMS_ADAPTER.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Log.d("SN ###", e.toString() + " -- Unable to save the note '" + currName + "'");
+                    return false;
                 }
-                ITEMS.get(currPosition).text = newText;
-                ITEMS_ADAPTER.notifyDataSetChanged();
-            } catch (Exception e) {
-                Log.d("SN ###", e.toString() + " -- Unable to save the note '" + currName + "'");
-                return false;
-            }
 
+            }
         }
 
         // Ora provo a salvare le registrazioni

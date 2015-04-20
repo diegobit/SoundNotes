@@ -1580,8 +1580,6 @@ containing a value of this type.
     public static final class style {
         public static final int Animation_AppCompat_DropDownUp=0x7f0d0000;
         public static final int AppTheme=0x7f0d0001;
-        /** <item name="windowActionBar">false</item>
-         */
         public static final int AppTheme_Base=0x7f0d0002;
         public static final int Base_Animation_AppCompat_DropDownUp=0x7f0d0003;
         public static final int Base_TextAppearance_AppCompat=0x7f0d0004;
