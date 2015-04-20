@@ -89,7 +89,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 
     @Override
     public void onCreate() {
-        Log.i("SN ###", "Service onCreate");
+//        Log.i("SN ###", "Service onCreate");
         super.onCreate();
 
         currPlayingLine = -1;
@@ -103,7 +103,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     public int onStartCommand(Intent intent, int flags, int startId) {
         // Questo metodo viene chiamato ogni volta che arriva uno startintent al service.
         // cellulare: NoteDetailActivity - tablet: NoteListActivity
-        Log.d("SN ###", "Service: id " + startId + ": " + intent);
+//        Log.d("SN ###", "Service: id " + startId + ": " + intent);
         String action;
 
         // intent == null significa che il service è stato riavviato dal sistema.
@@ -114,7 +114,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         else if ((action = intent.getAction()) == null) {
             if (!isRecording() && !isPlaying()) {
                 // qui il service non era rimasto in background a registrare...
-                Log.i("SN ###", "Service Started");
+//                Log.i("SN ###", "Service Started");
 //                if (intent.hasExtra(EXTRA_MAIN_PATH))
 //                    filesDir = intent.getStringExtra(EXTRA_MAIN_PATH);
 //                mTwoPane = intent.getBooleanExtra(EXTRA_TWO_PANE, false);
@@ -127,15 +127,15 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             // ...processo l'azione richiesta (avvio registrazione, stop, prepara registratore)
             switch (action) {
                 case ACTION_START:
-                    Log.i("SN ###", "Service: recording maybe starting. Asking to RecordingsView...");
+//                    Log.i("SN ###", "Service: recording maybe starting. Asking to RecordingsView...");
                     start();
                     break;
                 case ACTION_START_ACCEPTED:
-                    Log.i("SN ###", "Service: recording started!!");
+//                    Log.i("SN ###", "Service: recording started!!");
                     startAccepted();
                     break;
                 case ACTION_STOP:
-                    Log.i("SN ###", "Service: recording stopped");
+//                    Log.i("SN ###", "Service: recording stopped");
                     // questo arriva solo dalla notifica. Se l'app è visiblie stoppo, se no rilascio.
                     if (LifecycleHandler.isApplicationVisible()) {
                         stop();
@@ -145,7 +145,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
                     }
                     break;
                 case ACTION_PREPARE:
-                    Log.i("SN ###", "Service prepare started");
+//                    Log.i("SN ###", "Service prepare started");
                     setRecPath(intent.getStringExtra(EXTRA_NOTEID));
                     if (state == MRState.INITIAL)
                         setParameters(prefs[0], prefs[1], prefs[2]);
@@ -220,7 +220,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
         currRecDir = dir.getPath();
         currRecRelPath = "temp.aac";  // -temp lo rinomino a fine registrazione nel tempo della registrazione. Per
                                       // ora mi va bene così
-        Log.d("SN ###", "RecMan filesDir: " + filesDir + "; currRecDir: " + currRecDir + "; relpath: " + currRecRelPath);
+//        Log.d("SN ###", "RecMan filesDir: " + filesDir + "; currRecDir: " + currRecDir + "; relpath: " + currRecRelPath);
     }
 
     // Per cambiare le impostazioni della registrazione in futuro
@@ -241,7 +241,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 	}
 	
 	public void prepare() {
-        Log.d("SN @@@", "RecServ prepare middle");
+//        Log.d("SN @@@", "RecServ prepare middle");
         if (state == MRState.DATASOURCECONFIGURED) {
             try {
 //                AsyncTask<Integer, Float, Boolean> prepAsync = new PrepareAsync();
@@ -281,9 +281,9 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 //    }
 
     public void start() {
-        Log.d("SN @@@", "RecServ start1 - state: " + state);
+//        Log.d("SN @@@", "RecServ start1 - state: " + state);
         if (state != MRState.PREPARED) {
-            Log.i("SN @@@", "recServ start - rec non era ancora pronto");
+//            Log.i("SN @@@", "recServ start - rec non era ancora pronto");
             if (state == MRState.INITIAL)
                 setParameters(prefs[0], prefs[1], prefs[2]);
             if (state == MRState.DATASOURCECONFIGURED)
@@ -329,10 +329,10 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             // smetto di essere un service in background e rimuovo la notifica
             stopForeground(true);
 
-            Log.d("SN ###", "RecMan stop OK");
+//            Log.d("SN ###", "RecMan stop OK");
         } catch (IllegalStateException e) {
             Toast.makeText(getApplicationContext(), R.string.action_rec_stopfail, Toast.LENGTH_LONG).show();
-            Log.d("SN ###", "MediaRecorder is in an incorrect state (" + state + "), it should be MRState.RECORDING (rarely INITIAL)");
+//            Log.d("SN ###", "MediaRecorder is in an incorrect state (" + state + "), it should be MRState.RECORDING (rarely INITIAL)");
             e.printStackTrace();
         } catch (RuntimeException e) {
             e.printStackTrace();
@@ -373,7 +373,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             if (!deleted)
                 Log.i("SN @@@", "recServ stop rec non riuscito e temp non eliminato... temp verrà però sovrascritto se registro ancora nella stessa nota");
         }
-        Log.i("SN ###", "Service release ok");
+//        Log.i("SN ###", "Service release ok");
         if (hasToStop) {
             stopSelf();
         }
@@ -384,12 +384,12 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     public void startPlaying(String path, int line) {
         // significa che ho riprodotto un pezzo di registrazione
         if (mp != null && !isPlaying() && line == currPlayingLine) {
-            Log.i("SN @@@", "recServ startPlaying start dopo pausa: ");
+//            Log.i("SN @@@", "recServ startPlaying start dopo pausa: ");
             finallyStartPlaying();
         }
         else {
             if (mp == null) {
-                Log.i("SN @@@", "recServ startPlaying start inizializzando mp: ");
+//                Log.i("SN @@@", "recServ startPlaying start inizializzando mp: ");
                 mp = new MediaPlayer();
                 mp.setOnPreparedListener(this);
                 mp.setOnInfoListener(this);
@@ -402,7 +402,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
                 mp.setLooping(false);
                 mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
             } else {
-                Log.i("SN @@@", "recServ startPlaying start mp da resettare: ");
+//                Log.i("SN @@@", "recServ startPlaying start mp da resettare: ");
                 if (isPlaying())
                     mp.stop();
                 mp.reset();
@@ -415,7 +415,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
                 mp.prepareAsync();
                 currPlayingLine = line;
             } catch (IOException e) {
-                Log.i("SN @@@", "recServ startPlaying errore. path " + path + ", line " + line + " completo: " + new File(new File(getFilesDir(), StorageManager.getCurrNote().id), path).getPath());
+//                Log.i("SN @@@", "recServ startPlaying errore. path " + path + ", line " + line + " completo: " + new File(new File(getFilesDir(), StorageManager.getCurrNote().id), path).getPath());
                 e.printStackTrace();
                 releasePlayer(); // chiamo stopforeground qui dentro anche sae non ho chiamato startForeground... problemi?
             }
@@ -450,13 +450,13 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 
     /** Called when MediaPlayer is ready */
     public void onPrepared(MediaPlayer player) {
-        Log.i("SN @@@", "recServ startPlaying prepared");
+//        Log.i("SN @@@", "recServ startPlaying prepared");
         finallyStartPlaying();
     }
 
     private class MediaPlayerOnCompletionListener implements MediaPlayer.OnCompletionListener {
         public void onCompletion(MediaPlayer mp) {
-            Log.i("SN @@@", "recServ player playback completed");
+//            Log.i("SN @@@", "recServ player playback completed");
             if (mp != null && isPlaying())
                 mp.stop();
             releasePlayer();
@@ -589,7 +589,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 //        String id = getCurrRecNoteID();
         String newName = getCurrRecNoteLine() + "-" + currRecLength + ".aac";
         File f = new File(currRecDir, currRecRelPath);
-        Log.w("SN @@@", "RecServ save file (" + f.getPath() + ") CAN be read, l: " + f.length());
+//        Log.w("SN @@@", "RecServ save file (" + f.getPath() + ") CAN be read, l: " + f.length());
         File f2 = new File(currRecDir, newName);
         boolean renamed = f.renameTo(f2);
         if (renamed) {
@@ -611,7 +611,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
 
     @Override
     public void onDestroy() {
-        Log.d("SN ###", "Service onDestroy forst");
+//        Log.d("SN ###", "Service onDestroy forst");
         // se sto registrando salvo prima di release
         if (isRecording()) {
             stop();
@@ -623,7 +623,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
             mr = null;
         }
         releasePlayer();
-        Log.d("SN ###", "Service onDestroy after");
+//        Log.d("SN ###", "Service onDestroy after");
         super.onDestroy();
     }
 
@@ -634,7 +634,7 @@ public class RecorderService extends Service implements MediaPlayer.OnPreparedLi
     }
 
     public void setRecLenghtOnText() {
-        Log.d("SN @@@", "RecMan setRecLenghtOnText");
+//        Log.d("SN @@@", "RecMan setRecLenghtOnText");
         currRecLength = endTime - startTime;
         Intent i = new Intent(REC_STOPPED);
         i.putExtra(EXTRA_REC_TIME, currRecLength);

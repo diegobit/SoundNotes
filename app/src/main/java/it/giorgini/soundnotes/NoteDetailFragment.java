@@ -98,13 +98,13 @@ public class NoteDetailFragment extends Fragment {
 
         // Dico di voler aggiungere dei bottoni nella action bar
         setHasOptionsMenu(true);
-        Log.i("SN ###", "NoteDetailFragment onCreate");
+//        Log.i("SN ###", "NoteDetailFragment onCreate");
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-        Log.i("SN ###", "NoteDetailFragment onCreateView");
+//        Log.i("SN ###", "NoteDetailFragment onCreateView");
         View view = inflater.inflate(R.layout.fragment_note_detail, container, false);
 //        RichEditText ret = (RichEditText) view;
 
@@ -119,7 +119,7 @@ public class NoteDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.i("SN ###", "NoteDetailFragment onActivityCreated");
+//        Log.i("SN ###", "NoteDetailFragment onActivityCreated");
 
         // Show the content as text in the TextView.
         updateCurrItem();
@@ -146,7 +146,7 @@ public class NoteDetailFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Log.i("SN ###", "NoteDetailFragment onResume");
+//        Log.i("SN ###", "NoteDetailFragment onResume");
         super.onResume();
 
         // Se lo stato è recording o playing vuol dire che era già avviato, non serve fargli eseguire la prepare
@@ -165,27 +165,27 @@ public class NoteDetailFragment extends Fragment {
 
     @Override
 	public void onPause() {
-        Log.i("SN ###", "NoteDetailFragment: onPause");
+//        Log.i("SN ###", "NoteDetailFragment: onPause");
 		super.onPause();
 	}
 
     @Override
     public void onStop() {
-        Log.i("SN ###", "NoteDetailFragment: onStop");
+//        Log.i("SN ###", "NoteDetailFragment: onStop");
         super.onStop();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.i("SN ###", "NoteDetailFragment: onDetach");
+//        Log.i("SN ###", "NoteDetailFragment: onDetach");
         // Reset the active callbacks interface to the dummy implementation.
         callbacks_DetailActivity = defaultCallbacks_DetailActivity;
     }
 
     @Override
     public void onDestroy() {
-        Log.i("SN ###", "NoteDetailFragment: onDestroy");
+//        Log.i("SN ###", "NoteDetailFragment: onDestroy");
         super.onDestroy();
     }
 
@@ -210,7 +210,7 @@ public class NoteDetailFragment extends Fragment {
     // Anche il fragment contribuisce agli elementi dell'action bar.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.i("SN ###", "NoteDetailFragment onCreateOptionsMenu");
+//        Log.i("SN ###", "NoteDetailFragment onCreateOptionsMenu");
         this.menu = new WeakReference<>(menu);
         inflater.inflate(R.menu.note_actions, menu);
 
@@ -268,7 +268,7 @@ public class NoteDetailFragment extends Fragment {
                 i.setIcon(R.drawable.ic_action_mic);
             }
         } else {
-            Log.i("SN ###", "NoteDetFrag setRecIcon menu = null.- Forse non un probl, metodo chiamato su tablet");
+//            Log.i("SN ###", "NoteDetFrag setRecIcon menu = null.- Forse non un probl, metodo chiamato su tablet");
         }
     }
 

@@ -148,7 +148,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
     protected void onStart() {
         super.onStart();
 
-        Log.i("SN @@@", "noteDetAct onStart");
+//        Log.i("SN @@@", "noteDetAct onStart");
 
         // Mi registro agli intent del service
         LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
@@ -173,7 +173,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
     @Override
     protected void onPause() {
-        Log.i("SN ###", "NoteDetailActivity onPause");
+//        Log.i("SN ###", "NoteDetailActivity onPause");
         super.onPause();
 
 //        // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra). Due cose:
@@ -191,7 +191,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
     @Override
     protected void onStop() {
-        Log.i("SN ###", "NoteDetailActivity onStop");
+//        Log.i("SN ###", "NoteDetailActivity onStop");
         super.onStop();
 
 //        // L'app non è più visibile: nessuna activity è visibile (nemmeno sotto un'altra).
@@ -212,7 +212,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
             saveCurrentNote();
 
             if (!RecorderService.isRecording() && !RecorderService.isPlaying()) {
-                Log.d("SN ###", "stopService called from NoteDetailActivity onStop");
+//                Log.d("SN ###", "stopService called from NoteDetailActivity onStop");
                 stopService(new Intent(this, RecorderService.class));
             }
         }
@@ -220,12 +220,12 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
     @Override
     protected void onDestroy() {
-        Log.d("SN ###", "NoteDetailActivity onDestroy");
+//        Log.d("SN ###", "NoteDetailActivity onDestroy");
 
         // Vengo chiamato per esempio quando chiudo l'app dalla lista delle recenti.
         // Devo terminare il service
         if (!LifecycleHandler.isApplicationVisible()) {
-            Log.d("SN ###", "stopService called from NoteDetailActivity onDestroy");
+//            Log.d("SN ###", "stopService called from NoteDetailActivity onDestroy");
             stopService(new Intent(this, RecorderService.class));
         }
 
@@ -248,7 +248,7 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        Log.i("SN ###", "NoteDetailActivity onWindowFocusChanged");
+//        Log.i("SN ###", "NoteDetailActivity onWindowFocusChanged");
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
@@ -284,23 +284,23 @@ public class NoteDetailActivity extends ActionBarActivity implements NoteDetailF
     // salva la nota corrente.
     // NB: codice uguale alla metodo saveCurrentNote di NoteListActivity
     public void saveCurrentNote() {
-        Log.i("SN ###", "NoteDetailActivity saveCurrentNote called");
+//        Log.i("SN ###", "NoteDetailActivity saveCurrentNote called");
         RichEditText ret = (RichEditText) findViewById(R.id.note_detail);
         if (ret != null) {
             String s = ret.getText().toString();
             StorageManager.save(this, s);
         } else {
-            Log.d("SN ###", "NoteDetailActivity saveCurrentNote: EditText nota = null, non salvo nulla");
+//            Log.d("SN ###", "NoteDetailActivity saveCurrentNote: EditText nota = null, non salvo nulla");
         }
     }
 
     @Override
     public void initConnections(RichEditText editText) {
-        Log.i("SN ###", "NoteDetailActivity initConnections");
+//        Log.i("SN ###", "NoteDetailActivity initConnections");
         recordingsView = (RecordingsView) findViewById(R.id.rec_view);
-        if (recordingsView != null) {
-            Log.d("SN @@@", "recView != null -0- inizial da initCOnnections");
-        }
+//        if (recordingsView != null) {
+//            Log.d("SN @@@", "recView != null -0- inizial da initCOnnections");
+//        }
         this.editText = new WeakReference<RichEditText>(editText);
         editText.setRecView(recordingsView);
         recordingsView.setAssociatedEditText(editText);

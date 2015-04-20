@@ -55,12 +55,12 @@ public class RichEditText extends EditText {
         if (recView != null) {
             recView.get().setCurrRecList();
         } else {
-            Log.e("SN ###", "RET onLayout non ho aggiornato la currRecList. RecView == null");
+//            Log.e("SN ###", "RET onLayout non ho aggiornato la currRecList. RecView == null");
         }
     }
 
     public void setRecView(RecordingsView recView) {
-        Log.d("SN ###", "RET setRecView");
+//        Log.d("SN ###", "RET setRecView");
         this.recView = new WeakReference<>(recView);
     }
 
@@ -158,7 +158,7 @@ public class RichEditText extends EditText {
         if (lay != null) {
             return getLayout().getLineForOffset(index);
         } else {
-            Log.w("SN @@@", "RET getDeviceLineFroOffset layout NULL!!!");
+//            Log.w("SN @@@", "RET getDeviceLineFroOffset layout NULL!!!");
             return 0;
         }
     }
@@ -213,7 +213,7 @@ public class RichEditText extends EditText {
             return getDeviceLineForOffset(i);
         }
         else {
-            Log.w("SN @@@", "RET getDeviceLineFromLine(" + line + ") ha ritornato 0 - strlen: " + s.length() + " counter: " + counter);
+//            Log.w("SN @@@", "RET getDeviceLineFromLine(" + line + ") ha ritornato 0 - strlen: " + s.length() + " counter: " + counter);
             return -0;
         }
     }
@@ -261,10 +261,10 @@ public class RichEditText extends EditText {
                 i++;
             }
 
-            Log.i("SN @@@", "RET startpos: " + startPos + " endPos: " + endPos);
+//            Log.i("SN @@@", "RET startpos: " + startPos + " endPos: " + endPos);
             return getText().toString().substring(startPos, endPos);
         } else {
-            Log.e("SN @@@", "RET getLineText line parametro < 0");
+//            Log.e("SN @@@", "RET getLineText line parametro < 0");
             return "";
         }
     }
