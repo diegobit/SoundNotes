@@ -1,0 +1,369 @@
+02-09 14:48:06.793    4259-4259/it.giorgini.soundnotes I/art﹕ Late-enabling -Xcheck:jni
+02-09 14:48:06.865    4259-4259/it.giorgini.soundnotes I/LoadedApk﹕ No resource references to update in package com.Fraom.IrideUI
+02-09 14:48:06.889    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onCreate
+02-09 14:48:06.990    4259-4259/it.giorgini.soundnotes I/SN ###﹕ StorMan load return false
+02-09 14:48:06.994    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onResume
+02-09 14:48:06.995    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ StorageManager getNotePosFromID -- NON TROVATA!!! ritornato 0
+02-09 14:48:07.000    4259-4280/it.giorgini.soundnotes D/OpenGLRenderer﹕ Render dirty regions requested: true
+02-09 14:48:07.007    4259-4259/it.giorgini.soundnotes D/Atlas﹕ Validating map...
+02-09 14:48:07.039    4259-4280/it.giorgini.soundnotes I/Adreno-EGL﹕ <qeglDrvAPI_eglInitialize:410>: QUALCOMM Build: 10/24/14, 167c270, I68fa98814b
+02-09 14:48:07.039    4259-4280/it.giorgini.soundnotes I/OpenGLRenderer﹕ Initialized EGL, version 1.4
+02-09 14:48:07.053    4259-4280/it.giorgini.soundnotes D/OpenGLRenderer﹕ Enabling debug mode 0
+02-09 14:48:07.186    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_idle id: android.os.BinderProxy@1ed7ce50 time:174704
+02-09 14:48:08.820    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:48:09.885    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:48:12.944    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:48:12.944    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:48:16.116    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:48:21.541    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_launch_request id:it.giorgini.soundnotes time:189059
+02-09 14:48:21.666    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreate
+02-09 14:48:21.666    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreateView
+02-09 14:48:21.671    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity initConnections
+02-09 14:48:21.672    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ recView != null -0- inizial da initCOnnections
+02-09 14:48:21.672    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RET setRecView
+02-09 14:48:21.672    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onActivityCreated
+02-09 14:48:21.684    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ noteDetAct onStart
+02-09 14:48:21.687    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onResume
+02-09 14:48:21.691    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service onCreate
+02-09 14:48:21.696    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 1: Intent { cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:48:21.696    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service Started
+02-09 14:48:21.696    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 2: Intent { act=it.giorgini.soundnotes.recordermanager.PREPARE cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:48:21.696    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service prepare started
+02-09 14:48:21.696    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RecMan filesDir: /data/data/it.giorgini.soundnotes/files; currRecDir: /data/data/it.giorgini.soundnotes/files/1; relpath: temp.aac
+02-09 14:48:21.699    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ prepare middle
+02-09 14:48:21.748    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreateOptionsMenu
+02-09 14:48:21.763    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:48:21.855    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_idle id: android.os.BinderProxy@1d309840 time:189373
+02-09 14:48:21.991    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onStop
+02-09 14:48:26.561    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 3: Intent { act=it.giorgini.soundnotes.recordermanager.START cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:48:26.562    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording maybe starting. Asking to RecordingsView...
+02-09 14:48:26.562    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ start1 - state: PREPARED
+02-09 14:48:26.576    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ broadRec - onNewIntent rec started
+02-09 14:48:26.576    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ recView != null -1-, ok, niente asynctask
+02-09 14:48:26.588    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 4: Intent { act=it.giorgini.soundnotes.recordermanager.START.ACCEPTED cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:48:26.588    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording started!!
+02-09 14:48:32.081    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 5: Intent { act=it.giorgini.soundnotes.recordermanager.STOP cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:48:32.081    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording stopped
+02-09 14:48:32.181    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecMan setRecLenghtOnText
+02-09 14:48:32.181    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RecServ save file (/data/data/it.giorgini.soundnotes/files/1/temp.aac) CAN be read, l: 106174
+02-09 14:48:32.182    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RecServ save - 2th RENAMED - file (/data/data/it.giorgini.soundnotes/files/1/1-5538.aac) CAN be read, l: 106174
+02-09 14:48:32.191    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RecMan stop OK
+02-09 14:48:32.225    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ broadRec - onNewIntent rec stopped - 5538
+02-09 14:48:35.773    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 6: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:48:35.774    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start inizializzando mp:
+02-09 14:48:35.792    4259-4259/it.giorgini.soundnotes E/ExtMediaPlayer-JNI﹕ QCMediaPlayer could not be located....
+02-09 14:48:35.792    4259-4259/it.giorgini.soundnotes E/MediaPlayer-JNI﹕ QCMediaPlayer mediaplayer NOT present
+02-09 14:48:35.984    4259-4259/it.giorgini.soundnotes E/MediaPlayer﹕ Should have subtitle controller already set
+02-09 14:48:35.985    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying prepared
+02-09 14:48:41.418    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ player playback completed
+02-09 14:48:44.068    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 7: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:48:44.068    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start inizializzando mp:
+02-09 14:48:44.070    4259-4259/it.giorgini.soundnotes E/ExtMediaPlayer-JNI﹕ QCMediaPlayer could not be located....
+02-09 14:48:44.070    4259-4259/it.giorgini.soundnotes E/MediaPlayer-JNI﹕ QCMediaPlayer mediaplayer NOT present
+02-09 14:48:44.156    4259-4259/it.giorgini.soundnotes E/MediaPlayer﹕ Should have subtitle controller already set
+02-09 14:48:44.156    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying prepared
+02-09 14:48:44.548    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:48:47.312    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 8: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.PAUSE flg=0x10000000 cmp=it.giorgini.soundnotes/.RecorderService bnds=[193,413][1056,557] (has extras) }
+02-09 14:48:48.278    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:48:49.790    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:48:49.790    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:48:49.875    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:48:50.120    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:48:50.132    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:48:55.022    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 9: Intent { act=it.giorgini.soundnotes.recordermanager.START cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:48:55.022    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording maybe starting. Asking to RecordingsView...
+02-09 14:48:55.022    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ start1 - state: INITIAL
+02-09 14:48:55.022    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ start - rec non era ancora pronto
+02-09 14:48:55.033    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ prepare middle
+02-09 14:48:55.050    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ broadRec - onNewIntent rec started
+02-09 14:48:55.050    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ recView != null -1-, ok, niente asynctask
+02-09 14:48:55.059    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 10: Intent { act=it.giorgini.soundnotes.recordermanager.START.ACCEPTED cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:48:55.059    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording started!!
+02-09 14:49:02.366    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:04.036    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:05.121    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onPause
+02-09 14:49:05.121    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onPause
+02-09 14:49:05.161    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onStop
+02-09 14:49:05.162    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onStop
+02-09 14:49:05.162    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity saveCurrentNote called
+02-09 14:49:05.169    4259-4259/it.giorgini.soundnotes I/SN ###﹕ StorMan saveAll: rinominata! da pos1a 3 (giusto che siano uguali
+02-09 14:49:05.172    4259-4259/it.giorgini.soundnotes I/SN ###﹕ StorMan saveAll: non rinom dopo collisione! da pos
+02-09 14:49:05.327    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:08.422    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 11: Intent { act=it.giorgini.soundnotes.recordermanager.STOP flg=0x10000000 cmp=it.giorgini.soundnotes/.RecorderService bnds=[193,329][1056,473] }
+02-09 14:49:08.422    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording stopped
+02-09 14:49:08.538    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecMan setRecLenghtOnText
+02-09 14:49:08.538    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RecServ save file (/data/data/it.giorgini.soundnotes/files/1/temp.aac) CAN be read, l: 261923
+02-09 14:49:08.538    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RecServ save - 2th RENAMED - file (/data/data/it.giorgini.soundnotes/files/1/6-13438.aac) CAN be read, l: 261923
+02-09 14:49:08.544    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RecMan stop OK
+02-09 14:49:08.549    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service release ok
+02-09 14:49:08.550    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service onDestroy forst
+02-09 14:49:08.550    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service onDestroy after
+02-09 14:49:10.036    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ noteDetAct onStart
+02-09 14:49:10.039    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onResume
+02-09 14:49:10.048    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service onCreate
+02-09 14:49:10.051    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 1: Intent { cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:10.051    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service Started
+02-09 14:49:10.052    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 2: Intent { act=it.giorgini.soundnotes.recordermanager.PREPARE cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:10.052    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service prepare started
+02-09 14:49:10.053    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RecMan filesDir: /data/data/it.giorgini.soundnotes/files; currRecDir: /data/data/it.giorgini.soundnotes/files/1; relpath: temp.aac
+02-09 14:49:10.118    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ prepare middle
+02-09 14:49:10.125    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_idle id: android.os.BinderProxy@1d309840 time:237643
+02-09 14:49:10.128    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:13.719    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 3: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:13.720    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start inizializzando mp:
+02-09 14:49:13.723    4259-4259/it.giorgini.soundnotes E/ExtMediaPlayer-JNI﹕ QCMediaPlayer could not be located....
+02-09 14:49:13.723    4259-4259/it.giorgini.soundnotes E/MediaPlayer-JNI﹕ QCMediaPlayer mediaplayer NOT present
+02-09 14:49:13.725    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying errore. path 1-5538.aac, line 1 completo: /data/data/it.giorgini.soundnotes/files/1/1-5538.aac
+02-09 14:49:13.725    4259-4259/it.giorgini.soundnotes W/System.err﹕ java.io.FileNotFoundException: /data/data/it.giorgini.soundnotes/files/1/1-5538.aac: open failed: ENOENT (No such file or directory)
+02-09 14:49:13.729    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.IoBridge.open(IoBridge.java:456)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.io.FileInputStream.<init>(FileInputStream.java:76)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at it.giorgini.soundnotes.RecorderService.startPlaying(RecorderService.java:414)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at it.giorgini.soundnotes.RecorderService.onStartCommand(RecorderService.java:156)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:2895)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.access$2200(ActivityThread.java:147)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1394)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.os.Handler.dispatchMessage(Handler.java:102)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.os.Looper.loop(Looper.java:135)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.main(ActivityThread.java:5256)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.lang.reflect.Method.invoke(Native Method)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.lang.reflect.Method.invoke(Method.java:372)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:898)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:693)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ Caused by: android.system.ErrnoException: open failed: ENOENT (No such file or directory)
+02-09 14:49:13.730    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.Posix.open(Native Method)
+02-09 14:49:13.731    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.BlockGuardOs.open(BlockGuardOs.java:186)
+02-09 14:49:13.731    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.IoBridge.open(IoBridge.java:442)
+02-09 14:49:13.731    4259-4259/it.giorgini.soundnotes W/System.err﹕ ... 13 more
+02-09 14:49:26.600    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 4: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:26.600    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start inizializzando mp:
+02-09 14:49:26.602    4259-4259/it.giorgini.soundnotes E/ExtMediaPlayer-JNI﹕ QCMediaPlayer could not be located....
+02-09 14:49:26.602    4259-4259/it.giorgini.soundnotes E/MediaPlayer-JNI﹕ QCMediaPlayer mediaplayer NOT present
+02-09 14:49:26.731    4259-4259/it.giorgini.soundnotes E/MediaPlayer﹕ Should have subtitle controller already set
+02-09 14:49:26.731    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying prepared
+02-09 14:49:28.441    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 5: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.PAUSE cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:29.461    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:49:29.461    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:49:29.543    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:29.775    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:49:29.775    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:30.415    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 6: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:30.415    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start mp da resettare:
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying errore. path 1-5538.aac, line 1 completo: /data/data/it.giorgini.soundnotes/files/1/1-5538.aac
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ java.io.FileNotFoundException: /data/data/it.giorgini.soundnotes/files/1/1-5538.aac: open failed: ENOENT (No such file or directory)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.IoBridge.open(IoBridge.java:456)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.io.FileInputStream.<init>(FileInputStream.java:76)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at it.giorgini.soundnotes.RecorderService.startPlaying(RecorderService.java:414)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at it.giorgini.soundnotes.RecorderService.onStartCommand(RecorderService.java:156)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:2895)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.access$2200(ActivityThread.java:147)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1394)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.os.Handler.dispatchMessage(Handler.java:102)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.os.Looper.loop(Looper.java:135)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.main(ActivityThread.java:5256)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.lang.reflect.Method.invoke(Native Method)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.lang.reflect.Method.invoke(Method.java:372)
+02-09 14:49:30.438    4259-4259/it.giorgini.soundnotes W/System.err﹕ at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:898)
+02-09 14:49:30.439    4259-4259/it.giorgini.soundnotes W/System.err﹕ at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:693)
+02-09 14:49:30.439    4259-4259/it.giorgini.soundnotes W/System.err﹕ Caused by: android.system.ErrnoException: open failed: ENOENT (No such file or directory)
+02-09 14:49:30.444    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.Posix.open(Native Method)
+02-09 14:49:30.444    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.BlockGuardOs.open(BlockGuardOs.java:186)
+02-09 14:49:30.444    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.IoBridge.open(IoBridge.java:442)
+02-09 14:49:30.444    4259-4259/it.giorgini.soundnotes W/System.err﹕ ... 13 more
+02-09 14:49:32.294    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 7: Intent { act=it.giorgini.soundnotes.recordermanager.START cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:49:32.294    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording maybe starting. Asking to RecordingsView...
+02-09 14:49:32.294    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ start1 - state: PREPARED
+02-09 14:49:32.297    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ broadRec - onNewIntent rec started
+02-09 14:49:32.297    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ recView != null -1-, ok, niente asynctask
+02-09 14:49:32.312    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 8: Intent { act=it.giorgini.soundnotes.recordermanager.START.ACCEPTED cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:49:32.312    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording started!!
+02-09 14:49:34.445    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 9: Intent { act=it.giorgini.soundnotes.recordermanager.STOP cmp=it.giorgini.soundnotes/.RecorderService }
+02-09 14:49:34.445    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service: recording stopped
+02-09 14:49:34.533    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecMan setRecLenghtOnText
+02-09 14:49:34.533    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RecServ save file (/data/data/it.giorgini.soundnotes/files/1/temp.aac) CAN be read, l: 39368
+02-09 14:49:34.534    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RecServ save - 2th RENAMED - file (/data/data/it.giorgini.soundnotes/files/1/1-2192.aac) CAN be read, l: 39368
+02-09 14:49:34.548    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RecMan stop OK
+02-09 14:49:34.565    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ broadRec - onNewIntent rec stopped - 2192
+02-09 14:49:38.275    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 10: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:38.275    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start inizializzando mp:
+02-09 14:49:38.277    4259-4259/it.giorgini.soundnotes E/ExtMediaPlayer-JNI﹕ QCMediaPlayer could not be located....
+02-09 14:49:38.277    4259-4259/it.giorgini.soundnotes E/MediaPlayer-JNI﹕ QCMediaPlayer mediaplayer NOT present
+02-09 14:49:38.339    4259-4259/it.giorgini.soundnotes E/MediaPlayer﹕ Should have subtitle controller already set
+02-09 14:49:38.339    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying prepared
+02-09 14:49:40.511    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ player playback completed
+02-09 14:49:41.501    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 11: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:41.501    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start inizializzando mp:
+02-09 14:49:41.505    4259-4259/it.giorgini.soundnotes E/ExtMediaPlayer-JNI﹕ QCMediaPlayer could not be located....
+02-09 14:49:41.505    4259-4259/it.giorgini.soundnotes E/MediaPlayer-JNI﹕ QCMediaPlayer mediaplayer NOT present
+02-09 14:49:41.570    4259-4259/it.giorgini.soundnotes E/MediaPlayer﹕ Should have subtitle controller already set
+02-09 14:49:41.570    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying prepared
+02-09 14:49:43.728    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ player playback completed
+02-09 14:49:45.148    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 12: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:45.148    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start inizializzando mp:
+02-09 14:49:45.156    4259-4259/it.giorgini.soundnotes E/ExtMediaPlayer-JNI﹕ QCMediaPlayer could not be located....
+02-09 14:49:45.156    4259-4259/it.giorgini.soundnotes E/MediaPlayer-JNI﹕ QCMediaPlayer mediaplayer NOT present
+02-09 14:49:45.264    4259-4259/it.giorgini.soundnotes E/MediaPlayer﹕ Should have subtitle controller already set
+02-09 14:49:45.264    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying prepared
+02-09 14:49:46.388    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 13: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.PAUSE cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:47.506    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:49:47.506    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:49:47.579    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:47.836    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:49:47.836    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:49:48.539    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 14: Intent { act=it.giorgini.soundnotes.recordermanager.PLAYER.START cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:49:48.539    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying start mp da resettare:
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ recServ startPlaying errore. path 1-5538.aac, line 1 completo: /data/data/it.giorgini.soundnotes/files/1/1-5538.aac
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ java.io.FileNotFoundException: /data/data/it.giorgini.soundnotes/files/1/1-5538.aac: open failed: ENOENT (No such file or directory)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.IoBridge.open(IoBridge.java:456)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.io.FileInputStream.<init>(FileInputStream.java:76)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at it.giorgini.soundnotes.RecorderService.startPlaying(RecorderService.java:414)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at it.giorgini.soundnotes.RecorderService.onStartCommand(RecorderService.java:156)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.handleServiceArgs(ActivityThread.java:2895)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.access$2200(ActivityThread.java:147)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1394)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.os.Handler.dispatchMessage(Handler.java:102)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.os.Looper.loop(Looper.java:135)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at android.app.ActivityThread.main(ActivityThread.java:5256)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.lang.reflect.Method.invoke(Native Method)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at java.lang.reflect.Method.invoke(Method.java:372)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:898)
+02-09 14:49:48.566    4259-4259/it.giorgini.soundnotes W/System.err﹕ at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:693)
+02-09 14:49:48.567    4259-4259/it.giorgini.soundnotes W/System.err﹕ Caused by: android.system.ErrnoException: open failed: ENOENT (No such file or directory)
+02-09 14:49:48.567    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.Posix.open(Native Method)
+02-09 14:49:48.567    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.BlockGuardOs.open(BlockGuardOs.java:186)
+02-09 14:49:48.567    4259-4259/it.giorgini.soundnotes W/System.err﹕ at libcore.io.IoBridge.open(IoBridge.java:442)
+02-09 14:49:48.567    4259-4259/it.giorgini.soundnotes W/System.err﹕ ... 13 more
+02-09 14:50:12.526    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:12.527    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:12.632    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:13.825    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:50:13.825    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:17.127    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:17.127    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:17.204    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:19.436    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:34.366    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity saveCurrentNote called
+02-09 14:50:34.367    4259-4259/it.giorgini.soundnotes I/SN ###﹕ StorMan saveAll: non rinominata da pos1a 3
+02-09 14:50:34.372    4259-4259/it.giorgini.soundnotes I/SN ###﹕ StorMan saveAll: non rinom dopo collisione! da pos
+02-09 14:50:34.372    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_launch_request id:it.giorgini.soundnotes time:321890
+02-09 14:50:34.401    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onPause
+02-09 14:50:34.401    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onPause
+02-09 14:50:34.408    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onResume
+02-09 14:50:34.430    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:50:34.456    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_idle id: android.os.BinderProxy@1ed7ce50 time:321973
+02-09 14:50:34.489    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:34.614    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onStop
+02-09 14:50:34.614    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onStop
+02-09 14:50:34.619    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onDestroy
+02-09 14:50:34.619    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onDetach
+02-09 14:50:34.619    4259-4259/it.giorgini.soundnotes D/SN ###﹕ NoteDetailActivity onDestroy
+02-09 14:50:35.348    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_launch_request id:it.giorgini.soundnotes time:322866
+02-09 14:50:35.381    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:50:35.406    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreate
+02-09 14:50:35.406    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreateView
+02-09 14:50:35.407    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity initConnections
+02-09 14:50:35.407    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ recView != null -0- inizial da initCOnnections
+02-09 14:50:35.407    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RET setRecView
+02-09 14:50:35.407    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onActivityCreated
+02-09 14:50:35.430    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ noteDetAct onStart
+02-09 14:50:35.431    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onResume
+02-09 14:50:35.433    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RET getDeviceLineFroOffset layout NULL!!!
+02-09 14:50:35.433    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RET getDeviceLineFroOffset layout NULL!!!
+02-09 14:50:35.433    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RET getDeviceLineFroOffset layout NULL!!!
+02-09 14:50:35.439    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 15: Intent { cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:50:35.439    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service Started
+02-09 14:50:35.439    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 16: Intent { act=it.giorgini.soundnotes.recordermanager.PREPARE cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:50:35.439    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service prepare started
+02-09 14:50:35.440    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RecMan filesDir: /data/data/it.giorgini.soundnotes/files; currRecDir: /data/data/it.giorgini.soundnotes/files/1; relpath: temp.aac
+02-09 14:50:35.443    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ prepare middle
+02-09 14:50:35.523    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreateOptionsMenu
+02-09 14:50:35.527    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:35.588    4259-4280/it.giorgini.soundnotes D/OpenGLRenderer﹕ endAllStagingAnimators on 0xaf334b80 (ListView) with handle 0x9f64e5d0
+02-09 14:50:35.592    4259-4259/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_idle id: android.os.BinderProxy@19d59bf4 time:323110
+02-09 14:50:35.738    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onStop
+02-09 14:50:36.534    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:36.534    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:36.600    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:37.020    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:50:37.020    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:38.772    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:38.772    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:38.842    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:46.800    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:50:46.800    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:48.808    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:48.808    4259-4259/it.giorgini.soundnotes E/SpannableStringBuilder﹕ SPAN_EXCLUSIVE_EXCLUSIVE spans cannot have a zero length
+02-09 14:50:48.879    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:49.241    4259-4259/it.giorgini.soundnotes W/InputEventReceiver﹕ Attempted to finish an input event but the input event receiver has already been disposed.
+02-09 14:50:49.242    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:52.669    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:50:59.580    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onPause
+02-09 14:50:59.580    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onPause
+02-09 14:50:59.664    4259-4259/it.giorgini.soundnotes W/IInputConnectionWrapper﹕ showStatusIcon on inactive InputConnection
+02-09 14:50:59.849    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onStop
+02-09 14:50:59.849    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onStop
+02-09 14:50:59.849    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity saveCurrentNote called
+02-09 14:50:59.850    4259-4259/it.giorgini.soundnotes I/SN ###﹕ StorMan saveAll: non rinominata da pos1a 3
+02-09 14:50:59.856    4259-4259/it.giorgini.soundnotes I/SN ###﹕ StorMan saveAll: non rinom dopo collisione! da pos
+02-09 14:50:59.856    4259-4259/it.giorgini.soundnotes D/SN ###﹕ stopService called from NoteDetailActivity onStop
+02-09 14:50:59.859    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service onDestroy forst
+02-09 14:50:59.863    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service onDestroy after
+02-09 14:52:03.091    4259-4259/it.giorgini.soundnotes E/Minikin﹕ addFont failed to create font /system/fonts/NanumGothic.ttf
+02-09 14:52:03.091    4259-4259/it.giorgini.soundnotes E/Minikin﹕ addFont failed to create font /system/fonts/DroidSansFallback.ttf
+02-09 14:53:09.001    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onDestroy
+02-09 14:53:09.001    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment: onDetach
+02-09 14:53:09.001    4259-4259/it.giorgini.soundnotes D/SN ###﹕ NoteDetailActivity onDestroy
+02-09 14:53:09.002    4259-4259/it.giorgini.soundnotes D/SN ###﹕ stopService called from NoteDetailActivity onDestroy
+02-09 14:53:09.017    4259-4259/it.giorgini.soundnotes W/ResourceType﹕ For resource 0x01030224, entry index(548) is beyond type entryCount(2)
+02-09 14:53:09.017    4259-4259/it.giorgini.soundnotes W/ResourceType﹕ For resource 0x01030224, entry index(548) is beyond type entryCount(2)
+02-09 14:53:09.018    4259-4259/it.giorgini.soundnotes W/ResourceType﹕ For resource 0x01030237, entry index(567) is beyond type entryCount(2)
+02-09 14:53:09.018    4259-4259/it.giorgini.soundnotes W/ResourceType﹕ For resource 0x01030237, entry index(567) is beyond type entryCount(2)
+02-09 14:53:09.020    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreate
+02-09 14:53:09.036    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreateView
+02-09 14:53:09.037    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity initConnections
+02-09 14:53:09.037    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ recView != null -0- inizial da initCOnnections
+02-09 14:53:09.037    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RET setRecView
+02-09 14:53:09.037    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onActivityCreated
+02-09 14:53:09.052    4259-4259/it.giorgini.soundnotes I/SN @@@﹕ noteDetAct onStart
+02-09 14:53:09.054    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onResume
+02-09 14:53:09.054    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RET getDeviceLineFroOffset layout NULL!!!
+02-09 14:53:09.054    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RET getDeviceLineFroOffset layout NULL!!!
+02-09 14:53:09.054    4259-4259/it.giorgini.soundnotes W/SN @@@﹕ RET getDeviceLineFroOffset layout NULL!!!
+02-09 14:53:09.096    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service onCreate
+02-09 14:53:09.097    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 1: Intent { cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:53:09.097    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service Started
+02-09 14:53:09.097    4259-4259/it.giorgini.soundnotes D/SN ###﹕ Service: id 2: Intent { act=it.giorgini.soundnotes.recordermanager.PREPARE cmp=it.giorgini.soundnotes/.RecorderService (has extras) }
+02-09 14:53:09.097    4259-4259/it.giorgini.soundnotes I/SN ###﹕ Service prepare started
+02-09 14:53:09.097    4259-4259/it.giorgini.soundnotes D/SN ###﹕ RecMan filesDir: /data/data/it.giorgini.soundnotes/files; currRecDir: /data/data/it.giorgini.soundnotes/files/1; relpath: temp.aac
+02-09 14:53:09.098    4259-4259/it.giorgini.soundnotes D/SN @@@﹕ RecServ prepare middle
+02-09 14:53:09.100    4259-4259/it.giorgini.soundnotes W/ResourceType﹕ For resource 0x01030224, entry index(548) is beyond type entryCount(2)
+02-09 14:53:09.100    4259-4259/it.giorgini.soundnotes W/ResourceType﹕ For resource 0x01030224, entry index(548) is beyond type entryCount(2)
+02-09 14:53:09.102    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailFragment onCreateOptionsMenu
+02-09 14:53:09.108    4259-4259/it.giorgini.soundnotes I/SN ###﹕ NoteDetailActivity onWindowFocusChanged
+02-09 14:53:09.108    4259-4259/it.giorgini.soundnotes D/AndroidRuntime﹕ Shutting down VM
+    --------- beginning of crash
+02-09 14:53:09.109    4259-4259/it.giorgini.soundnotes E/AndroidRuntime﹕ FATAL EXCEPTION: main
+    Process: it.giorgini.soundnotes, PID: 4259
+    java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.Object java.lang.ref.WeakReference.get()' on a null object reference
+            at it.giorgini.soundnotes.NoteDetailActivity.onWindowFocusChanged(NoteDetailActivity.java:258)
+            at com.android.internal.policy.impl.PhoneWindow$DecorView.onWindowFocusChanged(PhoneWindow.java:3319)
+            at android.view.View.dispatchWindowFocusChanged(View.java:8592)
+            at android.view.ViewGroup.dispatchWindowFocusChanged(ViewGroup.java:1160)
+            at android.view.ViewRootImpl$ViewRootHandler.handleMessage(ViewRootImpl.java:3199)
+            at android.os.Handler.dispatchMessage(Handler.java:102)
+            at android.os.Looper.loop(Looper.java:135)
+            at android.app.ActivityThread.main(ActivityThread.java:5256)
+            at java.lang.reflect.Method.invoke(Native Method)
+            at java.lang.reflect.Method.invoke(Method.java:372)
+            at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:898)
+            at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:693)
+02-09 14:53:14.636    4259-4259/it.giorgini.soundnotes I/Process﹕ Sending signal. PID: 4259 SIG: 9
+02-09 14:53:19.957    6557-6557/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onStop
+02-09 14:53:19.957    6557-6557/it.giorgini.soundnotes D/SN ###﹕ stopService called from NoteListActivity
+02-09 14:53:20.002    6557-6557/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:53:20.982    6557-6557/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onResume
+02-09 14:53:20.983    6557-6557/it.giorgini.soundnotes W/SN @@@﹕ StorageManager getNotePosFromID -- NON TROVATA!!! ritornato 0
+02-09 14:53:21.020    6557-6557/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:53:21.032    6557-6557/it.giorgini.soundnotes I/Timeline﹕ Timeline: Activity_idle id: android.os.BinderProxy@f86d781 time:488550
+02-09 14:53:21.946    6557-6557/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onWindowFocusChanged
+02-09 14:53:22.164    6557-6557/it.giorgini.soundnotes I/SN ###﹕ NoteListActivity onStop
+02-09 14:53:22.164    6557-6557/it.giorgini.soundnotes D/SN ###﹕ stopService called from NoteListActivity
