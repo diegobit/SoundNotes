@@ -7,10 +7,11 @@ N.B. The repo is not entirely in English, I'm sorry, this is is one of my first 
 
 ![Main screen](/screenshots/1.png) ![Notes list](/screenshots/2.png) ![Editor](/screenshots/3.png) ![Tablet layout](/screenshots/4.png)
 
-**How to try**
+### How to try it
 There's an already built apk in the Releases section.
 
-**How to build**
+### How to build it
+
 This repository contains everything necessary to build it Android Studio.
 
 Info about some libraries:
